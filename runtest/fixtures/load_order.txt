@@ -1,0 +1,4 @@
+# Order in which to load data 
+# This file is mandatory. We can run python scripts
+# or json or yml files (using manage.py loaddata)
+stocks.py
