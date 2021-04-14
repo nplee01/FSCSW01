@@ -2,3 +2,11 @@
 # This file is mandatory. We can run python scripts
 # or json or yml files (using manage.py loaddata)
 stocks.py
+strategy_params.py
+strategies.py
+indicator_params.py
+indicators.py
+size_params.py
+size_methods.py
+run_params.py
+run_fields.py

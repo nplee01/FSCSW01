@@ -4,6 +4,7 @@ from django.db import models
 
 # Our modules
 from .record_owner import RecordOwner
+from .parameter import Parameter
 
 class ValueSet(RecordOwner):
     """
@@ -65,12 +66,12 @@ class ValueSetMember(RecordOwner):
         blank=True, null=True,
         help_text=_("Optionally override sorting by Value Code"))
     # up to 3 optional Parameters that accept integers
-    param_1 = models.CharField(verbose_name=_("Parameter 1"), max_length=30,
-        null=True, blank=True, help_text=_("Optional Parameter 1"))
-    param_2 = models.CharField(verbose_name=_("Parameter 2"), max_length=30,
-        null=True, blank=True, help_text=_("Optional Parameter 2"))
-    param_3 = models.CharField(verbose_name=_("Parameter 3"), max_length=30,
-        null=True, blank=True, help_text=_("Optional Parameter 3"))
+    param_1 = models.ForeignKey(Parameter, on_delete=models.PROTECT, verbose_name=_("Parameter 1"),
+            null=True, related_name='param_1')
+    param_2 = models.ForeignKey(Parameter, on_delete=models.PROTECT, verbose_name=_("Parameter 2"),
+            null=True, related_name='param_2')
+    param_3 = models.ForeignKey(Parameter, on_delete=models.PROTECT, verbose_name=_("Parameter 3"),
+            null=True, related_name='param_3')
 
     class Meta:
         db_table = 'value_set_member'
