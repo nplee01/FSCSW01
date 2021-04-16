@@ -21,7 +21,7 @@ Then in a command prompt,
     load_fixtures.py
     manage.py runserver
 
-Then in your Browser, http://localhost:8000/admin, login in as admin. This development version will
+Then in your Browser, http://localhost:8000/. This development version will
 create a db.sqlite3 file as database. Ensure you have internet connection as we use CDN for bootstrap and jquery.
 
 When you restart your computer, you will only need to

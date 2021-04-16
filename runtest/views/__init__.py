@@ -1,1 +1,1 @@
-from .home import home
+from .dispatcher import dispatcher
