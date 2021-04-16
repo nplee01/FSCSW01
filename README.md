@@ -11,11 +11,10 @@ Then in a command prompt,
     cd any_working_directory
     git clone https://github.com/nplee01/FSCSW01.git
     cd FSCSW01
-    pip3 -r requirements.txt
+    pip3 install -r requirements.txt
     edit backtest.env to match your working_directory, mine is ~/work/backtest
     source backtest.env
     manage.py check
-    manage.py makemigrations
     manage.py migrate
     manage.py createsuperuser
     load_fixtures.py
