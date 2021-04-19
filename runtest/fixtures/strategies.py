@@ -9,7 +9,20 @@ if __name__ == '__main__':
     # Param 1 is number of Indicators allowed (max 3)
     strategies = [
         ValueSetTuple(value_set_code='STRATEGIES', value_set_description='Strategies for backtesting',
+            # Version 0.1 data
             set_member_list=(
+                SetMemberTuple(value_code='SINGLE', value_description='Single Indicator', sort_order=1,
+                    param_1_code='1-IND', param_2_code=None, param_3_code=None),
+                SetMemberTuple(value_code='CONFLUENCE', value_description='Confluence', sort_order=2,
+                    param_1_code='2-IND', param_2_code=None, param_3_code=None),
+            )
+          )
+        ]
+    
+    (ic, uc, mic, muc) = load_value_set(strategies)
+    print("Strategies: Inserted: %d, Updated: %d" % (mic, muc))
+
+    """
                 SetMemberTuple(value_code='ONE-SHOT', value_description='One Shot', sort_order=1,
                     param_1_code='1-IND', param_2_code=None, param_3_code=None),
                 SetMemberTuple(value_code='KILL-SWITCH', value_description='Kill Switch', sort_order=2,
@@ -20,9 +33,4 @@ if __name__ == '__main__':
                     param_1_code='2-IND', param_2_code=None, param_3_code=None),
                 SetMemberTuple(value_code='HIERARCHY', value_description='Hierarchy', sort_order=5,
                     param_1_code='2-IND', param_2_code=None, param_3_code=None),
-            )
-          )
-        ]
-    
-    (ic, uc, mic, muc) = load_value_set(strategies)
-    print("Strategies: Inserted: %d, Updated: %d" % (mic, muc))
+    """

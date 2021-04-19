@@ -2,6 +2,10 @@
 <html lang="en-us">
 <head>
 <title>{% block title %}{% endblock %}</title>
+{# to load site wide css or js files #}
+{% block basestyle %}{% endblock %}
+{% block basehead %}{% endblock %}
+{# Your templates might wanna load one off css or js files #}
 {% block extrastyle %}{% endblock %}
 {% block extrahead %}{% endblock %}
 {% block responsive %}

@@ -16,7 +16,10 @@ if __name__ == '__main__':
                     param_1_code='PORTFOLIO-START', param_2_code=None, param_3_code=None),
                 # used by strategy
                 SetMemberTuple(value_code='STOP-LOSS', value_description='Stop Loss %', sort_order=3,
-                    param_1_code='STOP-LOSS', param_2_code='TRAIL-STOP-LOSS', param_3_code=None),
+                    param_1_code='STOP-LOSS', param_2_code=None, param_3_code=None),
+                    # param_1_code='STOP-LOSS', param_2_code='TRAIL-STOP-LOSS', param_3_code=None),
+                SetMemberTuple(value_code='TRADE-SIZE', value_description='Trade Size', sort_order=4,
+                    param_1_code='TRADE-SIZE', param_2_code=None, param_3_code=None),
             )
           )
         ]

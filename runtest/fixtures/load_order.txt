@@ -6,7 +6,8 @@ strategy_params.py
 strategies.py
 indicator_params.py
 indicators.py
-size_params.py
-size_methods.py
+# Version 0.1 does not need sizing params
+# size_params.py
+# size_methods.py
 run_params.py
 run_fields.py

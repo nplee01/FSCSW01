@@ -23,7 +23,10 @@ def get_run_params(request):
         # Get Stop loss fields
         sl = ValueSetMember.objects.get(value_set=vs, value_code='STOP-LOSS')
         data['stop_loss'] = sl.param_1.default_value
-        data['trail_stop_loss'] = sl.param_2.default_value
+        # Version 0.1 does not need trailing stop loss
+        # data['trail_stop_loss'] = sl.param_2.default_value
+        ts = ValueSetMember.objects.get(value_set=vs, value_code='TRADE-SIZE')
+        data['trade_size'] = ts.param_1.default_value
         # Prepare data to be returned
         ret.set_data(data)
     # No exceptions expected if fixtures has been loaded

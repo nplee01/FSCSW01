@@ -19,9 +19,12 @@ if __name__ == '__main__':
             ParameterTuple(param_code='STOP-LOSS', param_label='Stop Loss %', 
                 param_description='Stop Loss %', default_value=5,
                 min_value=0, max_value=None, mult_by=0.01),
-            ParameterTuple(param_code='TRAIL-STOP-LOSS', param_label='Trailing Stop Loss %', 
-                param_description='Trailing Stop Loss %', default_value=10,
-                min_value=0, max_value=None, mult_by=0.01),
+            ParameterTuple(param_code='TRADE-SIZE', param_label='Trade Size',
+                param_description='Trade Size', default_value=100,
+                min_value=0, max_value=None, mult_by=None),
+            # ParameterTuple(param_code='TRAIL-STOP-LOSS', param_label='Trailing Stop Loss %', 
+            #     param_description='Trailing Stop Loss %', default_value=10,
+            #     min_value=0, max_value=None, mult_by=0.01),
         ]
     
     (ic, uc) = load_parameters(params)
