@@ -1,0 +1,50 @@
+nav {
+  background: rgb(52, 48, 48);
+  background: linear-gradient(
+    90deg,
+    rgba(52, 48, 48, 1) 5%,
+    rgba(80, 74, 74, 1) 95%
+  );
+}
+
+#logo-text {
+  font-family: Impact;
+  font-size: 40px;
+  margin: 0px 10px;
+  text-shadow: 3px 3px #252525a6;
+  color: white;
+}
+
+nav > ul > li > a {
+  margin-top: 25px;
+  font-family: system-ui;
+  font-weight: 600;
+  text-shadow: 1px 1px #252525a6;
+  color: white;
+}
+
+nav > ul > li > a:hover {
+  color: rgb(233, 201, 58);
+  border-bottom: solid 3px rgb(233, 201, 58);
+  margin-top: 22px;
+  transition: 0.3s;
+}
+
+.fa-cube {
+  margin-left: 10px;
+  color: white;
+  text-shadow: 3px 3px #252525a6;
+  font-size: 250%;
+}
+
+footer {
+  height: 40px;
+  background: rgb(52, 48, 48);
+  background: linear-gradient(
+    90deg,
+    rgba(52, 48, 48, 1) 5%,
+    rgba(80, 74, 74, 1) 95%
+  );
+  color: rgb(255, 255, 255);
+  padding: 10px;
+}

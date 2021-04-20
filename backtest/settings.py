@@ -131,4 +131,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Our settings
-APP_NAME = 'Backtest'
+APP_NAME = 'theCube'
+
