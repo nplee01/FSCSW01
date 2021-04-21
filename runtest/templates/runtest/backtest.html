@@ -1,4 +1,112 @@
-{% extends "runtest/base_site.html" %}
+{% extends "base/base_site.html" %}
+{% load crispy_forms_tags %}
+
+{% block extrahead %}
+    <script>
+        // Initialise the page, on first load
+        function initPage() {
+            $.getJSON('runtest/rpc/GetRunParams', function(ret) {
+                if (ret.status == 'OK') {
+                    // Set the default values
+                    $("#id_start_date").val(ret.data.start_date);
+                    $("#id_end_date").val(ret.data.end_date);
+                    $("#id_portfolio_start").val(parseInt(ret.data.portfolio_start));
+                    $("#id_stop_loss").val(parseInt(ret.data.stop_loss));
+                    $("#id_trade_size").val(parseInt(ret.data.trade_size));
+                } else {
+                    console.error(ret.error);
+                }
+            });
+        }
+        // Reset page
+        function resetPage() {
+            initPage();
+            $("#id_stock_ticker").val(null);
+            $("#id_indicator_1_code").val(null);
+            $("#id_ind_1_param_1").val(null);
+            $("#id_ind_1_param_2").val(null);
+            $("#id_ind_1_param_3").val(null);
+            $("#id_indicator_2_code").val(null);
+            $("#id_ind_2_param_1").val(null);
+            $("#id_ind_2_param_2").val(null);
+            $("#id_ind_2_param_3").val(null);
+        }
+        // When strategy selected
+        function onSelectStrategy() {
+            // When strategy selected only
+            var strategyCode = $("#id_strategy_code").val();
+            if (strategyCode) {
+                $.getJSON('runtest/rpc/GetStrategyParams/' + strategyCode, function(ret) {
+                    if (ret.status == 'OK') {
+                        // Hide or Display Indicators
+                        if (ret.data.indicator_count == 1) {
+                            $("#ind_2_group").hide();
+                        }
+                        else if (ret.data.indicator_count == 2) {
+                            $("#ind_2_group").show();
+                        }
+                    } else {
+                        console.error(ret.error);
+                    }
+                });
+            }
+        }
+        // When Indicator selected, we need to hide/show params
+        // and change its labels and default values
+        function onSelectIndicator(evt) {
+            var indicatorNo = evt.data;
+            var indicator = $("#id_indicator_" + indicatorNo + "_code").val();
+            if (indicator) {
+                $.getJSON('runtest/rpc/GetIndicatorParams/' + indicator, function(ret) {
+                    if (ret.status == 'OK') {
+                        // Reset all param values
+                        $("#ind_" + indicatorNo + "_param_1").val(null);
+                        $("#ind_" + indicatorNo + "_param_2").val(null);
+                        $("#ind_" + indicatorNo + "_param_3").val(null);
+                        // We expect data to be an array
+                        if (ret.data.length == 1) {
+                            // Show 1 param
+                            $("#ind_" + indicatorNo + "_param_1_group").show();
+                            $("#ind_" + indicatorNo + "_param_2_group").hide();
+                            $("#ind_" + indicatorNo + "_param_3_group").hide();
+                        }
+                        else if (ret.data.length == 2) {
+                            // Show 2 params
+                            $("#ind_" + indicatorNo + "_param_1_group").show();
+                            $("#ind_" + indicatorNo + "_param_2_group").show();
+                            $("#ind_" + indicatorNo + "_param_3_group").hide();
+                        }
+                        else if (ret.data.length == 3) {
+                            // Show 3 params
+                            $("#ind_" + indicatorNo + "_param_1_group").show();
+                            $("#ind_" + indicatorNo + "_param_2_group").show();
+                            $("#ind_" + indicatorNo + "_param_3_group").show();
+                        }
+
+                        // Change label and default values
+                        ret.data.forEach(function(param, i) {
+                            $("label[for='id_ind_" + indicatorNo + "_param_" + (i+1).toString() + "']")
+                                .text(param.param_label);
+                            $("#id_ind_" + indicatorNo + "_param_" + (i+1).toString())
+                                .val(parseInt(param.default_value));
+                        });
+                    } else {
+                        console.error(ret.error);
+                    }
+                });
+            }
+        }
+        // After document loaded...
+        $(document).ready(function() {
+            initPage();
+            // Attach change functions to strategy and indicators
+            $("#id_strategy_code").change(onSelectStrategy);
+            // Event data is the indicator number
+            $("#id_indicator_1_code").change('1', onSelectIndicator);
+            $("#id_indicator_2_code").change('2', onSelectIndicator);
+        });
+    </script>
+{% endblock %}
 
 {% block content %}
 
@@ -9,12 +117,94 @@
     <div class="card-body">
     <h3 class="card-title">Please run a backtest</h3>
     <p class="card-text" style="line-height: 2rem;">
-        Backtest
-        <br> Blah
-        <br> Blah
-        <br> Blah
-        <br> Blah
     </p>
+    <form method='post'>
+        {% csrf_token %}
+        <div id="section_1">
+            <div class="row">
+                <div class="col-3">
+                {{ form.stock_ticker | as_crispy_field }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                {{ form.start_date | as_crispy_field }}
+                </div>
+                <div class="col-2">
+                {{ form.end_date | as_crispy_field }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                {{ form.portfolio_start | as_crispy_field }}
+                </div>
+            </div>
+        </div>
+
+        <div id="section_2">
+            <div class="row">
+                <div class="col-3">
+                {{ form.strategy_code | as_crispy_field }}
+                </div>
+                <div class="col-2">
+                {{ form.stop_loss | as_crispy_field }}
+                </div>
+            </div>
+        </div>
+
+        <div id="section_3">
+            <div id="ind_1_group">
+                <div class="row">
+                    <div class="col-3">
+                    {{ form.indicator_1_code | as_crispy_field }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="ind_1_param_1_group" class="col-2">
+                    {{ form.ind_1_param_1 | as_crispy_field }}
+                    </div>
+                    <div id="ind_1_param_2_group" class="col-2">
+                    {{ form.ind_1_param_2 | as_crispy_field }}
+                    </div>
+                    <div id="ind_1_param_3_group" class="col-2">
+                    {{ form.ind_1_param_3 | as_crispy_field }}
+                    </div>
+                </div>
+            </div>
+            <div id="ind_2_group">
+                <div class="row">
+                    <div class="col-3">
+                    {{ form.indicator_2_code | as_crispy_field }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="ind_2_param_1_group" class="col-2">
+                    {{ form.ind_2_param_1 | as_crispy_field }}
+                    </div>
+                    <div id="ind_2_param_2_group" class="col-2">
+                    {{ form.ind_2_param_2 | as_crispy_field }}
+                    </div>
+                    <div id="ind_2_param_3_group" class="col-2">
+                    {{ form.ind_2_param_3 | as_crispy_field }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-2">
+            {{ form.trade_size | as_crispy_field }}
+            </div>
+        </div>
+        <div class="row btn-group" role="toolbar">
+            <div class="btn-group mr-2" role="group">
+                <button type="submit" class="btn btn-success">Run</button>
+            </div>
+            <div class="btn-group mr-2" role="group">
+                <button type="button" onClick="resetPage()" class="btn btn-warning">Reset</button>
+            </div>
+        </div>
+    </form>
     </div>
 </div>
 
