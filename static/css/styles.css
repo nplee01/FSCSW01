@@ -96,3 +96,39 @@ footer {
   color: black;
   border: 0px;
 }
+
+/* Homepage */
+img {
+  width: 40%;
+  height: auto;
+}
+
+.card-header h1 {
+  font-family: "Times New Roman";
+}
+
+.card-body {
+  display: flex;
+  padding-left: 5%;
+}
+
+.card-text {
+  font-family: "Raleway";
+  font-size: 20px;
+}
+
+.homepageDesc {
+  padding-left: 5%;
+  padding-top: 5%;
+}
+
+.homepageDesc h2 {
+  font-family: "Times New Roman", Times, serif;
+  font-weight: bold;
+  font-size: 4rem;
+}
+
+.disclaimer {
+  font-size: x-small;
+  padding-left: 5%;
+}
