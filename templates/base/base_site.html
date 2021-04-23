@@ -19,23 +19,22 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 {% endblock %}
 
-{% block branding %}
-    
-    
-{% endblock %}
-
 {% block navbar%}
-    <nav class="navbar navbar-expand-lg">
-        <ul class="nav">
+    <nav class="navbar navbar-expand-sm">
+        <ul class="navbar-nav mr-auto">
             <a class="nav-link" href="{% url 'home' %}" id="logo-and-text"><i class="fas fa-cube"></i>
-                <h1 class="navbar-brand" id="logo-text">the<span style="color: rgb(233, 201, 58)">Cube</span></h1></a>
-                <li class="nav-item" ><a class="nav-link" href="{% url 'about' %}">ABOUT</a></li>
+                <h1 class="navbar-brand" id="logo-text">the<span style="color: rgb(233, 201, 58)">Cube</span></h1>
+            </a>
+            <li class="nav-item" ><a class="nav-link" href="{% url 'about' %}">ABOUT</a></li>
             <li class="nav-item" ><a class="nav-link" href="{% url 'backtest' %}">BACKTEST</a></li>
             <li class="nav-item" ><a class="nav-link" href="{% url 'howitworks' %}">HOW IT WORKS</a></li>
-            </ul>
-        {% if title %} &rsaquo; {{ title }}{% endif %}
+        </ul>
+        <!-- Login button right aligned -->
+        <div class="navbar-nav ml-auto">
+            <button class="nav-item btn btn-light" onclick="location.href='{% url 'account_login' %}'">Login
+            </button>
         </div>
-    <!-- </nav> -->
+    </nav>
 {% endblock %}
 
 {% block footer %}
@@ -43,5 +42,3 @@
       <p>Copyright &copy; 2021 ATSC</p>
     </footer>
 {% endblock %}
-
-{# end #}
