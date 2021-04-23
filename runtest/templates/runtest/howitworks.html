@@ -2,20 +2,78 @@
 
 {% block content %}
 
-<div class="card bg-light">
-    <div class="card-header">
-        <h1><strong style="font-weight: 700;">How it works</strong></h1>    
+<div class="tab-container">
+    
+    <div class="tab">
+        <h1>Overview</h1>
+        <button class="tablinks" onmouseover="openTab(event, 'step1-card')">Step 1: Range</button>
+        <button class="tablinks" onmouseover="openTab(event, 'step2-card')">Step 2: Strategy</button>
+        <button class="tablinks" onmouseover="openTab(event, 'step3-card')">Step 3: Indicator</button>
+        <button class="tablinks" onmouseover="openTab(event, 'step4-card')">Step 4: Number of shares</button>
+    <a id="start-in-overview" class="btn btn-success" href="{% url 'backtest' %}" role="button">START</a>
+
     </div>
-    <div class="card-body">
-    <h3 class="card-title">The Cube is a class exercise for our Cloud Programming Course</h3>
-    <p class="card-text" style="line-height: 2rem;">
-        How it works.
-        <br> Blah
-        <br> Blah
-        <br> Blah
-        <br> Blah
-    </p>
+
+    <div id="overview-card" class="tabcontent" style="display:block;">
+        <h3>Overview</h3>
+        <p>Allows user to specify the input parameters to the Algorithmic Trading backend to discover the 
+            best strategies to make profits over a range of dates. 
+            </p>
     </div>
+
+    <div id="step1-card" class="tabcontent">
+        <h3>Setting the range</h3>
+        <p>Choose a stock you want to do the backtesting. Then select the starting date and the ending date of the historical data of the stocks. Enter how much you want to trade as well.</p>
+    </div>
+    
+    <div id="step2-card" class="tabcontent">
+        <h3>Choosing the strategy</h3>
+        <p>Type of strategies available:</p>
+        <ol>
+            <li>Single Indicator</li>
+            <li>Confluence</li>
+        </ol>
+    </div>
+    
+    <div id="step3-card" class="tabcontent">
+        <h3>Setting the indicators</h3>
+        <p>List of indicators:</p>
+        <ul>
+            <li>Bollinger Band</li>
+            <li>EMA</li>
+            <li>MACD</li>
+            <li>RSI</li>
+        </ul>
+    </div>
+
+    <div id="step4-card" class="tabcontent">
+        <h3>Number of shares</h3>
+        <p>Select the number of shares you want to buy for each trade</p>
+    </div>
+
 </div>
+
+<script>
+    function openTab(evt, cityName) {
+    // Declare all variables
+    var i, tabcontent, tablinks;
+
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+    }
+
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+
+    // Show the current tab, and add an "active" class to the link that opened the tab
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+    }
+</script>
 
 {% endblock %}
