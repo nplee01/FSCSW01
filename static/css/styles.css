@@ -98,18 +98,8 @@ footer {
 }
 
 /* Homepage */
-img {
-  width: 40%;
-  height: auto;
-}
-
 .card-header h1 {
   font-family: "Times New Roman";
-}
-
-.card-body {
-  display: flex;
-  padding-left: 5%;
 }
 
 .card-text {
@@ -117,12 +107,24 @@ img {
   font-size: 20px;
 }
 
-.homepageDesc {
-  padding-left: 5%;
-  padding-top: 5%;
+.hp-card-body {
+  display: flex;
+  margin-top: 2%;
+  margin-left: 5%;
+  margin-bottom: 5%;
 }
 
-.homepageDesc h2 {
+.hp-card-body img {
+  width: 40%;
+  height: auto;
+}
+
+.desc {
+  margin-left: 5%;
+  margin-top: 5%;
+}
+
+.desc h2 {
   font-family: "Times New Roman", Times, serif;
   font-weight: bold;
   font-size: 4rem;
@@ -130,5 +132,18 @@ img {
 
 .disclaimer {
   font-size: x-small;
-  padding-left: 5%;
+  margin-left: 5%;
+}
+
+/* About */
+.ab-card-body {
+  display: flex;
+  margin-top: 2%;
+  margin-left: 10%;
+  margin-bottom: 5%;
+}
+
+.ab-card-body img {
+  width: 40%;
+  height: auto;
 }
