@@ -24,6 +24,7 @@ class Parameter(RecordOwner):
     # Min/Max value to validate input
     min_value = models.IntegerField(verbose_name=_("Minimum"), null=True)
     max_value = models.IntegerField(verbose_name=_("Maximum"), null=True)
+    step_by = models.IntegerField(verbose_name=_("Increment By"), null=True)
     # Multiplier to apply to input, eg input is a %, so multiply by 0.01 after input
     mult_by = models.FloatField(verbose_name=_("Multiply by"), null=True)
 

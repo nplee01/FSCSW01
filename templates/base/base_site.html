@@ -31,6 +31,10 @@
         </ul>
         <!-- Login button right aligned -->
         <div class="navbar-nav ml-auto">
+            {% if request.user.is_staff%}
+                <a class="nav-item btn btn-light" role=button 
+                   href='/admin'>Admin</a>
+            {% endif %}
             {% if request.user.is_authenticated %}
                 {# Profile Menu when already logged in #}
                 <div class="dropdown">

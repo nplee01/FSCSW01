@@ -6,7 +6,7 @@ ParameterTuple = namedtuple('ParameterTuple',
 """
     param_code, param_label, param_description,
     default_value, min_value, max_value,
-    mult_by
+    step_by, mult_by
 """)
 
 def load_parameters(param_list):
@@ -20,12 +20,14 @@ def load_parameters(param_list):
             pm.default_value = tp.default_value
             pm.min_value = tp.min_value
             pm.max_value = tp.max_value
+            pm.step_by = tp.step_by
             pm.mult_by = tp.mult_by
             upd += 1
         except Parameter.DoesNotExist:
             pm = Parameter(param_code=tp.param_code, param_label=tp.param_label,
                     param_description=tp.param_description, default_value=tp.default_value,
-                    min_value=tp.min_value, max_value=tp.max_value, mult_by=tp.mult_by)
+                    min_value=tp.min_value, max_value=tp.max_value, 
+                    step_by=tp.step_by, mult_by=tp.mult_by)
             ins += 1
         pm.save()
 

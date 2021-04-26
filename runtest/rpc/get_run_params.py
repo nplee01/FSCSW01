@@ -20,13 +20,22 @@ def get_run_params(request):
         # Get Portfolio Start amount
         pf = ValueSetMember.objects.get(value_set=vs, value_code='PORTFOLIO-START')
         data['portfolio_start'] = pf.param_1.default_value
-        # Get Stop loss fields
+        data['portfolio_start_min'] = pf.param_1.min_value
+        data['portfolio_start_max'] = pf.param_1.max_value
+        data['portfolio_start_step_by'] = pf.param_1.step_by 
+        # Get Stop loss fields 
         sl = ValueSetMember.objects.get(value_set=vs, value_code='STOP-LOSS')
         data['stop_loss'] = sl.param_1.default_value
+        data['stop_loss_min'] = sl.param_1.min_value
+        data['stop_loss_max'] = sl.param_1.max_value
+        data['stop_loss_step_by'] = sl.param_1.step_by
         # Version 0.1 does not need trailing stop loss
         # data['trail_stop_loss'] = sl.param_2.default_value
         ts = ValueSetMember.objects.get(value_set=vs, value_code='TRADE-SIZE')
         data['trade_size'] = ts.param_1.default_value
+        data['trade_size_min'] = ts.param_1.min_value
+        data['trade_size_max'] = ts.param_1.max_value
+        data['trade_size_step_by'] = ts.param_1.step_by
         # Prepare data to be returned
         ret.set_data(data)
     # No exceptions expected if fixtures has been loaded

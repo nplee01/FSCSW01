@@ -9,7 +9,7 @@ def get_indicator_params(request, indicator_code):
     ret = ReturnRecord()
     data = []
     # Fields from param we want to return
-    fld =['param_label', 'default_value', 'min_value', 'max_value', 'mult_by']
+    fld =['param_label', 'default_value', 'min_value', 'max_value', 'step_by', 'mult_by']
     try:
         # Get Indicator
         vs = ValueSet.objects.get(value_set_code='INDICATORS')

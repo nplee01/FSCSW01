@@ -9,13 +9,13 @@ if __name__ == '__main__':
     params = [
             ParameterTuple(param_code='1-IND', param_label='Max Indicators', 
                 param_description='Max Indicators allowed for a Strategy', default_value=1,
-                min_value=0, max_value=3, mult_by=None),
+                min_value=0, max_value=3, step_by=None, mult_by=None),
             ParameterTuple(param_code='2-IND', param_label='Max Indicators', 
                 param_description='Max Indicators allowed for a Strategy', default_value=2,
-                min_value=0, max_value=3, mult_by=None),
+                min_value=0, max_value=3, step_by=None, mult_by=None),
             ParameterTuple(param_code='3-IND', param_label='Max Indicators', 
                 param_description='Max Indicators allowed for a Strategy', default_value=3,
-                min_value=0, max_value=3, mult_by=None),
+                min_value=0, max_value=3, step_by=None, mult_by=None),
         ]
     
     (ic, uc) = load_parameters(params)

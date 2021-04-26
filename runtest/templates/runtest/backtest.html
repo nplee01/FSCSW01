@@ -11,8 +11,17 @@
                     $("#id_start_date").val(ret.data.start_date);
                     $("#id_end_date").val(ret.data.end_date);
                     $("#id_portfolio_start").val(parseInt(ret.data.portfolio_start));
+                    $("#id_portfolio_start").attr({"min": parseInt(ret.data.portfolio_start_min), 
+                        "max": parseInt(ret.data.portfolio_start_max), 
+                        "step": parseInt(ret.data.portfolio_start_step_by)});
                     $("#id_stop_loss").val(parseInt(ret.data.stop_loss));
+                    $("#id_stop_loss").attr({"min": parseInt(ret.data.stop_loss_min), 
+                        "max": parseInt(ret.data.stop_loss_max), 
+                        "step": parseInt(ret.data.stop_loss_step_by)});
                     $("#id_trade_size").val(parseInt(ret.data.trade_size));
+                    $("#id_trade_size").attr({"min": parseInt(ret.data.trade_size_min),
+                        "max": parseInt(ret.data.trade_size_max), 
+                        "step": parseInt(ret.data.trade_size_step_by)});
                 } else {
                     console.error(ret.error);
                 }
@@ -91,6 +100,11 @@
                                 .text(param.param_label);
                             $("#id_ind_" + indicatorNo + "_param_" + (i+1).toString())
                                 .val(parseInt(param.default_value));
+                            // Set min, max, step
+                            $("#id_ind_" + indicatorNo + "_param_" + (i+1).toString())
+                                .attr({"min": parseInt(param.min_value),
+                                "max": parseInt(param.max_value),
+                                "step": parseInt(param.step_by)});
                         });
                     } else {
                         console.error(ret.error);
