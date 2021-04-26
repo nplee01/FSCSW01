@@ -26,16 +26,17 @@
         <div id="branding">
             {% block branding %}{% endblock %}
         </div>
+        <!-- Navigation Bar -->
         {% block navbar%} {% endblock %}
+        {# Page-wide error messages #}
+        {% block messages %}{% endblock %}
     </div>
     <!-- END Header -->
     <!-- Content -->
     {% block content_title %}{% if title %}<h1>{{ title }}</h1>{% endif %}{% endblock %}
-    {% block content %}
-        {% block object-tools %}{% endblock %}
-    {% endblock %}
+    {% block content %} {% endblock %}
     {% block sidebar %}{% endblock %}
-        <br class="clear">
+    <br class="clear">
     <!-- END Content -->
     {% block footer %}{% endblock %}
 </div>

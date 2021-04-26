@@ -31,8 +31,23 @@
         </ul>
         <!-- Login button right aligned -->
         <div class="navbar-nav ml-auto">
-            <button class="nav-item btn btn-light" onclick="location.href='{% url 'account_login' %}'">Login
-            </button>
+            {% if request.user.is_authenticated %}
+                {# Profile Menu when already logged in #}
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" 
+                        id="userProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Profile</button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">User Profile</a>
+                            <a class="dropdown-item" href="#">Test History</a>
+                            <a class="dropdown-item" href={% url 'account_logout'%}>Logout</a>
+                        </div>
+                </div>
+                {% else %} {# else show login button #}
+                <a class="nav-item btn btn-light" role=button 
+                   href={% url 'account_login' %}?next={{ request.path | urlencode }}>Login
+                </a>
+            {% endif %}
         </div>
     </nav>
 {% endblock %}
