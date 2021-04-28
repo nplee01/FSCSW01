@@ -1,45 +1,46 @@
 import runtest.run_django
-# When run as script, use absolute imports
-from parameter import ParameterTuple, load_parameters
-from set_audit_user import set_audit_user
+from runtest.fixtures.parameter import ParameterTuple, load_parameters
+from runtest.fixtures.set_audit_user import set_audit_user
+
+params = [
+        # Version 0.1 data
+        # MACD 
+        ParameterTuple(param_code='MAC-FAST-PERIOD', param_label='Faster Period', 
+            param_description='MACD Faster Period', default_value=12,
+            min_value=0, max_value=None, step_by=None, mult_by=None),
+        ParameterTuple(param_code='MAC-SLOW-PERIOD', param_label='Slower Period', 
+            param_description='MACD Slower Period', default_value=26,
+            min_value=0, max_value=None, step_by=None, mult_by=None),
+        ParameterTuple(param_code='MAC-SIGNAL-PERIOD', param_label='Signal Period', 
+            param_description='MACD Signal Period', default_value=9,
+            min_value=0, max_value=None, step_by=None, mult_by=None),
+        # Bollinger Bands
+        ParameterTuple(param_code='BLB-PERIOD', param_label='Period', 
+            param_description='Bollinger Bands Period', default_value=20,
+            min_value=0, max_value=None, step_by=None, mult_by=None),
+        # EMA
+        ParameterTuple(param_code='EMA-PERIOD', param_label='Period', 
+            param_description='EMA Period', default_value=14,
+            min_value=0, max_value=None, step_by=None, mult_by=None),
+        # RSI
+        ParameterTuple(param_code='RSI-PERIOD', param_label='Period', 
+            param_description='RSI Period', default_value=14,
+            min_value=0, max_value=None, step_by=None, mult_by=None),
+        ParameterTuple(param_code='RSI-LOW-BAND', param_label='Lower Band', 
+            param_description='RSI Lower Band', default_value=30,
+            min_value=None, max_value=None, step_by=None, mult_by=None),
+        ParameterTuple(param_code='RSI-UP-BAND', param_label='Upper Band', 
+            param_description='RSI Upper Band', default_value=70,
+            min_value=None, max_value=None, step_by=None, mult_by=None),
+    ]
+    
 
 if __name__ == '__main__':
     set_audit_user()
-    params = [
-            # Version 0.1 data
-            # MACD 
-            ParameterTuple(param_code='MAC-FAST-PERIOD', param_label='Faster Period', 
-                param_description='MACD Faster Period', default_value=12,
-                min_value=0, max_value=None, step_by=None, mult_by=None),
-            ParameterTuple(param_code='MAC-SLOW-PERIOD', param_label='Slower Period', 
-                param_description='MACD Slower Period', default_value=26,
-                min_value=0, max_value=None, step_by=None, mult_by=None),
-            ParameterTuple(param_code='MAC-SIGNAL-PERIOD', param_label='Signal Period', 
-                param_description='MACD Signal Period', default_value=9,
-                min_value=0, max_value=None, step_by=None, mult_by=None),
-            # Bollinger Bands
-            ParameterTuple(param_code='BLB-PERIOD', param_label='Period', 
-                param_description='Bollinger Bands Period', default_value=20,
-                min_value=0, max_value=None, step_by=None, mult_by=None),
-            # EMA
-            ParameterTuple(param_code='EMA-PERIOD', param_label='Period', 
-                param_description='EMA Period', default_value=14,
-                min_value=0, max_value=None, step_by=None, mult_by=None),
-            # RSI
-            ParameterTuple(param_code='RSI-PERIOD', param_label='Period', 
-                param_description='RSI Period', default_value=14,
-                min_value=0, max_value=None, step_by=None, mult_by=None),
-            ParameterTuple(param_code='RSI-LOW-BAND', param_label='Lower Band', 
-                param_description='RSI Lower Band', default_value=30,
-                min_value=None, max_value=None, step_by=None, mult_by=None),
-            ParameterTuple(param_code='RSI-UP-BAND', param_label='Upper Band', 
-                param_description='RSI Upper Band', default_value=70,
-                min_value=None, max_value=None, step_by=None, mult_by=None),
-        ]
-    
     (ic, uc) = load_parameters(params)
     print("Indicator Parameters: Inserted: %d, Updated: %d" % (ic, uc))
-    """
+
+    """  Version 0.0 data
             # RSI
             ParameterTuple(param_code='RSI-PERIOD', param_label='Period', 
                 param_description='RSI Period', default_value=14,

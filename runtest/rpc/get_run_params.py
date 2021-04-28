@@ -43,11 +43,11 @@ def get_run_params(request):
         ret.set_error(str(err))
     except ValueSetMember.DoesNotExist as err:
         # We need line where error occured, many possible 
-        (_, _, tb) = sys.exc_info()
+        (*_unused, tb) = sys.exc_info()
         ret.set_error(str(err) + ' @ line ' + str(tb.tb_lineno))
     except AttributeError as err:
         # In case some params not set
-        (_, _, tb) = sys.exc_info()
+        (*_unused, tb) = sys.exc_info()
         ret.set_error(str(err) + ' @ line ' + str(tb.tb_lineno))
     # Return json
     return JsonResponse(ret.to_dict())

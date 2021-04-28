@@ -8,7 +8,7 @@ def get_sizing_params(request, sizing_code):
     # handles get only 
     ret = ReturnRecord()
     data = []
-    fld =['param_label', 'default_value', 'min_value', 'max_value', 'mult_by']
+    fld =['param_label', 'default_value', 'min_value', 'max_value', 'step_by', 'mult_by']
     try:
         vs = ValueSet.objects.get(value_set_code='SIZING-METHODS')
         # Get sizing Method

@@ -1,31 +1,30 @@
 import runtest.run_django
-# When run as script, use absolute imports
-from value_set import ValueSetTuple, SetMemberTuple, load_value_set
-from set_audit_user import set_audit_user
+from runtest.fixtures.value_set import ValueSetTuple, SetMemberTuple, load_value_sets
+from runtest.fixtures.set_audit_user import set_audit_user
 
+# Indicators allowed. Up to 3 params allowed per Indicator
+indicators = [
+    ValueSetTuple(value_set_code='INDICATORS', value_set_description='Indicators for backtesting',
+        set_member_list=(
+            # Version 0.1 data
+            SetMemberTuple(value_code='MACD', value_description='MACD', sort_order=1,
+                param_1_code='MAC-FAST-PERIOD', param_2_code='MAC-SLOW-PERIOD', 
+                param_3_code='MAC-SIGNAL-PERIOD'),
+            SetMemberTuple(value_code='BLB', value_description='Bollinger Bands', sort_order=2,
+                param_1_code='BLB-PERIOD', param_2_code=None, param_3_code=None),
+            SetMemberTuple(value_code='EMA', value_description='EMA', sort_order=3,
+                param_1_code='EMA-PERIOD', param_2_code=None, param_3_code=None),
+            SetMemberTuple(value_code='RSI', value_description='RSI', sort_order=4,
+                param_1_code='RSI-PERIOD', param_2_code='RSI-LOW-BAND', param_3_code='RSI-UP-BAND'),
+            )
+        )
+    ]
+    
 if __name__ == '__main__':
     set_audit_user()
-    # Indicators allowed. Up to 3 params allowed per Indicator
-    indicators = [
-        ValueSetTuple(value_set_code='INDICATORS', value_set_description='Indicators for backtesting',
-            set_member_list=(
-                # Version 0.1 data
-                SetMemberTuple(value_code='MACD', value_description='MACD', sort_order=1,
-                    param_1_code='MAC-FAST-PERIOD', param_2_code='MAC-SLOW-PERIOD', 
-                    param_3_code='MAC-SIGNAL-PERIOD'),
-                SetMemberTuple(value_code='BLB', value_description='Bollinger Bands', sort_order=2,
-                    param_1_code='BLB-PERIOD', param_2_code=None, param_3_code=None),
-                SetMemberTuple(value_code='EMA', value_description='EMA', sort_order=3,
-                    param_1_code='EMA-PERIOD', param_2_code=None, param_3_code=None),
-                SetMemberTuple(value_code='RSI', value_description='RSI', sort_order=4,
-                    param_1_code='RSI-PERIOD', param_2_code='RSI-LOW-BAND', param_3_code='RSI-UP-BAND'),
-            )
-          )
-        ]
-    
-    (ic, uc, mic, muc) = load_value_set(indicators)
+    (ic, uc, mic, muc) = load_value_sets(indicators)
     print("Indicators: Inserted: %d, Updated: %d" % (mic, muc))
-    """
+    """ Version 0.0 data
                 SetMemberTuple(value_code='RSI', value_description='RSI', sort_order=1,
                     param_1_code='RSI-PERIOD', param_2_code='RSI-LOW-BAND', param_3_code='RSI-UP-BAND'),
                 SetMemberTuple(value_code='SMA-X', value_description='SMA Crossover', sort_order=2,

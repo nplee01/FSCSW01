@@ -59,7 +59,7 @@ def load_set_members(value_set, set_member_list):
         sm.save()
     return (ins, upd)
 
-def load_value_set(value_set_list):
+def load_value_sets(value_set_list):
     # Load Value Set data
     ins = 0
     upd = 0

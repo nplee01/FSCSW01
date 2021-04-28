@@ -4,7 +4,7 @@ from runtest.threadlocals import set_user
 
 def set_audit_user():
     try:
-        # superuser should be the first user created during syncdb
+        # superuser should be the first user created after migrate
         user = User.objects.get(pk=1)
         set_user(user)
     except User.DoesNotExist:
