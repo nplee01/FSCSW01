@@ -20,6 +20,21 @@
 {% endblock %}
 
 {% block navbar%}
+
+    <script type="text/javascript">
+        $(function(){
+            var $page = window.location.pathname;
+            $('nav ul li a').each(function(){
+                var $href = $(this).attr('href');
+                if ( ($href == $page) || ($href == '') ) {
+                    $(this).addClass('on');
+                } else {
+                    $(this).removeClass('on');
+                }
+            });
+        });
+    </script>
+
     <nav class="navbar navbar-expand-sm">
         <ul class="navbar-nav mr-auto">
             <a class="nav-link" href="{% url 'home' %}" id="logo-and-text"><i class="fas fa-cube"></i>
@@ -28,26 +43,19 @@
             <li class="nav-item" ><a class="nav-link" href="{% url 'about' %}">ABOUT</a></li>
             <li class="nav-item" ><a class="nav-link" href="{% url 'backtest' %}">BACKTEST</a></li>
             <li class="nav-item" ><a class="nav-link" href="{% url 'howitworks' %}">HOW IT WORKS</a></li>
-        </ul>
-        <!-- Login button right aligned -->
-        <div class="navbar-nav ml-auto">
-            {% if request.user.is_staff%}
-                <a class="nav-item btn btn-light" role=button 
-                   href='/admin'>Admin</a>
-            {% endif %}
             {% if request.user.is_authenticated %}
-                {# Profile Menu when already logged in #}
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" 
-                        id="userProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Profile</button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">User Profile</a>
-                            <a class="dropdown-item" href="#">Test History</a>
-                            <a class="dropdown-item" href={% url 'account_logout'%}>Logout</a>
-                        </div>
-                </div>
+            {# Profile Menu when already logged in #}
+                <li class="nav-item" ><a class="nav-link" href="#">TEST HISTORY</a></li>
+            </ul>
+            <!-- Login button right aligned -->
+            <div class="navbar-nav ml-auto">
+                {% if request.user.is_staff%}
+                    <a class="nav-item btn btn-light" role=button 
+                    href='/admin'>Admin</a>
+                {% endif %}
+                    <a class="btn btn-secondary" href={% url 'account_logout'%}>Logout</a>
                 {% else %} {# else show login button #}
+            </ul>
                 <a class="nav-item btn btn-light" role=button 
                    href={% url 'account_login' %}?next={{ request.path | urlencode }}>Login
                 </a>

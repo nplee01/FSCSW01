@@ -29,6 +29,19 @@ nav > ul > li > a {
   color: white;
 }
 
+nav > ul > li > .on {
+  color: rgb(233, 201, 58);
+  border-bottom: solid 3px rgb(233, 201, 58);
+  margin-top: 22px;
+}
+
+nav ul:hover li a {
+  margin-top: 25px;
+  color: white;
+  transition: 0.3s;
+  border-bottom: 0px;
+}
+
 nav > ul > li > a:hover {
   color: rgb(233, 201, 58);
   border-bottom: solid 3px rgb(233, 201, 58);
@@ -80,10 +93,7 @@ footer {
   margin: 0px 50px;
 }
 
-.tab h2 {
-  font-family: "Times New Roman", Times, serif;
-  font-weight: bold;
-  font-size: 2rem;
+.tab h3 {
   margin: 10px;
 }
 
@@ -198,12 +208,33 @@ footer {
 /* About */
 .ab-card-body {
   display: flex;
-  margin-top: 2%;
-  margin-left: 10%;
-  margin-bottom: 5%;
+  justify-content: center;
+  margin: 50px;
 }
 
-.ab-card-body img {
-  width: 40%;
-  height: auto;
+#box-img {
+  margin: -50px 0px 50px 50px;
+  height: 30%;
+  width: 30%;
+}
+
+.about-text {
+  padding: 80px 150px 0px 50px;
+}
+
+.about-text p {
+  margin-top: 20px;
+  font-family: "Raleway";
+  font-size: 20px;
+  text-align: justify;
+}
+
+/* backtest */
+
+.bg-light {
+  margin: 50px 50px 80px 50px;
+}
+
+.border {
+  padding: 50px;
 }

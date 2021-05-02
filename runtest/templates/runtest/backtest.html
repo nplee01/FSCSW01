@@ -134,100 +134,102 @@
 
 {% block content %}
 
-<div class="bg-light">
-    <form method='post'>
-        <h2 class="form-text" style="line-height: 2rem;">
-            Overview</h2>
-        {% csrf_token %}
-        <div id="section_1" class="border">
-            <h3 class="form-text">Step 1 - Range</h3>
-            <div class="form-row">
-                <div class="col-sm-3">
-                {{ form.stock_ticker | as_crispy_field }}
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="col-sm-2">
-                {{ form.start_date | as_crispy_field }}
-                </div>
-                <div class="col-sm-2">
-                {{ form.end_date | as_crispy_field }}
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="col-sm-2">
-                {{ form.portfolio_start | as_crispy_field }}
-                </div>
-            </div>
-        </div>
-
-        <div id="section_2" class="border">
-            <h3 class="form-text">Step 2 - Strategy</h3>
-            <div class="form-row">
-                <div class="col-sm-3">
-                {{ form.strategy_code | as_crispy_field }}
-                </div>
-                <div class="col-sm-2">
-                {{ form.stop_loss | as_crispy_field }}
-                </div>
-            </div>
-        </div>
-
-        <div id="section_3" class="border">
-            <h3 class="form-text">Step 3 - Indicator(s)</h3>
-            <div id="ind_1_group">
+<div class="backtest-container">
+    <div class="bg-light">
+        <form method='post'>
+            <!-- <h2 class="form-text" style="line-height: 2rem;">
+                Overview</h2> -->
+            {% csrf_token %}
+            <div id="section_1" class="border">
+                <h3 class="form-text">Step 1 - Range</h3>
                 <div class="form-row">
                     <div class="col-sm-3">
-                    {{ form.indicator_1_code | as_crispy_field }}
+                    {{ form.stock_ticker | as_crispy_field }}
                     </div>
                 </div>
                 <div class="form-row">
-                    <div id="ind_1_param_1_group" class="col-sm-1">
-                    {{ form.ind_1_param_1 | as_crispy_field }}
+                    <div class="col-sm-2">
+                    {{ form.start_date | as_crispy_field }}
                     </div>
-                    <div id="ind_1_param_2_group" class="col-sm-1">
-                    {{ form.ind_1_param_2 | as_crispy_field }}
+                    <div class="col-sm-2">
+                    {{ form.end_date | as_crispy_field }}
                     </div>
-                    <div id="ind_1_param_3_group" class="col-sm-1">
-                    {{ form.ind_1_param_3 | as_crispy_field }}
+                </div>
+                <div class="form-row">
+                    <div class="col-sm-2">
+                    {{ form.portfolio_start | as_crispy_field }}
                     </div>
                 </div>
             </div>
-            <div id="ind_2_group">
+
+            <div id="section_2" class="border">
+                <h3 class="form-text">Step 2 - Strategy</h3>
                 <div class="form-row">
                     <div class="col-sm-3">
-                    {{ form.indicator_2_code | as_crispy_field }}
+                    {{ form.strategy_code | as_crispy_field }}
+                    </div>
+                    <div class="col-sm-2">
+                    {{ form.stop_loss | as_crispy_field }}
                     </div>
                 </div>
+            </div>
+
+            <div id="section_3" class="border">
+                <h3 class="form-text">Step 3 - Indicator(s)</h3>
+                <div id="ind_1_group">
+                    <div class="form-row">
+                        <div class="col-sm-3">
+                        {{ form.indicator_1_code | as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div id="ind_1_param_1_group" class="col-sm-1">
+                        {{ form.ind_1_param_1 | as_crispy_field }}
+                        </div>
+                        <div id="ind_1_param_2_group" class="col-sm-1">
+                        {{ form.ind_1_param_2 | as_crispy_field }}
+                        </div>
+                        <div id="ind_1_param_3_group" class="col-sm-1">
+                        {{ form.ind_1_param_3 | as_crispy_field }}
+                        </div>
+                    </div>
+                </div>
+                <div id="ind_2_group">
+                    <div class="form-row">
+                        <div class="col-sm-3">
+                        {{ form.indicator_2_code | as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div id="ind_2_param_1_group" class="col-sm-1">
+                        {{ form.ind_2_param_1 | as_crispy_field }}
+                        </div>
+                        <div id="ind_2_param_2_group" class="col-sm-1">
+                        {{ form.ind_2_param_2 | as_crispy_field }}
+                        </div>
+                        <div id="ind_2_param_3_group" class="col-sm-1">
+                        {{ form.ind_2_param_3 | as_crispy_field }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="section_4" class="border">
+                <h3 class="form-text">Step 4 - Number of Shares</h3>
                 <div class="form-row">
-                    <div id="ind_2_param_1_group" class="col-sm-1">
-                    {{ form.ind_2_param_1 | as_crispy_field }}
-                    </div>
-                    <div id="ind_2_param_2_group" class="col-sm-1">
-                    {{ form.ind_2_param_2 | as_crispy_field }}
-                    </div>
-                    <div id="ind_2_param_3_group" class="col-sm-1">
-                    {{ form.ind_2_param_3 | as_crispy_field }}
-                    </div>
+                <div class="col-sm-2">
+                    {{ form.trade_size | as_crispy_field }}
                 </div>
             </div>
-        </div>
-        <div id="section_4" class="border">
-            <h3 class="form-text">Step 4 - Number of Shares</h3>
-            <div class="form-row">
-             <div class="col-sm-2">
-                {{ form.trade_size | as_crispy_field }}
+            <div class="form-row btn-group" role="toolbar">
+                <div class="btn-group mr-2" role="group">
+                    <button type="submit" class="btn btn-success">Run</button>
+                </div>
+                <div class="btn-group mr-2" role="group">
+                    <button type="button" onClick="resetPage()" class="btn btn-warning">Reset</button>
+                </div>
             </div>
-        </div>
-        <div class="form-row btn-group" role="toolbar">
-            <div class="btn-group mr-2" role="group">
-                <button type="submit" class="btn btn-success">Run</button>
-            </div>
-            <div class="btn-group mr-2" role="group">
-                <button type="button" onClick="resetPage()" class="btn btn-warning">Reset</button>
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
 
 {% endblock %}
