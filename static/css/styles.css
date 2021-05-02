@@ -256,12 +256,12 @@ form p input {
   display: inline-block;
 }
 
-.primaryAction, #signup_form button {
+.primaryAction, #signup_form button, #logout_form {
   width: 11.5rem;
   border-radius: 0.5em;
 }
 
-.primaryAction:hover, #signup_form button:hover {
+.primaryAction:hover, #signup_form button:hover, #logout_form:hover {
   background-color: gold;
   transition: 0.3s;
 }
