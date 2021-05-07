@@ -46,9 +46,7 @@ class Command(BaseCommand):
                         po = subprocess.Popen("python " + fix_dir + os.sep + fix_file, shell=True)
                         ret = po.wait()
                     else:
-                        # Audit user shall be nobody because new shell will run loaddata below
-                        # and we can't change it to do our set audit user
-                        # print("Installing fixtures", fix_dir, fix_file)
+                        # Handle .json or .yml file using django loaddata
                         po = subprocess.Popen("django-admin.py loaddata " + fix_dir + os.sep + fix_file, shell=True)
                         ret = po.wait()
 
