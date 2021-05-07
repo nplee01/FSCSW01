@@ -1,0 +1,4 @@
+# Include everything from common requirements
+-r requirements.txt
+# For interactive testing
+selenium == 3.141

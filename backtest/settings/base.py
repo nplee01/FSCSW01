@@ -10,23 +10,19 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
+
+7 May 2021 - Using dotenv to load some security sensitive settings.
+             Split into base + dev or prod settings which is decided by
+             the env.
 """
 
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '%#!qp$j&v3!u8j&$35i^f7%vykvaezl8g2z+g2t(n2ra*re$kh'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -84,16 +80,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backtest.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 # django 3.2 requires this
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
@@ -121,24 +107,6 @@ AUTHENTICATION_BACKENDS = [
     # Our Vendor: `allauth` specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
-
-# Our Vendor: Allauth social Provider specific settings
-"""
-Note: Either create a row in socialaccount model or add the key here.
-
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        # For each OAuth based provider, either add a ``SocialApp``
-        # (``socialaccount`` app) containing the required client
-        # credentials, or list them here:
-        'APP': {
-            'client_id': '123',
-            'secret': '456',
-            'key': ''
-        }
-    }
-}
-"""
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/

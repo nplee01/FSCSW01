@@ -1,0 +1,7 @@
+# Production python packages required
+
+# Include everything from common requirements
+-r requirements.txt
+
+# For postgresql
+psycopg2 == 2.8.6

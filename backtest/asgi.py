@@ -8,9 +8,17 @@ https://docs.djangoproject.com/en/3.1/howto/deployment/asgi/
 """
 
 import os
+import dotenv
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backtest.settings')
+# Load .env from parent directory
+dotenv.load_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env'))
+# Default is fot development
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backtest.settings.dev')
+
+# Allow .env to override for production
+if os.getenv('DJANGO_SETTINGS_MODULE'):
+    os.environ['DJANGO_SETTINGS_MODULE'] = os.getenv('DJANGO_SETTINGS_MODULE')
 
 application = get_asgi_application()

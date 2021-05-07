@@ -21,8 +21,7 @@ from runtest.views import dispatcher, backtest
 urlpatterns = [
     # We are using 3rd party allauth app for authentication
     path('accounts/', include('allauth.urls')),
-    # Activate the admin app
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name='admin'),
     path('', dispatcher, {'template_name': 'runtest/home.html'}, name='home'),  
     path('backtest', backtest, name='backtest'),  
     path('howitworks', dispatcher, {'template_name': 'runtest/howitworks.html'}, name='howitworks'),  
