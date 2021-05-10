@@ -45,7 +45,7 @@
             <li class="nav-item" ><a class="nav-link" href="{% url 'howitworks' %}">HOW IT WORKS</a></li>
             {% if request.user.is_authenticated %}
             {# Profile Menu when already logged in #}
-                <li class="nav-item" ><a class="nav-link" href="#">TEST HISTORY</a></li>
+                <li class="nav-item" ><a class="nav-link" href="{% url 'testhistory' %}">TEST HISTORY</a></li>
             </ul>
             <!-- Login button right aligned -->
             <div class="navbar-nav ml-auto">

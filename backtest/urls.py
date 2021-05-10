@@ -25,6 +25,7 @@ urlpatterns = [
     path('', dispatcher, {'template_name': 'runtest/home.html'}, name='home'),  
     path('backtest', backtest, name='backtest'),  
     path('howitworks', dispatcher, {'template_name': 'runtest/howitworks.html'}, name='howitworks'),  
+    path('testhistory', dispatcher, {'template_name': 'runtest/testhistory.html'}, name='testhistory'),  
     path('about', dispatcher, {'template_name': 'runtest/about.html'}, name='about'),  
     path('runtest/', include('runtest.urls')),
 ]
