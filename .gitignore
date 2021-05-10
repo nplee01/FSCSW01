@@ -5,3 +5,6 @@ venv
 .env
 db.sqlite3
 static/js/vendor
+env
+.notes
+.vscode
