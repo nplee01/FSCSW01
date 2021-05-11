@@ -14,7 +14,7 @@ nav {
 }
 
 #logo-text {
-  font-family: Impact;
+  font-family: 'Abril Fatface', cursive;
   font-size: 40px;
   margin: 0px 10px;
   text-shadow: 3px 3px #252525a6;
@@ -240,12 +240,12 @@ footer {
 
 /* Login & Signup */
 .login-style h1{
-  font-family: Georgia;
-  font-weight: 600;
+  font-family: 'Abril Fatface', cursive;
 }
 
 .login-style p{
-  font-family: Georgia;
+  font-family: 'Quicksand';
+  font-weight: 600;
 }
 
 form p input {
@@ -259,11 +259,13 @@ form p input {
 .primaryAction, #signup_form button, #logout_form {
   width: 11.5rem;
   border-radius: 0.5em;
+  font-family: 'Abril Fatface', cursive;
 }
 
 .primaryAction:hover, #signup_form button:hover, #logout_form:hover {
   background-color: gold;
   transition: 0.3s;
+  font-family: 'Abril Fatface', cursive;
 }
 
 card-body {
