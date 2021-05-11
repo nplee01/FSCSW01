@@ -5,8 +5,11 @@
 {% block head_title %}{% trans "Sign Out" %}{% endblock %}
 
 {% block content %}
-<div class="card-body bg-light login-style">
-  <h1>{% trans "Sign Out" %}</h1>
+<div id="logout-img" >
+  <img src="/static/img/backtest-laptop.png" alt="Backtest">
+</div>
+<div id="logout-prompt" class="prompt-style">
+  <h1>{% trans "Logging Out?" %}</h1>
   
   <p>{% trans 'Are you sure you want to sign out?' %}</p>
   
