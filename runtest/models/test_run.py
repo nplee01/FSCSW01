@@ -79,8 +79,8 @@ class TestRun(RecordOwner):
     # Trade Sizing Method
     sizing_method = models.CharField(verbose_name=_("Sizing Method"), max_length=30, null=True, blank=True,
         help_text=_("Trade Sizing method decides how much to trade"))
-    trade_size = models.IntegerField(verbose_name=_("Trade Size"), null=True,
-        help_text=_("Number of shares or Amount to trade"))
+    trade_size = models.IntegerField(verbose_name=_("Contract Size"), null=True,
+        help_text=_("Number of contracts to trade"))
     # End Input Parameters
     # Results Summary. To be updated after run
     portfolio_end = models.IntegerField(verbose_name=_("Portfolio End"), null=True,
