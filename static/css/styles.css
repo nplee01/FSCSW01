@@ -89,6 +89,7 @@ footer {
   border: 1px solid #ccc;
   background-color: #f1f1f1;
   width: 400px;
+  min-width: 250px;
   height: 400px;
   margin: 0px 50px;
 }
@@ -122,6 +123,7 @@ footer {
   padding: 20px 20px;
   border: 1px solid #ccc;
   width: 600px;
+  min-width: 400px;
   height: 400px;
   margin: 0px 50px;
   display: none;
@@ -137,6 +139,24 @@ footer {
   background-color: rgb(233, 201, 58);
   color: black;
   border: 0px;
+}
+
+@media screen and (max-width: 1000px) {
+  .tab-container {
+    align-items: center;
+    flex-direction: column;
+    margin-top: 50px;
+    padding: 0px 20px;
+  }
+
+  .tab {
+    margin: 50px;
+  }
+
+  .tabcontent {
+    width: 400px;
+    margin-bottom: 100px;
+  }
 }
 
 /* Homepage */
@@ -205,20 +225,30 @@ footer {
   font-size: x-small;
 }
 
+@media screen and (max-width: 1000px) {
+  .desc {
+    width: 450px;
+    text-align: center;
+    margin-bottom: 150px;
+  }
+}
+
 /* About */
 .ab-card-body {
   display: flex;
   justify-content: center;
   margin: 50px;
+  min-width: 850px;
 }
 
 #box-img {
   margin: -50px 0px 50px 50px;
-  height: 30%;
-  width: 30%;
+  height: 400px;
+  width: 400px;
 }
 
 .about-text {
+  min-width: 600px;
   padding: 80px 150px 0px 50px;
 }
 
@@ -227,6 +257,27 @@ footer {
   font-family: "Raleway";
   font-size: 20px;
   text-align: justify;
+}
+
+@media screen and (max-width: 1000px) {
+  #about-card {
+    align-items: center;
+  }
+
+  .ab-card-body {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #box-img {
+    margin-right: 50px;
+  }
+
+  .about-text {
+    min-width: 400px;
+    width: 400px;
+    padding: 50px 10px;
+  }
 }
 
 /* backtest */
@@ -239,12 +290,12 @@ footer {
 }
 
 /* Login & Signup */
-.login-style h1{
+.login-style h1 {
   font-family: Georgia;
   font-weight: 600;
 }
 
-.login-style p{
+.login-style p {
   font-family: Georgia;
 }
 
@@ -256,16 +307,20 @@ form p input {
   display: inline-block;
 }
 
-.primaryAction, #signup_form button, #logout_form {
+.primaryAction,
+#signup_form button,
+#logout_form {
   width: 11.5rem;
   border-radius: 0.5em;
 }
 
-.primaryAction:hover, #signup_form button:hover, #logout_form:hover {
+.primaryAction:hover,
+#signup_form button:hover,
+#logout_form:hover {
   background-color: gold;
   transition: 0.3s;
 }
 
-card-body {
+/* card-body {
   padding-left: 10em;
-}
+} */
