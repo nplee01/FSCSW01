@@ -1,5 +1,7 @@
 /* navbar */
 nav {
+  font-family: "Quicksand";
+  font-weight: 600;
   background: rgb(52, 48, 48);
   background: linear-gradient(
     90deg,
@@ -14,7 +16,7 @@ nav {
 }
 
 #logo-text {
-  font-family: Impact;
+  font-family: "Abril Fatface", cursive;
   font-size: 40px;
   margin: 0px 10px;
   text-shadow: 3px 3px #252525a6;
@@ -23,7 +25,7 @@ nav {
 
 nav > ul > li > a {
   margin-top: 25px;
-  font-family: system-ui;
+  font-family: "Quicksand";
   font-weight: 600;
   text-shadow: 1px 1px #252525a6;
   color: white;
@@ -81,7 +83,7 @@ footer {
 .tab-container p,
 .tab-container button,
 .tab-container li {
-  font-family: "Raleway";
+  font-family: "Quicksand";
   font-size: 20px;
 }
 
@@ -89,13 +91,14 @@ footer {
   border: 1px solid #ccc;
   background-color: #f1f1f1;
   width: 400px;
-  min-width: 250px;
+  min-width: 300px;
   height: 400px;
   margin: 0px 50px;
 }
 
 .tab h3 {
   margin: 10px;
+  font-family: "Abril Fatface";
 }
 
 .tab button {
@@ -132,6 +135,7 @@ footer {
 .tabcontent h3 {
   text-align: center;
   margin-bottom: 20px;
+  font-family: "Abril Fatface";
 }
 
 #start-in-overview {
@@ -139,6 +143,8 @@ footer {
   background-color: rgb(233, 201, 58);
   color: black;
   border: 0px;
+  font-family: "Quicksand";
+  font-weight: 600;
 }
 
 @media screen and (max-width: 1000px) {
@@ -241,6 +247,14 @@ footer {
   min-width: 850px;
 }
 
+.quote {
+  font-family: "IM Fell French Canon SC", serif;
+  background-color: rgba(218, 218, 218, 0.7);
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  font-weight: bolder;
+}
+
 #box-img {
   margin: -50px 0px 50px 50px;
   height: 400px;
@@ -254,7 +268,7 @@ footer {
 
 .about-text p {
   margin-top: 20px;
-  font-family: "Raleway";
+  font-family: "Quicksand";
   font-size: 20px;
   text-align: justify;
 }
@@ -287,6 +301,12 @@ footer {
 
 .border {
   padding: 5%;
+  font-family: "Quicksand";
+  font-weight: 600;
+}
+
+.border h3 {
+  font-family: "Abril Fatface", cursive;
 }
 
 /* Login & Signup */
@@ -312,6 +332,7 @@ form p input {
 #logout_form {
   width: 11.5rem;
   border-radius: 0.5em;
+  font-family: "Abril Fatface", cursive;
 }
 
 .primaryAction:hover,
@@ -319,6 +340,7 @@ form p input {
 #logout_form:hover {
   background-color: gold;
   transition: 0.3s;
+  font-family: "Abril Fatface", cursive;
 }
 
 /* card-body {
