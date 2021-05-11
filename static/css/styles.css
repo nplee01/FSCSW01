@@ -218,6 +218,14 @@ footer {
   margin: 50px;
 }
 
+.quote {
+  font-family: 'IM Fell French Canon SC', serif;
+  background-color: rgba(218, 218, 218, 0.7);
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  font-weight: bolder;
+}
+
 #box-img {
   margin: -50px 0px 50px 50px;
   height: 30%;
@@ -225,12 +233,17 @@ footer {
 }
 
 .about-text {
-  padding: 80px 150px 0px 50px;
+  padding: 60px 150px 0px 50px;
+}
+
+.about-text h2 {
+  font-family: 'Abril Fatface', cursive;
+  font-size: 3rem;
 }
 
 .about-text p {
   margin-top: 20px;
-  font-family: "Raleway";
+  font-family: "Quicksand";
   font-size: 20px;
   text-align: justify;
 }
@@ -275,7 +288,7 @@ form p input {
 }
 
 .primaryAction:hover, #signup_form button:hover, #logout_form:hover {
-  background-color: gold;
+  background-color: rgb(233, 201, 58);
   transition: 0.3s;
   font-family: 'Abril Fatface', cursive;
 }
