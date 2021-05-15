@@ -1,0 +1,31 @@
+gunicorn setup for production theCube on a server
+
+1) Edit config/gunicorn.socket and gunicorn.service, change working directory
+2) Copy or Link config/gunicorn.socket and gunicorn.service to /etc/systemd/system
+3) sudo systemctl enable gunicorn.socket 
+4) sudo systemctl start gunicorn.socket 
+
+Thereafter, gunicorn will auto start/stop with system start/shutdown
+
+If linking, make sure use absolute path,
+
+    ln -s ~/work/backtest/config/gunicorn.socket /etc/systemd/system
+
+Gunicorn works together with nginx to serve our backtest webapp.
+
+Above config will make gunicorn listen at unix socket /run/gunicorn.socket and
+nginx will listen to http port and redirect to gunicorn. Using sockets on same 
+machine avoids the tcp overhead.
+
+Gunicorn Docs: https://docs.gunicorn.org/en/stable/index.html
+
+To enable theCube on nginx
+
+1) Edit config/thecube.conf, eg change host and port
+2) Copy or Link config/thecube.conf to /etc/nginx/sites-enabled/thecube
+3) sudo systemctl nginx restart (nginx already installed and started)
+
+# Prerequisites
+# You must have installed production python modules, ie pip install -r prodreq.txt
+# You must have also ./manage.py collectstatic (will copy static files to prod/static
+# Remember to configure your firewall to allow the ports exposed

@@ -1,0 +1,81 @@
+# backtest deployment using docker images
+#
+# 0) bin/gen_env.sh prod.env
+# 1) docker-compose build 
+#
+# Then bring up and down the containers...
+# 2) docker-compose up      # to bring up containers
+# 3) ctrl-c to kill containers
+# 4) docker-compose down    # to shutdown all containers
+#
+# Step 0 will ensure the .env inside the web image matches
+# with .env that docker-compose uses. Else passwords will fail.
+# Always redo from step 0 whenever prod.env or web programs 
+# are changed.
+
+version: '3'
+services:
+    ### DB START
+    # This image will create a database named POSTGRES_DB with
+    # superuser POSTGRES_USER.
+    db:
+        image: postgres:13-alpine
+        ports:
+            - "5400:5432" # Avoid clash with host's Postgresql
+        environment:
+            # Required for postgres image
+            - POSTGRES_DB=${CUBE_DB_NAME}
+            - POSTGRES_USER=${CUBE_DB_USER}
+            - POSTGRES_PASSWORD=${CUBE_DB_PASSWORD}
+    ### DB END
+ 
+    ### DJANGO+GUNICORN START
+    # Will create db tables, load app data and run gunicorn
+    # Image built with django + gunicorn + our app
+    web:
+        build:  
+            context: .
+            dockerfile: ./docker/web/Dockerfile
+        environment:
+            # Override .env inside image. We still use it
+            # for DJANGO_SETTINGS_MODULE.
+            - CUBE_DB_HOST=db   # follow service name above
+            - CUBE_DB_PORT=${CUBE_DB_PORT} # follow port above
+            # App dir hardcoded in our build
+            - PYTHONPATH=/code
+            # Required by our scripts
+            - CUBE_DB_NAME=${CUBE_DB_NAME}
+            - CUBE_DB_USER=${CUBE_DB_USER}
+            - CUBE_DB_PASSWORD=${CUBE_DB_PASSWORD} # same as above
+            - FIX_USER_PASSWORD=${FIX_USER_PASSWORD}
+        command: >
+            sh -c "python manage.py wait_for_db &&
+                python manage.py migrate &&
+                python manage.py appdata &&
+                gunicorn --bind 0.0.0.0:3000 --workers 5 backtest.wsgi:application"
+        links:
+            - db
+        ports:
+            - "3000:3000"
+        depends_on:
+            - db
+    ### DJANGO+GUNICORN END
+     
+    ### NGINX START
+    # This image will run nginx to serve static files and
+    # proxy all other locations to web service above
+    nginx:
+        image: nginx:1.20-alpine
+        volumes:
+            # Use our config file
+            - ./docker/nginx/thecube.conf:/etc/nginx/conf.d/thecube.conf
+            # Serve static files. Please run './manage.py collectstatic' first.
+            - ./prod:/html/prod
+        command: nginx -g 'daemon off;'
+        links:
+            - web
+        ports:
+            - "8080:8080"
+        depends_on:
+            - web
+    ### NGINX END

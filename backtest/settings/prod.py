@@ -10,7 +10,7 @@ SECRET_KEY = os.environ.get('CUBE_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['thecube.atsc.org.my']
+ALLOWED_HOSTS = ['localhost', 'web', 'thecube.atsc.org.my']
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
@@ -43,11 +43,8 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 """
 
-# In production, must use https
-SECURE_SSL_REDIRECT = True
-
-SESSION_COOKIE_SECURE = True
-
-CSRF_COOKIE_SECURE = True
-
-SECURE_BROWSER_XSS_FILTER = True
+# Later: In production, must use https
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# SECURE_BROWSER_XSS_FILTER = True

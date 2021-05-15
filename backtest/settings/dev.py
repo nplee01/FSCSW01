@@ -39,4 +39,6 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 """
-
+# All static files to be copied to single folder for production
+# Should be served by nginx or apache (not the wsgi appserver)
+STATIC_ROOT = BASE_DIR / 'prod' / 'static'

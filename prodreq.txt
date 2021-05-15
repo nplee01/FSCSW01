@@ -4,4 +4,6 @@
 -r requirements.txt
 
 # For postgresql
-psycopg2 == 2.8.6
+psycopg2-binary == 2.8.6
+# WSGI container
+gunicorn == 20.1.0
