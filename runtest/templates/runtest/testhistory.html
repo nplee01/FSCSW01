@@ -17,39 +17,19 @@
 		</tr>
 	</thead>
 	<tbody>
+		{% for data in testhistorydata %}
 		<tr>
-			<td>1</td>
-			<td>Monday, April 19, 2021 7:06:38 PM GMT+08:00</td>
-			<td>AMZN</td>
-			<td>Confluence MA (12), MA (26)</td>
-			<td>86.75%</td>
-			<td>$23822.12</td>
+			<td>{{ data.number}}</td>
+			<td>{{ data.timestamp }}</td>
+			<td>{{ data.stock_ticker }}</td>
+			<td>{{ data.test_parameter }}</td>
+			<td>{{ data.percent_winning_trade }}%</td>
+			<td>${{ data.average_win }}</td>
 			<td><i class="far fa-edit fa-lg"></i></td>
 			<td><i class="fas fa-search fa-lg"></i></td>
 			<td><i class="far fa-trash-alt fa-lg"></i></td>
 		</tr>
-		<tr>
-			<td>1</td>
-			<td>Tuesday, April 20, 2021 9:06:11 PM GMT+08:00</td>
-			<td>TSLA</td>
-			<td>Confluence MA (12), MA (26)</td>
-			<td>-10.32%</td>
-			<td>-$2203.16</td>
-			<td><i class="far fa-edit fa-lg"></i></td>
-			<td><i class="fas fa-search fa-lg"></i></td>
-			<td><i class="far fa-trash-alt fa-lg"></i></td>
-		</tr>
-		<tr>
-			<td>1</td>
-			<td>Wednesday, April 21, 2021 2:22:18 PM GMT+08:00</td>
-			<td>BTC</td>
-			<td>Confluence MA (12), MA (26)</td>
-			<td>12.22%</td>
-			<td>$2991.23</td>
-			<td><i class="far fa-edit fa-lg"></i></td>
-			<td><i class="fas fa-search fa-lg"></i></td>
-			<td><i class="far fa-trash-alt fa-lg"></i></td>
-		</tr>
+		{% endfor %}
 	</tbody>
 	<tfoot>
 		<tr>
