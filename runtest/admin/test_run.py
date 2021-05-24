@@ -3,6 +3,6 @@ from django.utils.translation import ugettext_lazy as _ # To mark strings for tr
 from django.contrib import admin
 
 # Our modules
-from runtest.models import history_set
+from runtest.models import test_run
 
-admin.site.register(history_set.historySet)
+admin.site.register(test_run.TestRun)

@@ -11,12 +11,17 @@ Generate some dummy data at the backend, select again the testrun table,
 Copy RPC anyone of those (getrunparam or getstartegy param), use the same ReturnRecord() to return the data
 Add in the runtest/url.py, create a new rpc call
 	1. import the function
-	2. map the path to the function
+	2. map the path to the function 
 '''
 from django.shortcuts import render
-from runtest.models import history_set
+from django.http import HttpResponseRedirect
 
-def testhistory(request): 
-    template_name= 'runtest/testhistory.html'
-    testhistorydata = history_set.historySet.objects.all()
-    return render(request, template_name, context={'testhistorydata': testhistorydata})
+def testhistory(request):
+    if request.user.is_authenticated:
+        template_name= 'runtest/testhistory.html'
+        # testhistorydata = history_set.historySet.objects.all()
+        testhistorydata = test_run.objects.filter(run_by = request.user)
+        return render(request, template_name, context={'testhistorydata': testhistorydata})
+    else:
+        return HttpResponseRedirect('accounts/login/?next=/testhistory')
+    
