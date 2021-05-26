@@ -1,6 +1,6 @@
 # backtest deployment using docker images
 #
-# 0) bin/gen_env.sh prod.env
+# 0) python bin/gen_env.py prod.env
 # 1) docker-compose build 
 #
 # Then bring up and down the containers...

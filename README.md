@@ -53,7 +53,7 @@ Perform the following in your working directory
 
     ./manage.py collectstatic   # to copy all static files to prod/
     pip install -r prodreq.txt  # install gunicorn and postgresql db driver
-    bin/gen_env.sh prod.env     # will override .env
+    python bin/gen_env.py prod.env     # will override .env
     # Ensure postgresql up and running
     # use pgadmin4 to create user thecube and database thecube to be owned by thecube
     # Please use the password CUBE_DB_PASSWORD in .env
@@ -101,6 +101,7 @@ Then http://localhost:8080 to access the app.
 docker-compose.yml defines 3 containers: 1) postgresql 2) django+gunicorn 3) nginx
 It will read docker/ for the Dockerfile during the build. 
 
-All data in the db will be lost on shutdown.
+All data in the db will be lost on shutdown. Please read postgres docker image docs for information on using volumes
+for PGDATA.
 
 #### License
