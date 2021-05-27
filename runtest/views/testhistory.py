@@ -16,11 +16,12 @@ Add in the runtest/url.py, create a new rpc call
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
+from runtest.models import TestRun
+
 def testhistory(request):
     if request.user.is_authenticated:
         template_name= 'runtest/testhistory.html'
-        # testhistorydata = history_set.historySet.objects.all()
-        testhistorydata = test_run.objects.filter(run_by = request.user)
+        testhistorydata = TestRun.objects.filter(run_by = request.user)
         return render(request, template_name, context={'testhistorydata': testhistorydata})
     else:
         return HttpResponseRedirect('accounts/login/?next=/testhistory')

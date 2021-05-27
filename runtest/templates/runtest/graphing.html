@@ -1,0 +1,30 @@
+{% extends "base/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+{% endblock %}
+
+{% block extrahead %}
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"
+></script>
+<script src="{% static 'js/candlestick.js' %}"></script>
+<script>
+  $(document).ready(function() {
+    drawChart();
+  });
+</script>
+<!-- <script src="static\js\candlestick.js"></script> -->
+<!-- <svg id="container"></svg> -->
+{% endblock %}
+
+{% block content %}
+<svg id="container"></svg>
+{% endblock %}
+
+

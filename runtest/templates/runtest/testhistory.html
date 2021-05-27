@@ -1,5 +1,14 @@
 {% extends "base/base_site.html" %}
 
+{% block extrahead %}
+<!-- Data Table -->
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script>
+	$('.testrecord').DataTable();
+</script>
+{% endblock %}
+
 {% block content %}
 <div class="container mb-3 mt-3">
 	<table class="table table-striped table-bordered testrecord" style="width: 100%">
@@ -17,12 +26,13 @@
 		</tr>
 	</thead>
 	<tbody>
+		<!-- ASK -->
 		{% for data in testhistorydata %}
 		<tr>
-			<td>{{ data.number }}</td>
-			<td>{{ data.timestamp }}</td>
+			<td>{{ data.id }}</td>
+			<td>{{ data.run_on }}</td>
 			<td>{{ data.stock_ticker }}</td>
-			<td>{{ data.test_parameter }}</td>
+			<td>{{ data.strategy_code }}</td>
 			<td>{{ data.percent_winning_trade }}%</td>
 			<td>${{ data.average_win }}</td>
 			<td><i class="far fa-edit fa-lg"></i></td>
@@ -47,7 +57,4 @@
 	</table>
 </div>
 
-<script>
-	$('.testrecord').DataTable();
-</script>
 {% endblock %}
