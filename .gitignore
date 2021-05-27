@@ -3,6 +3,7 @@
 *.swo
 __pycache__/
 venv
+virtenv
 .env
 db.sqlite3
 static/js/vendor

@@ -25,7 +25,7 @@ function drawChart() {
       h = 625 - margin.top - margin.bottom;
 
     var svg = d3
-      .select("#container")
+      .select("#graphcontainer")
       .attr("width", w + margin.left + margin.right)
       .attr("height", h + margin.top + margin.bottom)
       .append("g")
@@ -274,4 +274,4 @@ function wrap(text, width) {
   });
 }
 
-
+drawChart();
