@@ -101,7 +101,7 @@ class TestRun(RecordOwner):
         unique_together = ['run_by', 'run_on']
 
     def __str__(self):
-        return str(run_by) + RANGE_SEPARATOR + timezone.localtime(self.run_on).strftime(DATETIME_FORMAT)
+        return str(self.run_by) + RANGE_SEPARATOR + timezone.localtime(self.run_on).strftime(DATETIME_FORMAT)
     
     def save(self, force_insert=False, force_update=False):
         if self.run_on is None:
