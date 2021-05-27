@@ -49,8 +49,8 @@ class TestRun(RecordOwner):
     start_date = models.DateField(verbose_name=_("Start Date"), help_text=_("Backtest to start from this date"))
     end_date = models.DateField(verbose_name=_("End Date"), help_text=_("Backtest to end on this date"))
     # Portfolio starting amount
-    portfolio_start = models.IntegerField(verbose_name=_("Portfolio Start"),
-            help_text=_("Backtest will start with this initial portfolio amount"))
+    portfolio_start = models.IntegerField(verbose_name=_("Initial Capital"),
+            help_text=_("Backtest will start with this initial capital amount"))
     # Strategy selected (from ValueSet(STRATEGIES))
     strategy_code = models.CharField(verbose_name=_("Strategy"), max_length=30,
             choices=[], help_text=_("Strategy to use when triggering trades using Indicators"))
@@ -83,8 +83,8 @@ class TestRun(RecordOwner):
         help_text=_("Number of contracts to trade"))
     # End Input Parameters
     # Results Summary. To be updated after run
-    portfolio_end = models.IntegerField(verbose_name=_("Portfolio End"), null=True,
-            help_text=_("Portfolio Amount when Backtest Ends"))
+    portfolio_end = models.IntegerField(verbose_name=_("Final Capital"), null=True,
+            help_text=_("Final Capital Amount when Backtest Ends"))
     win_trades = models.PositiveIntegerField(verbose_name=_("Winning Trades"), null=True,
         help_text=_("Number of winning trades made"))
     lose_trades = models.PositiveIntegerField(verbose_name=_("Losing Trades"), null=True,

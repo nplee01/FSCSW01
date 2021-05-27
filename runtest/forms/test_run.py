@@ -1,5 +1,6 @@
 # Django Modules
 from django.utils.translation import ugettext_lazy as _ # To mark strings for translation
+from django.forms import ChoiceField
 
 # Our modules
 from runtest.models import TestRun, ValueSet
@@ -9,6 +10,11 @@ class TestRunForm(VersionModelForm):
     """
     Test Run form to allow user to select input parameters for a Backtest Run.
     """
+    # Override from Text to Select widget 
+    stock_ticker = ChoiceField()
+    strategy_code = ChoiceField()
+    indicator_1_code = ChoiceField()
+    indicator_2_code = ChoiceField()
 
     class Meta:
         model = TestRun
