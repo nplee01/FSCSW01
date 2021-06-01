@@ -1,12 +1,11 @@
 {% extends "base/base_site.html" %}
+{% load mathfilters %}
 
 {% block extrahead %}
 <!-- Data Table -->
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-<script>
-	$('.testrecord').DataTable();
-</script>
+
 {% endblock %}
 
 {% block content %}
@@ -29,15 +28,37 @@
 		<!-- ASK -->
 		{% for data in testhistorydata %}
 		<tr>
-			<td>{{ data.id }}</td>
+			<td class="table-no"></td>
 			<td>{{ data.run_on }}</td>
 			<td>{{ data.stock_ticker }}</td>
 			<td>{{ data.strategy_code }}</td>
-			<td>{{ data.percent_winning_trade }}%</td>
-			<td>${{ data.average_win }}</td>
-			<td><i class="far fa-edit fa-lg"></i></td>
-			<td><i class="fas fa-search fa-lg"></i></td>
-			<td><i class="far fa-trash-alt fa-lg"></i></td>
+			<td>{{ data.avg_win_amount | div:data.trade_size | mul:100 }}%</td>
+			<td>${{ data.avg_win_amount }}</td>
+			{% with current_id=data.id %}
+			<td>
+				<button class="far fa-edit fa-lg table-btn" onclick="openRemark()"></button>
+				<!-- The Modal -->
+				<div id="myModal" class="modal">
+				
+					<!-- Modal content -->
+					<div class="modal-content">
+						<span class="close" onclick="closeRemark()">&times;</span>
+						<p>{{ data.user_remarks }}</p>
+						<p>{{current_id}}</p>
+						<p>{{ testhistorydata.current_id }}</p>
+						{% for remark in testhistorydata %}
+							{% if remark.id == current_id %}
+								<p>{{ remark.user_remarks }}</p>
+							{% endif %}
+						{% endfor %}
+					</div>
+				
+				</div>
+			</td>
+
+			{% endwith %}
+			<td><button class="fas fa-search fa-lg table-btn"></button></td>
+			<td><button class="far fa-trash-alt fa-lg table-btn"></button></td>
 		</tr>
 		{% endfor %}
 	</tbody>
@@ -57,4 +78,34 @@
 	</table>
 </div>
 
+<script>
+	$('.testrecord').DataTable();
+	// Get the modal
+	var modal = document.getElementById("myModal");
+	
+	// Get the button that opens the modal
+	var btn = document.getElementsByClassName("far");
+	
+	// Get the <span> element that closes the modal
+	var span = document.getElementsByClassName("close")[0];
+	
+	// When the user clicks on the button, open the modal
+	function openRemark() {
+		// var remark = prompt("Remark", "PREVIOUS REMARK");
+		// update the table, runid, POST
+		modal.style.display = "block";
+	}
+	
+	// When the user clicks on <span> (x), close the modal
+	function closeRemark() {
+		modal.style.display = "none";
+	}
+	
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) {
+		if (event.target == modal) {
+			modal.style.display = "none";
+		}
+	}
+</script>
 {% endblock %}

@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     # Allow oauth2 with google (example only)
     # 'allauth.socialaccount.providers.google',
+    # Calculation
+    'mathfilters',
     # Our Apps
     'runtest',
 ]

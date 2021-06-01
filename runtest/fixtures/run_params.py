@@ -17,7 +17,7 @@ params = [
             param_description='Stop Loss %', default_value=5,
             min_value=0, max_value=100, step_by=None, mult_by=0.01),
         ParameterTuple(param_code='TRADE-SIZE', param_label='Trade Size',
-            param_description='Trade Size', default_value=100,
+            param_description='Trade Size', default_value=1000,
             min_value=0, max_value=None, step_by=None, mult_by=None),
         # ParameterTuple(param_code='TRAIL-STOP-LOSS', param_label='Trailing Stop Loss %', 
         #     param_description='Trailing Stop Loss %', default_value=10,

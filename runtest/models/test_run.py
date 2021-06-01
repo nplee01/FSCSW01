@@ -49,8 +49,8 @@ class TestRun(RecordOwner):
     start_date = models.DateField(verbose_name=_("Start Date"), help_text=_("Backtest to start from this date"))
     end_date = models.DateField(verbose_name=_("End Date"), help_text=_("Backtest to end on this date"))
     # Portfolio starting amount
-    portfolio_start = models.IntegerField(verbose_name=_("Initial Capital"),
-            help_text=_("Backtest will start with this initial capital amount"))
+    portfolio_start = models.IntegerField(verbose_name=_("Starting Capital"),
+            help_text=_("Backtest will start with this starting capital amount"))
     # Strategy selected (from ValueSet(STRATEGIES))
     strategy_code = models.CharField(verbose_name=_("Strategy"), max_length=30,
             choices=[], help_text=_("Strategy to use when triggering trades using Indicators"))
