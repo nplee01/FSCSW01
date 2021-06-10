@@ -6,5 +6,7 @@ FROM python:3.8
 ENV PYTHONUNBUFFERED=1
 WORKDIR /code
 # Copy everything except those in dockerignore
-COPY . /code
+COPY . /code/
 RUN pip install -r prodreq.txt
+# Command to run for image (cannot be overridden)
+ENTRYPOINT ["sh", "-c", "bin/entrypoint.sh"]

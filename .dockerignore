@@ -1,7 +1,6 @@
 # Do not copy these on docker build
 .git
 db.sqlite3
-prod
 config
 .gitignore
 **/*.swp

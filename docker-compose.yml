@@ -27,6 +27,7 @@ services:
             - POSTGRES_DB=${CUBE_DB_NAME}
             - POSTGRES_USER=${CUBE_DB_USER}
             - POSTGRES_PASSWORD=${CUBE_DB_PASSWORD}
+        # Should use a permanent PG_DATA volume for production (later)
     ### DB END
  
     ### DJANGO+GUNICORN START
@@ -37,8 +38,8 @@ services:
             context: .
             dockerfile: ./docker/web/Dockerfile
         environment:
-            # Override .env inside image. We still use it
-            # for DJANGO_SETTINGS_MODULE.
+            # Override some .env vars inside image. We still use the rest
+            # like DJANGO_SETTINGS_MODULE.
             - CUBE_DB_HOST=db   # follow service name above
             - CUBE_DB_PORT=${CUBE_DB_PORT} # follow port above
             # App dir hardcoded in our build
@@ -48,11 +49,6 @@ services:
             - CUBE_DB_USER=${CUBE_DB_USER}
             - CUBE_DB_PASSWORD=${CUBE_DB_PASSWORD} # same as above
             - FIX_USER_PASSWORD=${FIX_USER_PASSWORD}
-        command: >
-            sh -c "python manage.py wait_for_db &&
-                python manage.py migrate &&
-                python manage.py appdata &&
-                gunicorn --bind 0.0.0.0:3000 --workers 5 backtest.wsgi:application"
         links:
             - db
         ports:
@@ -65,13 +61,9 @@ services:
     # This image will run nginx to serve static files and
     # proxy all other locations to web service above
     nginx:
-        image: nginx:1.20-alpine
-        volumes:
-            # Use our config file
-            - ./docker/nginx/thecube.conf:/etc/nginx/conf.d/thecube.conf
-            # Serve static files. Please run './manage.py collectstatic' first.
-            - ./prod:/html/prod
-        command: nginx -g 'daemon off;'
+        build:  
+            context: .
+            dockerfile: ./docker/nginx/Dockerfile
         links:
             - web
         ports:
