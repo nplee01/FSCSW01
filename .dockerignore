@@ -2,6 +2,7 @@
 .git
 db.sqlite3
 config
+dbdata
 .gitignore
 **/*.swp
 **/*.pyc

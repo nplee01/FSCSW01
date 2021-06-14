@@ -6,6 +6,7 @@ venv
 virtenv
 .env
 db.sqlite3
+dbdata
 static/js/vendor
 env
 prod

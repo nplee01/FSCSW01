@@ -2,11 +2,12 @@
 #
 # 0) python bin/gen_env.py prod.env
 # 1) docker-compose build 
+# 2) delete contents of dbdata (because passwords are changed)
 #
 # Then bring up and down the containers...
-# 2) docker-compose up      # to bring up containers
-# 3) ctrl-c to kill containers
-# 4) docker-compose down    # to shutdown all containers
+# 3) docker-compose up          # to bring up containers
+# 4) ctrl-c to kill containers  # when you are done testing
+# 5) docker-compose down        # to shutdown all containers
 #
 # Step 0 will ensure the .env inside the web image matches
 # with .env that docker-compose uses. Else passwords will fail.
@@ -20,14 +21,17 @@ services:
     # superuser POSTGRES_USER.
     db:
         image: postgres:13-alpine
-        ports:
-            - "5400:5432" # Avoid clash with host's Postgresql
+        expose:
+            - "5432" # service port only, not accessible externally
         environment:
             # Required for postgres image
             - POSTGRES_DB=${CUBE_DB_NAME}
             - POSTGRES_USER=${CUBE_DB_USER}
             - POSTGRES_PASSWORD=${CUBE_DB_PASSWORD}
-        # Should use a permanent PG_DATA volume for production (later)
+        volumes:
+            # Use local storage for testing only
+            # Should use a permanent PGDATA volume for production (later)
+            - "./dbdata:/var/lib/postgresql/data"
     ### DB END
  
     ### DJANGO+GUNICORN START
@@ -51,8 +55,8 @@ services:
             - FIX_USER_PASSWORD=${FIX_USER_PASSWORD}
         links:
             - db
-        ports:
-            - "3000:3000"
+        expose:
+            - "3000" # service port only, not accessible externally
         depends_on:
             - db
     ### DJANGO+GUNICORN END
