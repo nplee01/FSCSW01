@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  # Match our docker-compose host names
+  name: db
+spec:
+  selector:
+    app: db-container
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432

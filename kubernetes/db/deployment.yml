@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db-container
+  template:
+    metadata:
+      labels:
+        app: db-container
+    spec:
+      containers:
+        - name: db-container
+          image: postgres:13-alpine 
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                # Secrets will come from .env file
+                # Please run "kubectl create secret generic bt-env-secrets --from-env-file=.env"
+                # After "bin/gen_env.py prod.env"
+                secretKeyRef:
+                  name: bt-env-secrets
+                  key: CUBE_DB_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: bt-env-secrets 
+                  key: CUBE_DB_PASSWORD
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: bt-env-secrets 
+                  key: CUBE_DB_NAME
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: dbdata-mount
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: dbdata-mount
+          persistentVolumeClaim:
+            claimName: dbdata-pvc

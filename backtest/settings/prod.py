@@ -10,7 +10,7 @@ SECRET_KEY = os.environ.get('CUBE_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', 'web', 'thecube.atsc.org.my']
+ALLOWED_HOSTS = ['localhost', 'web', 'minikube.local', 'thecube.atsc.org.my']
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases

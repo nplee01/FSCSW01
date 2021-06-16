@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-container
+  template:
+    metadata:
+      labels:
+        app: web-container
+    spec:
+      containers:
+        - name: web-container
+          imagePullPolicy: IfNotPresent
+          image: backtest_web
+          ports:
+          - containerPort: 3000
+          env:
+            # Our app is in /code in our image
+            - name: PYTHONPATH
+              value: /code
+            - name: CUBE_DB_HOST
+              value: db
+            - name: CUBE_DB_USER
+              valueFrom:
+                # Secrets will come from .env file
+                # Please run "kubectl create secret generic bt-env-secrets --from-env-file=.env"
+                # After "bin/gen_env.py prod.env"
+                secretKeyRef:
+                  name: bt-env-secrets
+                  key: CUBE_DB_USER
+            - name: CUBE_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: bt-env-secrets 
+                  key: CUBE_DB_PASSWORD
+            - name: CUBE_DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: bt-env-secrets 
+                  key: CUBE_DB_NAME
+            - name: CUBE_DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: bt-env-secrets 
+                  key: CUBE_DB_PORT
+            - name: FIX_USER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: bt-env-secrets 
+                  key: FIX_USER_PASSWORD
+
