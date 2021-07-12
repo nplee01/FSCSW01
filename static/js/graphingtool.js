@@ -1,4 +1,4 @@
-function drawChart() {
+function drawGraph() {
   var dim = {
     width: 960,
     height: 500,
@@ -174,7 +174,7 @@ function drawChart() {
     .verticalWireRange([0, dim.plot.height]);
 
   var svg = d3
-    .select("body")
+    .select("#graphv2")
     .append("svg")
     .attr("width", dim.width)
     .attr("height", dim.height);
@@ -414,10 +414,7 @@ function drawChart() {
     svg.select("g.crosshair.macd").call(macdCrosshair).call(zoom);
     svg.select("g.crosshair.rsi").call(rsiCrosshair).call(zoom);
     svg.select("g.trendlines").datum(trendlineData).call(trendline).call(trendline.drag);
-    svg.select("g.supstances")
-.datum(supstanceData)
-.call(supstance)
-.call(supstance.drag);
+    svg.select("g.supstances").datum(supstanceData).call(supstance).call(supstance.drag);
 
     svg.select("g.tradearrow").datum(trades).call(tradearrow);
 
@@ -471,4 +468,4 @@ function drawChart() {
   }
 }
 
-drawChart();
+drawGraph();

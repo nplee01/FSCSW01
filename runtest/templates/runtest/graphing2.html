@@ -6,11 +6,16 @@
 {% endblock %}
 
 {% block content %}
+
   <script src="https://d3js.org/d3.v4.min.js"></script>
   <script src="http://techanjs.org/techan.min.js"></script>
+
+  <div class="card bg-light" id="graph-container">
+    <h1>Graphing</h1>
+    <div id="svg-container">
+      <svg id="graphv2"></svg>
+    </div>
+  </div>
+
   <script src="static/js/graphingtool.js"></script>
-  <!-- <div class="bg-light">
-    <h1>test</h1>
-    <svg id="gr"></svg>
-  </div> -->
 {% endblock %}

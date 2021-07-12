@@ -1,3 +1,26 @@
+#graph-container {
+  height: 100%;
+}
+
+#graph-container h1 {
+  font-family: 'Abril Fatface';
+  padding: 5px 20px;
+}
+
+#svg-container{
+  margin: auto;
+}
+
+#graphv2 {
+  padding: 20px;
+  height: 600px;
+  width: 1000px;
+}
+
+.bg-light {
+  margin: 3% 5% 8% 5%;
+}
+
 text {
   fill: #000;
 }
