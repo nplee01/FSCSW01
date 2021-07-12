@@ -28,5 +28,6 @@ urlpatterns = [
     path('testhistory', testhistory.testhistory, name='testhistory'),
     path('about', dispatcher, {'template_name': 'runtest/about.html'}, name='about'),  
     path('graphing', dispatcher, {'template_name': 'runtest/graphing.html'}, name='graphing'),  
+    path('graphing2', dispatcher, {'template_name': 'runtest/graphing2.html'}, name='graphing'),  
     path('runtest/', include('runtest.urls')),
 ]

@@ -1,0 +1,16 @@
+{% extends "base/base_site.html" %}
+
+{% block graphhead %}
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/graphstyles.css' %}" /> 
+{% endblock %}
+
+{% block content %}
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="http://techanjs.org/techan.min.js"></script>
+  <script src="static/js/graphingtool.js"></script>
+  <!-- <div class="bg-light">
+    <h1>test</h1>
+    <svg id="gr"></svg>
+  </div> -->
+{% endblock %}
