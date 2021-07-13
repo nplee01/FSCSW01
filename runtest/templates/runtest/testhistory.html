@@ -34,29 +34,25 @@
 			<td>{{ data.strategy_code }}</td>
 			<td>{{ data.avg_win_amount | div:data.trade_size | mul:100 }}%</td>
 			<td>${{ data.avg_win_amount }}</td>
-			{% with current_id=data.id %}
 			<td>
-				<button class="far fa-edit fa-lg table-btn" onclick="openRemark()"></button>
+				<button class="far fa-edit fa-lg table-btn" onclick="openRemark(`{{data.user_remarks}}`)"></button>
 				<!-- The Modal -->
 				<div id="myModal" class="modal">
 				
 					<!-- Modal content -->
 					<div class="modal-content">
 						<span class="close" onclick="closeRemark()">&times;</span>
-						<p>{{ data.user_remarks }}</p>
-						<p>{{current_id}}</p>
-						<p>{{ testhistorydata.current_id }}</p>
-						{% for remark in testhistorydata %}
-							{% if remark.id == current_id %}
-								<p>{{ remark.user_remarks }}</p>
-							{% endif %}
-						{% endfor %}
+						<p id="para"></p>
+						<textarea id="edit-text-area" cols="30" rows="10" style="display:none"></textarea>
+						<button class="remark-btn" id="edit-btn" onclick="editRemark()">Edit</button>
+						<div class="update-buttons">
+							<button class="edit-btn" id="cancel-btn" onclick="cancelRemark()" style="display:none">Cancel</button>
+							<button class="edit-btn" id="update-btn" onclick="updateRemark()" style="display:none">Update</button>
+						</div>
 					</div>
 				
 				</div>
 			</td>
-
-			{% endwith %}
 			<td><button class="fas fa-search fa-lg table-btn"></button></td>
 			<td><button class="far fa-trash-alt fa-lg table-btn"></button></td>
 		</tr>
@@ -89,11 +85,27 @@
 	// Get the <span> element that closes the modal
 	var span = document.getElementsByClassName("close")[0];
 	
+	// document.addEventListener("DOMContentLoaded", () => {
+	// 	document.querySelectorAll("button").forEach((button) => {
+	// 		button.onclick = function () {
+	// 			document.querySelector("far").style.color = button.dataset.color;
+	// 		};
+	// 	});
+
+	// 	document.querySelector("form").onsubmit = () => {
+	// 		const change = document.querySelector("#colorname").value;
+	// 		alert(change);
+	// 		document.querySelector("#hello").style.color = change;
+	// 		return false;
+	// 	};
+	// });
+
 	// When the user clicks on the button, open the modal
-	function openRemark() {
+	function openRemark(remark) {
 		// var remark = prompt("Remark", "PREVIOUS REMARK");
 		// update the table, runid, POST
 		modal.style.display = "block";
+		document.getElementById("para").innerHTML = remark;
 	}
 	
 	// When the user clicks on <span> (x), close the modal
@@ -101,6 +113,23 @@
 		modal.style.display = "none";
 	}
 	
+	// When the user clicks on edit button, update the remark
+	function editRemark() {
+		var textarea = document.getElementById("edit-text-area");
+		var remark = document.getElementById("para");
+		var editbutton = document.getElementById("edit-btn");
+		var updatebutton = document.getElementById("update-btn");
+		var cancelbutton = document.getElementById("cancel-btn");
+		var remarktext = remark.innerHTML
+		
+		editbutton.style.display="none";
+		updatebutton.style.display = "block";
+		cancelbutton.style.display = "block";
+		textarea.style.display = "block";
+		remark.style.display = "none";
+		textarea.setAttribute("placeholder", remarktext);
+	}
+
 	// When the user clicks anywhere outside of the modal, close it
 	window.onclick = function(event) {
 		if (event.target == modal) {

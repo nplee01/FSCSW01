@@ -527,12 +527,15 @@ form p input {
   width: 80%; /* Could be more or less, depending on screen size */
 }
 
+
 /* The Close Button */
 .close {
   color: #aaa;
   float: right;
   font-size: 28px;
   font-weight: bold;
+  position: relative;
+  right: 0;
 }
 
 .close:hover,
@@ -556,4 +559,22 @@ div table tbody {
   padding: 0;
   border: none;
   background: none;
+}
+
+.remark-btn {
+  margin: auto;
+  background-color: none;
+  border-radius: 0.5em;
+}
+
+.update-buttons{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.edit-btn {
+  margin: 10px 10px 10px 10px;
+  background-color: none;
+  border-radius: 0.5em;
 }
