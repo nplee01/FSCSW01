@@ -18,11 +18,72 @@ from django.http import HttpResponseRedirect
 
 from runtest.models import TestRun
 
-def testhistory(request):
-    if request.user.is_authenticated:
-        template_name= 'runtest/testhistory.html'
-        testhistorydata = TestRun.objects.filter(run_by = request.user)
-        return render(request, template_name, context={'testhistorydata': testhistorydata})
-    else:
-        return HttpResponseRedirect('accounts/login/?next=/testhistory')
+# Default: GET
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_protect
+
+
+@login_required
+@csrf_protect
+def testhistory(request, id=None):
+    # This will handle Get, Post and Delete requests. I have changed urls.py to call this
+    # view and your 2 functions below is not used.
+    # id passed in only for Delete
+
+    # CSRF Protect means that all non-GET methods needs to supply a Header X-CSRFToken 
+    # with the cookie(csrftoken) that django sends with the original Get request.
+    template_name= 'runtest/testhistory.html'
+
+    if request.method == 'POST':
+        # Handle the update request
+        id = request.POST.get('id')
+        rmk = request.POST.get('remarks')
+        # Perform the update
+        if id:
+            row = TestRun.objects.get(pk=id)
+            row.user_remarks = rmk
+            row.save()
+    elif request.method == 'DELETE':
+        if id:
+            row = TestRun.objects.get(pk=id)
+            row.delete()
+    # Handle Get here or fallthru from handling Post and Delete to requery and redisplay data
+    testhistorydata = TestRun.objects.filter(run_by = request.user)
+    return render(request, template_name, context={'testhistorydata': testhistorydata})
+
+
+# https://stackoverflow.com/questions/29212713/update-django-database-through-javascript
+# https://www.geeksforgeeks.org/update-view-function-based-views-django/
+# https://docs.djangoproject.com/en/3.2/topics/http/urls/
+@csrf_protect
+@login_required
+def update(request, id=None, remark=None):
     
+    if request.method == "POST":
+        if remark and id != None:
+            row = TestRun.objects.get(id = id)
+            row.user_remarks = remark
+        
+    template_name = 'runtest/home.html'
+    return render(request, template_name)
+
+
+@login_required
+@csrf_protect
+def delete_entry(request):
+
+    # Get the id and delete
+    if request.method == "DELETE":
+        if id in TestRun:
+            row = TestRun.objects.get(id = id)
+            print(row)
+            
+            # To check if the current id is runby the current user 
+            # before deleting
+            if request.user in row['run_by']:
+                print('deleted')
+                # TestRun.objects.filter(id = id).delete()
+
+    template_name= 'runtest/testhistory.html'
+    testhistorydata = TestRun.objects.filter(run_by = request.user)
+    return render(request, template_name, context={'testhistorydata': testhistorydata})

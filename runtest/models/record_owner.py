@@ -30,6 +30,7 @@ class RecordOwner(models.Model):
     # Cannot implement here because no access to the queried last_version at the start of a transaction.
     # We make it a hidden field in all Forms so that its value is available in forms clean and save_instance methods
     last_version = VersionField(default=0, blank=True, null=True)
+    # handle optimistic locking
 
     class Meta:
         # This model is abstract, ie will never have its own DB table

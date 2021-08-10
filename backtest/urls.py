@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 
 from runtest.views import dispatcher, backtest, testhistory
 
@@ -25,7 +25,9 @@ urlpatterns = [
     path('', dispatcher, {'template_name': 'runtest/home.html'}, name='home'),  
     path('backtest', backtest, name='backtest'),  
     path('howitworks', dispatcher, {'template_name': 'runtest/howitworks.html'}, name='howitworks'),
-    path('testhistory', testhistory.testhistory, name='testhistory'),
+    path('testhistory', testhistory, name='testhistory'),
+    path('testhistory/update', testhistory, name='testhistoryupdate'),
+    path('testhistory/<int:id>/delete/', testhistory, name='testhistorydelete'),
     path('about', dispatcher, {'template_name': 'runtest/about.html'}, name='about'),  
     path('graphing', dispatcher, {'template_name': 'runtest/graphing.html'}, name='graphing'),  
     path('graphing2', dispatcher, {'template_name': 'runtest/graphing2.html'}, name='graphing'),  
