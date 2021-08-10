@@ -1,140 +1,274 @@
-{% extends "base/base_site.html" %}
-{% load mathfilters %}
-
-{% block extrahead %}
+{% extends "base/base_site.html" %} {% load mathfilters %} {% block extrahead %}
 <!-- Data Table -->
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
-{% endblock %}
-
-{% block content %}
+{% endblock %} {% block content %}
 <div class="container mb-3 mt-3">
-	<table class="table table-striped table-bordered testrecord" style="width: 100%">
-	<thead>
-		<tr>
-			<th>No.</th>
-			<th>Timestamp</th>
-			<th>Stock Ticker</th>
-			<th>Test Parameter</th>
-			<th>Percent winning trade</th>
-			<th>Average win</th>
-			<th>Remark</th>
-			<th>Peruse</th>
-			<th>Purge</th>
-		</tr>
-	</thead>
-	<tbody>
-		<!-- ASK -->
-		{% for data in testhistorydata %}
-		<tr>
-			<td class="table-no"></td>
-			<td>{{ data.run_on }}</td>
-			<td>{{ data.stock_ticker }}</td>
-			<td>{{ data.strategy_code }}</td>
-			<td>{{ data.avg_win_amount | div:data.trade_size | mul:100 }}%</td>
-			<td>${{ data.avg_win_amount }}</td>
-			<td>
-				<button class="far fa-edit fa-lg table-btn" onclick="openRemark(`{{data.user_remarks}}`)"></button>
-				<!-- The Modal -->
-				<div id="myModal" class="modal">
-				
-					<!-- Modal content -->
-					<div class="modal-content">
-						<span class="close" onclick="closeRemark()">&times;</span>
-						<p id="para"></p>
-						<textarea id="edit-text-area" cols="30" rows="10" style="display:none"></textarea>
-						<button class="remark-btn" id="edit-btn" onclick="editRemark()">Edit</button>
-						<div class="update-buttons">
-							<button class="edit-btn" id="cancel-btn" onclick="cancelRemark()" style="display:none">Cancel</button>
-							<button class="edit-btn" id="update-btn" onclick="updateRemark()" style="display:none">Update</button>
-						</div>
-					</div>
-				
-				</div>
-			</td>
-			<td><button class="fas fa-search fa-lg table-btn"></button></td>
-			<td><button class="far fa-trash-alt fa-lg table-btn"></button></td>
-		</tr>
-		{% endfor %}
-	</tbody>
-	<tfoot>
-		<tr>
-			<th>No.</th>
-			<th>Timestamp</th>
-			<th>Stock Ticker</th>
-			<th>Test Parameter</th>
-			<th>Percent winning trade</th>
-			<th>Average win</th>
-			<th>Remark</th>
-			<th>Peruse</th>
-			<th>Purge</th>
-		</tr>
-	</tfoot>
-	</table>
+  <table
+    class="table table-striped table-bordered testrecord"
+    style="width: 100%"
+  >
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>Timestamp</th>
+        <th>Stock Ticker</th>
+        <th>Test Parameter</th>
+        <th>Percent winning trade</th>
+        <th>Average win</th>
+        <th>Remark</th>
+        <th>Peruse</th>
+        <th>Purge</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- ASK -->
+      {% for data in testhistorydata %}
+      <tr>
+        <td class="table-no"></td>
+        <td>{{ data.run_on }}</td>
+        <td>{{ data.stock_ticker }}</td>
+        <td>{{ data.strategy_code }}</td>
+        <td>{{ data.avg_win_amount | div:data.trade_size | mul:100 }}%</td>
+        <td>${{ data.avg_win_amount }}</td>
+        <td>
+          <button
+            class="far fa-edit fa-lg table-btn"
+            onclick="openRemark(`{{data.user_remarks}}`)"
+          ></button>
+          <!-- The Modal -->
+          <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+              <span class="close" onclick="closeRemark()">&times;</span>
+              <p id="para"></p>
+              <input
+                id="edit-text-area"
+                cols="30"
+                rows="10"
+                style="display: none"
+              />
+              <!-- <button class="remark-btn" id="edit-btn" onclick="editRemark()">
+                Edit
+              </button> -->
+              <div class="update-buttons">
+                <button
+                  class="edit-btn"
+                  id="cancel-btn"
+                  onclick="cancelRemark()"
+                  style="display: none"
+                >
+                  Cancel
+                </button>
+                <button
+                  class="edit-btn"
+                  id="update-btn"
+                  onclick="updateRemark(`{{data.id}}`)"
+                  style="display: none"
+                >
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td><button class="fas fa-search fa-lg table-btn"></button></td>
+        <td>
+          <button
+            class="far fa-trash-alt fa-lg table-btn"
+            onclick="deleteEntry(`{{data.id}}`)"
+          ></button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr>
+        <th>No.</th>
+        <th>Timestamp</th>
+        <th>Stock Ticker</th>
+        <th>Test Parameter</th>
+        <th>Percent winning trade</th>
+        <th>Average win</th>
+        <th>Remark</th>
+        <th>Peruse</th>
+        <th>Purge</th>
+      </tr>
+    </tfoot>
+  </table>
 </div>
 
 <script>
-	$('.testrecord').DataTable();
-	// Get the modal
-	var modal = document.getElementById("myModal");
-	
-	// Get the button that opens the modal
-	var btn = document.getElementsByClassName("far");
-	
-	// Get the <span> element that closes the modal
-	var span = document.getElementsByClassName("close")[0];
-	
-	// document.addEventListener("DOMContentLoaded", () => {
-	// 	document.querySelectorAll("button").forEach((button) => {
-	// 		button.onclick = function () {
-	// 			document.querySelector("far").style.color = button.dataset.color;
-	// 		};
-	// 	});
+  $(".testrecord").DataTable();
+  // Get the modal
+  var modal = document.getElementById("myModal");
 
-	// 	document.querySelector("form").onsubmit = () => {
-	// 		const change = document.querySelector("#colorname").value;
-	// 		alert(change);
-	// 		document.querySelector("#hello").style.color = change;
-	// 		return false;
-	// 	};
-	// });
+  // Get the button that opens the modal
+  var btn = document.getElementsByClassName("far");
 
-	// When the user clicks on the button, open the modal
-	function openRemark(remark) {
-		// var remark = prompt("Remark", "PREVIOUS REMARK");
-		// update the table, runid, POST
-		modal.style.display = "block";
-		document.getElementById("para").innerHTML = remark;
-	}
-	
-	// When the user clicks on <span> (x), close the modal
-	function closeRemark() {
-		modal.style.display = "none";
-	}
-	
-	// When the user clicks on edit button, update the remark
-	function editRemark() {
-		var textarea = document.getElementById("edit-text-area");
-		var remark = document.getElementById("para");
-		var editbutton = document.getElementById("edit-btn");
-		var updatebutton = document.getElementById("update-btn");
-		var cancelbutton = document.getElementById("cancel-btn");
-		var remarktext = remark.innerHTML
-		
-		editbutton.style.display="none";
-		updatebutton.style.display = "block";
-		cancelbutton.style.display = "block";
-		textarea.style.display = "block";
-		remark.style.display = "none";
-		textarea.setAttribute("placeholder", remarktext);
-	}
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
 
-	// When the user clicks anywhere outside of the modal, close it
-	window.onclick = function(event) {
-		if (event.target == modal) {
-			modal.style.display = "none";
-		}
-	}
+  // document.addEventListener("DOMContentLoaded", () => {
+  // 	document.querySelectorAll("button").forEach((button) => {
+  // 		button.onclick = function () {
+  // 			document.querySelector("far").style.color = button.dataset.color;
+  // 		};
+  // 	});
+
+  // 	document.querySelector("form").onsubmit = () => {
+  // 		const change = document.querySelector("#colorname").value;
+  // 		alert(change);
+  // 		document.querySelector("#hello").style.color = change;
+  // 		return false;
+  // 	};
+  // });
+
+  // When the user clicks on the button, open the modal
+  function openRemark(remark) {
+    // var remark = prompt("Remark", "PREVIOUS REMARK");
+    // update the table, runid, POST
+    modal.style.display = "block";
+    document.getElementById("para").innerHTML = remark;
+
+    var textarea = document.getElementById("edit-text-area");
+    var remark = document.getElementById("para");
+    var updatebutton = document.getElementById("update-btn");
+    var cancelbutton = document.getElementById("cancel-btn");
+    var remarktext = remark.innerHTML;
+    textarea.setAttribute("value", remarktext);
+    textarea.style.display = "block";
+    updatebutton.style.display = "block";
+    cancelbutton.style.display = "block";
+    remark.style.display = "none";
+  }
+
+  // When the user clicks on <span> (x), close the modal
+  function closeRemark() {
+    var textarea = document.getElementById("edit-text-area");
+    var remark = document.getElementById("para");
+    var editbutton = document.getElementById("edit-btn");
+    // var updatebutton = document.getElementById("update-btn");
+    var cancelbutton = document.getElementById("cancel-btn");
+    var remarktext = remark.innerHTML;
+
+    editbutton.style.display = "block";
+    // updatebutton.style.display = "none";
+    cancelbutton.style.display = "none";
+    textarea.style.display = "none";
+    remark.style.display = "block";
+
+    modal.style.display = "none";
+  }
+
+  function cancelRemark() {
+    // modal.style.display = "none";
+
+    // var textarea = document.getElementById("edit-text-area");
+    // var remark = document.getElementById("para");
+    // var editbutton = document.getElementById("edit-btn");
+    // var updatebutton = document.getElementById("update-btn");
+    // var cancelbutton = document.getElementById("cancel-btn");
+    // var remarktext = remark.innerHTML;
+
+    // editbutton.style.display = "block";
+    // updatebutton.style.display = "none";
+    // cancelbutton.style.display = "none";
+    // textarea.style.display = "none";
+    // remark.style.display = "block";
+    var textarea = document.getElementById("edit-text-area");
+    var remark = document.getElementById("para");
+    var editbutton = document.getElementById("edit-btn");
+    // var updatebutton = document.getElementById("update-btn");
+    var cancelbutton = document.getElementById("cancel-btn");
+    var remarktext = remark.innerHTML;
+
+    editbutton.style.display = "block";
+    // updatebutton.style.display = "none";
+    cancelbutton.style.display = "none";
+    textarea.style.display = "none";
+    remark.style.display = "block";
+
+    modal.style.display = "none";
+  }
+
+  // When the user clicks on edit button, update the remark
+  function editRemark() {
+    // var textarea = document.getElementById("edit-text-area");
+    // var remark = document.getElementById("para");
+    // var editbutton = document.getElementById("edit-btn");
+    // var updatebutton = document.getElementById("update-btn");
+    // var cancelbutton = document.getElementById("cancel-btn");
+    // var remarktext = remark.innerHTML;
+    // editbutton.style.display = "none";
+    // updatebutton.style.display = "block";
+    // cancelbutton.style.display = "block";
+    // textarea.style.display = "block";
+    // remark.style.display = "none";
+    // textarea.setAttribute("placeholder", remarktext);
+  }
+
+  // Unfortunately jquery does not have a get cookie function.
+  function getCookie(name) {
+    var match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
+    if (match) return match[2];
+  }
+
+  function updateRemark(id) {
+    var textarea = document.getElementById("edit-text-area");
+    var text = textarea.value;
+    $.ajax({
+      method: "POST",
+      url: "/testhistory/update",
+      // CSRF Token
+      headers: { "X-CSRFToken": getCookie("csrftoken") },
+      // Data to send
+      data: { id: id, remarks: text },
+      // Function to run on success
+      success: function (msg) {
+        console.log("Update ok msg: " + msg);
+        console.log("/testhistory/" + id);
+        closeRemark();
+      },
+      error: function (msg) {
+        console.log("Update failed: " + msg);
+      },
+    });
+  }
+
+  function deleteEntry(id) {
+    // <div>
+    // 	Are you sure you want to delete?
+    // </div>
+    var x = confirm("Are you sure you want to delete?");
+    if (x)
+      // $.delete("/testhistory/"+id+"/delete/");
+      console.log("sent " + id);
+
+    // Send the delete request
+    $.ajax({
+      method: "DELETE",
+      url: "/testhistory/" + id + "/delete",
+      // CSRF Token
+      headers: { "X-CSRFToken": getCookie("csrftoken") },
+      // Function to run on success
+      success: function (msg) {
+        console.log("Delete ok msg: " + msg);
+        console.log("/testhistory/" + id + "/delete");
+      },
+      error: function (msg) {
+        console.log("Delete failed: " + msg);
+      },
+    });
+  }
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
 </script>
+
 {% endblock %}
