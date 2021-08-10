@@ -8,7 +8,10 @@ best strategies to make profits over a range of dates.
 Ensure you have git cli installed. Requires python >= 3.8.  
 Then in a command prompt, 
 
+    sudo apt install python3.8-venv
     cd any_working_directory
+    python -m venv env_name
+    source env_name/bin/activate
     git clone https://github.com/nplee01/FSCSW01.git
     cd FSCSW01
     pip install -r devreq.txt
