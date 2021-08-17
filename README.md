@@ -14,12 +14,18 @@ Then in a command prompt,
     source env_name/bin/activate
     git clone https://github.com/nplee01/FSCSW01.git
     cd FSCSW01
+    install the Technical Analysis c library
+        On Mac, on the command line, "brew install ta-lib"
+        On Windows, download [ta-lib-0.4.0-msvc.zip](https://sourceforge.net/projects/ta-lib/files/ta-lib/0.4.0/ta-lib-0.4.0-msvc.zip) and extract to C:\ta-lib
+        On Linux, download [ta-lib-0.4.0-src.tar.gz](https://sourceforge.net/projects/ta-lib/files/ta-lib/0.4.0/ta-lib-0.4.0-src.tar.gz) and extract to a working directory.
+            then cd to the working_directory and "./configure --prefix=/usr; make; sudo make install"
     pip install -r devreq.txt
     ./bin/gen_env.py backtest.env
     ./manage.py check
     ./manage.py migrate
     ./manage.py createsuperuser
     ./manage.py appdata
+    ./manage.py stockdata
     ./manage.py runserver
 
 Then in your Browser, http://localhost:8000/. This development version will

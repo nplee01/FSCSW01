@@ -141,6 +141,9 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # Allow project wide static files (else default is app static files only)
 STATICFILES_DIRS = [BASE_DIR / 'static']
 
+# Stock Price Data directory
+STOCK_DIR = BASE_DIR / 'stockdata'
+
 # allauth settings
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = False
 ACCOUNT_AUTHENTICATION_METHOD = 'username' # username, email, username_email

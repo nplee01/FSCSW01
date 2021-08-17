@@ -5,10 +5,10 @@ from runtest.fixtures.set_audit_user import set_audit_user
 # Misc run fields to default
 params = [
         ParameterTuple(param_code='RUN-START', param_label='Start Date', 
-            param_description='Start Date as ordinal number', default_value=736330, # is 2017-01-01
+            param_description='Start Date as ordinal number', default_value=730122, # is 2000-01-03
             min_value=0, max_value=None, step_by=None, mult_by=None),
         ParameterTuple(param_code='RUN-END', param_label='End Date', 
-            param_description='End Date as ordinal number', default_value=737425, # is 2020-01-01
+            param_description='End Date as ordinal number', default_value=None, # as at last download date
             min_value=0, max_value=None, step_by=None, mult_by=None),
         ParameterTuple(param_code='PORTFOLIO-START', param_label='Portfolio Start', 
             param_description='Portfolio Starting Amount', default_value=100000,

@@ -3,6 +3,7 @@
 db.sqlite3
 config
 dbdata
+stockdata
 .gitignore
 **/*.swp
 **/*.pyc

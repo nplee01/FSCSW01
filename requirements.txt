@@ -3,3 +3,13 @@ django-crispy-forms == 1.11.2
 django-allauth == 0.44
 python-dotenv == 0.15
 django-mathfilters == 1.0.0
+# Backtest Engine requirements
+pandas == 1.2.4
+numpy == 1.20.2
+# Plotting lib
+matplotlib == 3.2.2
+# TA depends on a c library to be installed first, see README.md
+# This is installing just the python wrappers
+TA-lib == 0.4.19
+# Yahoo Finance for stock prices
+yfinance == 0.1.63
