@@ -88,9 +88,10 @@ def download_all_stocks(end_date=None):
         return
 
     print(f"Downloading from {start_date} to {end_date}....")
-    for stock in [st.value_code for st in ValueSetMember.objects.filter(value_set=vs)]:
+    for stock, stock_name in [(st.value_code, st.value_description) 
+            for st in ValueSetMember.objects.filter(value_set=vs)]:
         rows = download_stock(stock, start_date, end_date)
-        print(f"{stock}: Downloaded {rows} rows")
+        print(f"{stock_name}: Downloaded {rows} rows")
     # Update last download date
     update_last_download(end_date)
 
