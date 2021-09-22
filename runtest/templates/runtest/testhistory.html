@@ -12,21 +12,31 @@
     <thead>
       <tr>
         <th>No.</th>
-        <th>Timestamp</th>
-        <th>Stock Ticker</th>
-        <th>Test Parameter</th>
-        <th>Percent winning trade</th>
-        <th>Average win</th>
-        <th>Remark</th>
+        <!-- <th>Timestamp</th> -->
+        <th>Test Date / Time</th>
+        <th>Stock Name</th>
+        <th>Initial Capital</th>
+        <th>Final Equity</th>
+        <th>Equity ROI/%</th>
+        <th>Win Rate/%</th>
+        <th>Max Drawdown/%</th>
+        <!-- <th>Remark</th>
         <th>Peruse</th>
-        <th>Purge</th>
+        <th>Purge</th> -->
       </tr>
     </thead>
     <tbody>
-      <!-- ASK -->
-      {% for data in testhistorydata %}
       <tr>
-        <td class="table-no"></td>
+        <td>1</td>
+        <td>01-01-1990 00:00</td>
+        <td>TENAGA</td>
+        <td>100000.00</td>
+        <td>8432.00</td>
+        <td>50.98%</td>
+        <td>21.43%</td>
+        <td>21.12%</td>
+      <!-- {% for data in testhistorydata %} -->
+        <!-- <td class="table-no"></td>
         <td>{{ data.run_on }}</td>
         <td>{{ data.stock_ticker }}</td>
         <td>{{ data.strategy_code }}</td>
@@ -37,9 +47,8 @@
             class="far fa-edit fa-lg table-btn"
             onclick="openRemark(`{{data.user_remarks}}`)"
           ></button>
-          <!-- The Modal -->
+          
           <div id="myModal" class="modal">
-            <!-- Modal content -->
             <div class="modal-content">
               <span class="close" onclick="closeRemark()">&times;</span>
               <p id="para"></p>
@@ -49,9 +58,6 @@
                 rows="10"
                 style="display: none"
               />
-              <!-- <button class="remark-btn" id="edit-btn" onclick="editRemark()">
-                Edit
-              </button> -->
               <div class="update-buttons">
                 <button
                   class="edit-btn"
@@ -79,21 +85,24 @@
             class="far fa-trash-alt fa-lg table-btn"
             onclick="deleteEntry(`{{data.id}}`)"
           ></button>
-        </td>
+        </td> -->
       </tr>
-      {% endfor %}
+      <!-- {% endfor %} -->
     </tbody>
     <tfoot>
       <tr>
         <th>No.</th>
-        <th>Timestamp</th>
-        <th>Stock Ticker</th>
-        <th>Test Parameter</th>
-        <th>Percent winning trade</th>
-        <th>Average win</th>
-        <th>Remark</th>
+        <!-- <th>Timestamp</th> -->
+        <th>Test Date / Time</th>
+        <th>Stock Name</th>
+        <th>Initial Capital</th>
+        <th>Final Equity</th>
+        <th>Equity ROI/%</th>
+        <th>Win Rate/%</th>
+        <th>Max Drawdown/%</th>
+        <!-- <th>Remark</th>
         <th>Peruse</th>
-        <th>Purge</th>
+        <th>Purge</th> -->
       </tr>
     </tfoot>
   </table>

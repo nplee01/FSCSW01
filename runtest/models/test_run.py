@@ -43,14 +43,14 @@ class TestRun(RecordOwner):
     # Input parameters ....
     # Initially allow 1 stock, later can be comma delimited each max=30. Empty choices is to
     # make it a ChoiceField in its form.
-    stock_ticker = models.CharField(verbose_name=_("Stock Ticker"), max_length=200, 
+    stock_ticker = models.CharField(verbose_name=_("Stock Name"), max_length=200, 
             choices=[], help_text=_("Stock to be selected for this backtest run"))
     # Start/End date range for backtest
     start_date = models.DateField(verbose_name=_("Start Date"), help_text=_("Backtest to start from this date"))
     end_date = models.DateField(verbose_name=_("End Date"), help_text=_("Backtest to end on this date"))
     # Portfolio starting amount
     portfolio_start = models.IntegerField(verbose_name=_("Starting Capital"),
-            help_text=_("Backtest will start with this starting capital amount"))
+            help_text=_("Backtest will start with this starting capital amount"), default=100000)
     # Strategy selected (from ValueSet(STRATEGIES))
     strategy_code = models.CharField(verbose_name=_("Strategy"), max_length=30,
             choices=[], help_text=_("Strategy to use when triggering trades using Indicators"))
@@ -79,8 +79,8 @@ class TestRun(RecordOwner):
     # Trade Sizing Method
     sizing_method = models.CharField(verbose_name=_("Sizing Method"), max_length=30, null=True, blank=True,
         help_text=_("Trade Sizing method decides how much to trade"))
-    trade_size = models.IntegerField(verbose_name=_("Contract Size"), null=True,
-        help_text=_("Number of contracts to trade"))
+    trade_size = models.IntegerField(verbose_name=_(""), null=True, default=1000,
+        help_text=_(""))
     # End Input Parameters
     # Results Summary. To be updated after run
     portfolio_end = models.IntegerField(verbose_name=_("Final Capital"), null=True,

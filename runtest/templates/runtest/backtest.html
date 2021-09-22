@@ -141,7 +141,7 @@
                 Overview</h2> -->
             {% csrf_token %}
             <div id="section_1" class="border">
-                <h3 class="form-text">Step 1 - Range</h3>
+                <h3 class="form-text">Step 1 - Choose Stock</h3>
                 <div class="form-row">
                     <div class="col-sm-3">
                     {{ form.stock_ticker | as_crispy_field }}
@@ -163,19 +163,19 @@
             </div>
 
             <div id="section_2" class="border">
-                <h3 class="form-text">Step 2 - Strategy</h3>
+                <h3 class="form-text">Step 2 - Choose Strategy</h3>
                 <div class="form-row">
                     <div class="col-sm-3">
                     {{ form.strategy_code | as_crispy_field }}
                     </div>
-                    <div class="col-sm-2">
+                    <!-- <div class="col-sm-2">
                     {{ form.stop_loss | as_crispy_field }}
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
             <div id="section_3" class="border">
-                <h3 class="form-text">Step 3 - Indicator(s)</h3>
+                <h3 class="form-text">Step 3 - Choose Indicator(s)</h3>
                 <div id="ind_1_group">
                     <div class="form-row">
                         <div class="col-sm-3">
@@ -214,7 +214,7 @@
                 </div>
             </div>
             <div id="section_4" class="border">
-                <h3 class="form-text">Step 4 - Number of Contracts</h3>
+                <h3 class="form-text">Step 4 - Number of Shares</h3>
                 <div class="form-row">
                 <div class="col-sm-2">
                     {{ form.trade_size | as_crispy_field }}

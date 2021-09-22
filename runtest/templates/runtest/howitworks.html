@@ -8,9 +8,9 @@
         
             <div class="tab">
                 <h3>Overview</h3>
-                <button class="tablinks" onmouseover="openTab(event, 'step1-card')">Step 1: Range</button>
-                <button class="tablinks" onmouseover="openTab(event, 'step2-card')">Step 2: Strategy</button>
-                <button class="tablinks" onmouseover="openTab(event, 'step3-card')">Step 3: Indicator</button>
+                <button class="tablinks" onmouseover="openTab(event, 'step1-card')">Step 1: Choose Stock</button>
+                <button class="tablinks" onmouseover="openTab(event, 'step2-card')">Step 2: Choose Strategy</button>
+                <button class="tablinks" onmouseover="openTab(event, 'step3-card')">Step 3: Choose Indicator(s)</button>
                 <button class="tablinks" onmouseover="openTab(event, 'step4-card')">Step 4: Number of shares</button>
             <a id="start-in-overview" class="btn btn-success" href="{% url 'backtest' %}" role="button">START</a>
         
@@ -24,32 +24,45 @@
             </div>
         
             <div id="step1-card" class="tabcontent">
-                <h3>Setting the range</h3>
-                <p>Choose a stock you want to do the backtesting. Then select the starting date and the ending date of the historical data of the stocks. Enter how much you want to trade as well.</p>
+                <h3>Choose the stock</h3>
+                <p>Choose the stock you want to back test. Then, select the start and end date.
+                </p>
             </div>
             
             <div id="step2-card" class="tabcontent">
-                <h3>Choosing the strategy</h3>
+                <h3>Choosing strategy</h3>
                 <p>Type of strategies available:</p>
                 <ol>
-                    <li>Single Indicator</li>
-                    <li>Confluence</li>
+                    <li>Single Indicator (Only using one indicator to back test)</li>
+                    <li>Confluence (Using more than 1 indicator to back test)</li>
                 </ol>
             </div>
             
             <div id="step3-card" class="tabcontent">
-                <h3>Setting the indicators</h3>
+                <h3>Choose indicator(s)</h3>
                 <p>List of indicators:</p>
                 <ul>
-                    <li>MA</li>
-                    <li>MACD</li>
+                    <li>SMA (Baseline)</li>
+                    <ul>
+                        <li>Buy if candle closes above the SMA</li>
+                        <li>Sell if candle closes below the SMA.</li>
+                    </ul>
+                    <li>SMA (Crossing)</li>
+                    <ul>
+                        <li>Buy if faster SMA crosses above the slower SMA.</li>
+                        <li>Sell if faster SMA crosses below the slower SMA.</li>
+                    </ul>
                     <li>RSI</li>
+                    <ul>
+                        <li>Buy if RSI crosses upwards from oversold region.</li>
+                        <li>Sell if RSI crosses downwards from the overbought region.</li>
+                    </ul>
                 </ul>
             </div>
         
             <div id="step4-card" class="tabcontent">
-                <h3>Number of contracts</h3>
-                <p>Select the number of contracts you want to buy for each trade</p>
+                <h3>Number of Shares</h3>
+                <p>The number of shares that will be traded. Currently fixed at 1000.</p>
             </div>
         </div>
     </div>  

@@ -303,13 +303,40 @@ footer {
   padding: 5%;
   font-family: "Quicksand";
   font-weight: 600;
+
 }
 
 .border h3 {
   font-family: "Abril Fatface", cursive;
 }
 
-graphing
+#div_id_portfolio_start .asteriskField{
+  display: none;
+}
+
+#div_id_strategy_code label{
+  display: none;
+}
+
+#div_id_portfolio_start input[name=portfolio_start] {
+  pointer-events: none;
+  color:#AAA;
+  background:#F5F5F5;
+}
+
+#div_id_trade_size input[name=trade_size] {
+  pointer-events: none;
+  color:#AAA;
+  background:#F5F5F5;
+}
+
+#div_id_portfolio_start input[name=portfolio_start]::-webkit-outer-spin-button,
+#div_id_portfolio_start input[name=portfolio_start]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* graphing */
 #graph-card{
   padding: 20px;
 }
