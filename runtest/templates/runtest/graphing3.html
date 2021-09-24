@@ -1,0 +1,74 @@
+{% extends "base/base_site.html" %}
+
+{% block graphhead %}
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/graphstyle3.css' %}" /> 
+{% endblock %}
+
+{% block content %}
+<!-- Styles -->
+  
+  <!-- Resources -->
+  <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/themes/kelly.js"></script>
+  <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+
+  <div class="card bg-light" id="graph-container">
+    <div id="svg-container">
+    <h1 class="test-result-text">Test Result</h1>
+      <div id="controls" style="width: 100%; overflow: hidden;">
+        <div style="float: left; margin-left: 15px;">
+          From: <input type="text" id="fromfield" class="amcharts-input" />
+          To: <input type="text" id="tofield" class="amcharts-input" />
+        </div>
+        <div style="float: right; margin-right: 15px;">
+          <button id="b1m" class="amcharts-input">1m</button>
+          <button id="b3m" class="amcharts-input">3m</button>
+          <button id="b6m" class="amcharts-input">6m</button>
+          <button id="b1y" class="amcharts-input">1y</button>
+          <button id="bytd" class="amcharts-input">YTD</button>
+          <button id="bmax" class="amcharts-input">MAX</button>
+        </div>
+      </div>
+      <div id="chartdiv"></div>
+    </div> 
+    <hr>
+    <div class="test-result-summary">
+      <h1 class="test-result-text">Summary</h1>
+      <div class="card-container">
+        <div class="card"> 
+          <div class="summary-row">
+            <span class="summary-key">Initial Capital : </span>
+            <span class="summary-data">100000.00</span>
+          </div>
+          <hr>
+          <div class="summary-row">
+            <span class="summary-key">Equity ROI : </span>
+            <span class="summary-data">50.98%</span>
+          </div>
+          <hr>
+          <div class="summary-row">
+            <span class="summary-key">Win Rate : </span>
+            <span class="summary-data">21.43%</span>
+          </div>
+          <hr>
+          <div class="summary-row"> 
+            <span class="summary-key">Max Drawdown : </span>
+            <span class="summary-data">21.12%</span>
+          </div>
+          <hr>
+          <div class="summary-row">
+            <span class="summary-key">Final Equity Value : </span>
+            <span class="summary-data">8432.00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    
+
+  <script src="static/js/graphing3.js"></script>
+
+{% endblock %}
+
