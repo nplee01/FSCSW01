@@ -3,6 +3,7 @@
 # or json or yml files (using manage.py loaddata)
 audit_user.py
 stocks.py
+stock_params.py
 strategy_params.py
 strategies.py
 indicator_params.py

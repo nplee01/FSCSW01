@@ -27,9 +27,8 @@ def get_stock_prices(request, stock_name, start_date, end_date):
         raise Exception('Invalid start or end date')
 
     try:
-        vs = ValueSet.objects.get(value_set_code='RUN-FIELDS')
-        # Get Run Range
-        rr = ValueSetMember.objects.get(value_set=vs, value_code='RUN-RANGE')
+        vs = ValueSet.objects.get(value_set_code='STOCKS')
+        rr = ValueSetMember.objects.get(value_set=vs, value_description=stock_name)
         # We store date as ordinal in Parameter
         rr_start = date.fromordinal(rr.param_1.default_value)
         rr_end = date.fromordinal(rr.param_2.default_value)

@@ -6,16 +6,19 @@ from runtest.fixtures.set_audit_user import set_audit_user
 indicators = [
     ValueSetTuple(value_set_code='INDICATORS', value_set_description='Indicators for backtesting',
         set_member_list=(
-            # Version 0.1 data
-            SetMemberTuple(value_code='MACD', value_description='MACD', sort_order=1,
-                param_1_code='MAC-FAST-PERIOD', param_2_code='MAC-SLOW-PERIOD', 
-                param_3_code='MAC-SIGNAL-PERIOD'),
-            SetMemberTuple(value_code='BLB', value_description='Bollinger Bands', sort_order=2,
-                param_1_code='BLB-PERIOD', param_2_code=None, param_3_code=None),
-            SetMemberTuple(value_code='EMA', value_description='EMA', sort_order=3,
-                param_1_code='EMA-PERIOD', param_2_code=None, param_3_code=None),
-            SetMemberTuple(value_code='RSI', value_description='RSI', sort_order=4,
-                param_1_code='RSI-PERIOD', param_2_code='RSI-LOW-BAND', param_3_code='RSI-UP-BAND'),
+            # Version 1.0 data
+            SetMemberTuple(value_code='BUYNHOLD', value_description='Buy and Hold', sort_order=1,
+                param_1_code=None, param_2_code=None, 
+                param_3_code=None, param_4_code=None, param_5_code=None),
+            SetMemberTuple(value_code='SMA', value_description='SMA as Baseline', sort_order=2,
+                param_1_code='SMA-BASE-LINE', param_2_code=None, param_3_code=None,
+                param_4_code=None, param_5_code=None),
+            SetMemberTuple(value_code='XMA', value_description='SMA Crossing', sort_order=3,
+                param_1_code='XMA-FAST-PERIOD', param_2_code='XMA-SLOW-PERIOD', param_3_code=None,
+                param_4_code=None, param_5_code=None),
+            SetMemberTuple(value_code='RSIOBOS', value_description='RSI OB/OS', sort_order=4,
+                param_1_code='RSI-PERIOD', param_2_code='RSI-OVERBOT', param_3_code='RSI-BASE-LINE',
+                param_4_code='RSI-OVERSOLD', param_5_code=None),
             )
         )
     ]
@@ -64,5 +67,20 @@ if __name__ == '__main__':
                     param_1_code='EMA-PERIOD', param_2_code=None, param_3_code=None),
                 SetMemberTuple(value_code='EMA-C', value_description='EMA Continuous', sort_order=19,
                     param_1_code='EMAC-P1', param_2_code=None, param_3_code=None),
+    """
+    """
+            # Version 0.1 data
+            SetMemberTuple(value_code='MACD', value_description='MACD', sort_order=1,
+                param_1_code='MAC-FAST-PERIOD', param_2_code='MAC-SLOW-PERIOD', 
+                param_3_code='MAC-SIGNAL-PERIOD', param_4_code=None, param_5_code=None),
+            SetMemberTuple(value_code='BLB', value_description='Bollinger Bands', sort_order=2,
+                param_1_code='BLB-PERIOD', param_2_code=None, param_3_code=None,
+                param_4_code=None, param_5_code=None),
+            SetMemberTuple(value_code='EMA', value_description='EMA', sort_order=3,
+                param_1_code='EMA-PERIOD', param_2_code=None, param_3_code=None,
+                param_4_code=None, param_5_code=None),
+            SetMemberTuple(value_code='RSI', value_description='RSI', sort_order=4,
+                param_1_code='RSI-PERIOD', param_2_code='RSI-LOW-BAND', param_3_code='RSI-UP-BAND',
+                param_4_code=None, param_5_code=None),
     """
 

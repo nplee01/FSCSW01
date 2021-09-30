@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 # For loading data
+from runtest.fixtures.audit_user import FIX_USER, audit_user
 from runtest.fixtures.set_audit_user import set_audit_user
 from runtest.fixtures.value_set import load_value_sets
 from runtest.fixtures.parameter import load_parameters
@@ -25,6 +26,8 @@ TESTUSER = 'tester'
 class Test01(TestCase):
     @classmethod
     def setUpTestData(cls):
+        # Create fixtures user
+        audit_user()
         # Create user for testing
         tu = User.objects.create_user(username=TESTUSER, password=TESTUSER, email=TESTUSER + '@atsc.org.my',
                 is_active=True, is_staff=True, is_superuser=True)
@@ -54,7 +57,7 @@ class Test01(TestCase):
         # Ensure we have some stocks
         vs = ValueSet.objects.get(value_set_code='STOCKS')
         # Check out record owner trigger works
-        self.assertEqual(vs.created_by, TESTUSER)
+        self.assertEqual(vs.created_by, FIX_USER)
         # Check if get choices works
         ch = vs.get_choices() 
         self.assertGreater(len(ch), 0)
@@ -62,7 +65,7 @@ class Test01(TestCase):
     def test_strategies(self):
         vs = ValueSet.objects.get(value_set_code='STRATEGIES')
         # Check out record owner trigger works
-        self.assertEqual(vs.created_by, TESTUSER)
+        self.assertEqual(vs.created_by, FIX_USER)
         ch = vs.get_choices() 
         self.assertGreater(len(ch), 0)
         # All strategies param 1 must have value
@@ -74,19 +77,18 @@ class Test01(TestCase):
     def test_indicators(self):
         vs = ValueSet.objects.get(value_set_code='INDICATORS')
         # Check out record owner trigger works
-        self.assertEqual(vs.created_by, TESTUSER)
+        self.assertEqual(vs.created_by, FIX_USER)
         ch = vs.get_choices() 
         self.assertGreater(len(ch), 0)
-        # All indicators must have at least 1 param
         for sm in vs.valuesetmember_set.all():
-            self.assertIsNotNone(sm.param_1)
-            # Its default value > 0
-            self.assertGreater(sm.param_1.default_value, 0)
+            if sm.param_1:
+                # Its default value > 0
+                self.assertGreater(sm.param_1.default_value, 0)
 
     def test_run_fields(self):
         vs = ValueSet.objects.get(value_set_code='RUN-FIELDS')
         # Check out record owner trigger works
-        self.assertEqual(vs.created_by, TESTUSER)
+        self.assertEqual(vs.created_by, FIX_USER)
         ch = vs.get_choices() 
         self.assertGreater(len(ch), 0)
         # All run fields must have at least 1 param
@@ -98,7 +100,7 @@ class Test01(TestCase):
     def test_size_methods(self):
         vs = ValueSet.objects.get(value_set_code='SIZING-METHODS')
         # Check out record owner trigger works
-        self.assertEqual(vs.created_by, TESTUSER)
+        self.assertEqual(vs.created_by, FIX_USER)
         ch = vs.get_choices() 
         self.assertGreater(len(ch), 0)
         # All methods must have at least 1 param
@@ -122,7 +124,7 @@ class Test01(TestCase):
         self.assertEqual(ret['status'], 'OK')
         self.assertGreater(ret['data']['indicator_count'], 0)
         # Get Indicator Params
-        resp = self.clt.get('/runtest/rpc/GetIndicatorParams/RSI', HTTP_ACCEPT='application/json')
+        resp = self.clt.get('/runtest/rpc/GetIndicatorParams/SMA', HTTP_ACCEPT='application/json')
         self.assertEqual(resp.status_code, 200)
         ret = resp.json()
         self.assertEqual(ret['status'], 'OK')

@@ -309,20 +309,27 @@ footer {
 .border h3 {
   font-family: "Abril Fatface", cursive;
 }
-
-#div_id_portfolio_start .asteriskField{
-  display: none;
+/* Do not show * for required fields */
+.asteriskField {
+    display: none;
 }
 
+/*
+#div_id_portfolio_start .asteriskField{
+  display: none;
+} */
+
+/* Do not show label for Strategy */
 #div_id_strategy_code label{
   display: none;
 }
 
+/* We disable field in form directly. see forms/test_run.py
 #div_id_portfolio_start input[name=portfolio_start] {
   pointer-events: none;
   color:#AAA;
   background:#F5F5F5;
-}
+} 
 
 #div_id_trade_size input[name=trade_size] {
   pointer-events: none;
@@ -335,6 +342,7 @@ footer {
   -webkit-appearance: none;
   margin: 0;
 }
+*/
 
 /* graphing */
 #graph-card{

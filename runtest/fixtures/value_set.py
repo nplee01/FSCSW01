@@ -6,7 +6,8 @@ from runtest.models import Parameter, ValueSet, ValueSetMember
 SetMemberTuple = namedtuple('SetMemberTuple',
 """
     value_code, value_description, sort_order,
-    param_1_code, param_2_code, param_3_code
+    param_1_code, param_2_code, param_3_code,
+    param_4_code, param_5_code
 """)
 
 ValueSetTuple = namedtuple('ValueSetTuple',
@@ -44,17 +45,35 @@ def load_set_members(value_set, set_member_list):
             except Parameter.DoesNotExist:
                 raise ValidationError("Parameter 3 %s not found for set member %s" % 
                         (tp.param_3_code, tp.value_code), code='param_3')
+        if tp.param_4_code is None:
+            p4 = None
+        else:
+            try:
+                p4 = Parameter.objects.get(param_code=tp.param_4_code)
+            except Parameter.DoesNotExist:
+                raise ValidationError("Parameter 4 %s not found for set member %s" % 
+                        (tp.param_4_code, tp.value_code), code='param_4')
+        if tp.param_5_code is None:
+            p5 = None
+        else:
+            try:
+                p5 = Parameter.objects.get(param_code=tp.param_5_code)
+            except Parameter.DoesNotExist:
+                raise ValidationError("Parameter 5 %s not found for set member %s" % 
+                        (tp.param_5_code, tp.value_code), code='param_5')
         try:
             sm = ValueSetMember.objects.get(value_set=value_set, value_code = tp.value_code)
             sm.sort_order = tp.sort_order
             sm.param_1 = p1
             sm.param_2 = p2
             sm.param_3 = p3
+            sm.param_4 = p4
+            sm.param_5 = p5
             upd += 1
         except ValueSetMember.DoesNotExist:
             sm = ValueSetMember(value_set=value_set, value_code=tp.value_code, 
                     value_description=tp.value_description, sort_order=tp.sort_order,
-                    param_1=p1, param_2=p2, param_3=p3)
+                    param_1=p1, param_2=p2, param_3=p3, param_4=p4, param_5=p5)
             ins += 1
         sm.save()
     return (ins, upd)

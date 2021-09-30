@@ -7,21 +7,26 @@
         function initPage() {
             $.getJSON('runtest/rpc/GetRunParams', function(ret) {
                 if (ret.status == 'OK') {
-                    // Set the default values
-                    $("#id_start_date").val(ret.data.start_date);
-                    $("#id_end_date").val(ret.data.end_date);
-                    $("#id_portfolio_start").val(parseInt(ret.data.portfolio_start));
-                    $("#id_portfolio_start").attr({"min": parseInt(ret.data.portfolio_start_min), 
-                        "max": parseInt(ret.data.portfolio_start_max), 
-                        "step": parseInt(ret.data.portfolio_start_step_by)});
-                    $("#id_stop_loss").val(parseInt(ret.data.stop_loss));
-                    $("#id_stop_loss").attr({"min": parseInt(ret.data.stop_loss_min), 
-                        "max": parseInt(ret.data.stop_loss_max), 
-                        "step": parseInt(ret.data.stop_loss_step_by)});
-                    $("#id_trade_size").val(parseInt(ret.data.trade_size));
-                    $("#id_trade_size").attr({"min": parseInt(ret.data.trade_size_min),
-                        "max": parseInt(ret.data.trade_size_max), 
-                        "step": parseInt(ret.data.trade_size_step_by)});
+                    // Set the default values when no value
+                    // When form error, these fields will have value
+                    if (!$("#id_start_date").val()) {
+                        $("#id_start_date").val(ret.data.start_date);
+                    }
+                    if (!$("#id_end_date").val()) {
+                        $("#id_end_date").val(ret.data.end_date);
+                    }
+                    if (!$("#id_portfolio_start").val()) {
+                        $("#id_portfolio_start").val(parseInt(ret.data.portfolio_start));
+                        $("#id_portfolio_start").attr({"min": parseInt(ret.data.portfolio_start_min), 
+                            "max": parseInt(ret.data.portfolio_start_max), 
+                            "step": parseInt(ret.data.portfolio_start_step_by)});
+                    }
+                    if (!$("#id_trade_size").val()) {
+                        $("#id_trade_size").val(parseInt(ret.data.trade_size));
+                        $("#id_trade_size").attr({"min": parseInt(ret.data.trade_size_min),
+                            "max": parseInt(ret.data.trade_size_max), 
+                            "step": parseInt(ret.data.trade_size_step_by)});
+                    }
                 } else {
                     console.error(ret.error);
                 }
@@ -35,10 +40,14 @@
             $("#id_ind_1_param_1").val(null);
             $("#id_ind_1_param_2").val(null);
             $("#id_ind_1_param_3").val(null);
+            $("#id_ind_1_param_4").val(null);
+            $("#id_ind_1_param_5").val(null);
             $("#id_indicator_2_code").val(null);
             $("#id_ind_2_param_1").val(null);
             $("#id_ind_2_param_2").val(null);
             $("#id_ind_2_param_3").val(null);
+            $("#id_ind_2_param_4").val(null);
+            $("#id_ind_2_param_5").val(null);
             // Set focus on first input
             $(':input:enabled:visible:first').focus();
         }
@@ -74,24 +83,56 @@
                         $("#ind_" + indicatorNo + "_param_1").val(null);
                         $("#ind_" + indicatorNo + "_param_2").val(null);
                         $("#ind_" + indicatorNo + "_param_3").val(null);
+                        $("#ind_" + indicatorNo + "_param_4").val(null);
+                        $("#ind_" + indicatorNo + "_param_5").val(null);
                         // We expect data to be an array
-                        if (ret.data.length == 1) {
+                        if (ret.data.length == 0) {
+                            // Show 0 param
+                            $("#ind_" + indicatorNo + "_param_1_group").hide();
+                            $("#ind_" + indicatorNo + "_param_2_group").hide();
+                            $("#ind_" + indicatorNo + "_param_3_group").hide();
+                            $("#ind_" + indicatorNo + "_param_4_group").hide();
+                            $("#ind_" + indicatorNo + "_param_5_group").hide();
+                        }
+                        else if (ret.data.length == 1) {
                             // Show 1 param
                             $("#ind_" + indicatorNo + "_param_1_group").show();
                             $("#ind_" + indicatorNo + "_param_2_group").hide();
                             $("#ind_" + indicatorNo + "_param_3_group").hide();
+                            $("#ind_" + indicatorNo + "_param_4_group").hide();
+                            $("#ind_" + indicatorNo + "_param_5_group").hide();
                         }
                         else if (ret.data.length == 2) {
                             // Show 2 params
                             $("#ind_" + indicatorNo + "_param_1_group").show();
                             $("#ind_" + indicatorNo + "_param_2_group").show();
                             $("#ind_" + indicatorNo + "_param_3_group").hide();
+                            $("#ind_" + indicatorNo + "_param_4_group").hide();
+                            $("#ind_" + indicatorNo + "_param_5_group").hide();
                         }
                         else if (ret.data.length == 3) {
                             // Show 3 params
                             $("#ind_" + indicatorNo + "_param_1_group").show();
                             $("#ind_" + indicatorNo + "_param_2_group").show();
                             $("#ind_" + indicatorNo + "_param_3_group").show();
+                            $("#ind_" + indicatorNo + "_param_4_group").hide();
+                            $("#ind_" + indicatorNo + "_param_5_group").hide();
+                        }
+                        else if (ret.data.length == 4) {
+                            // Show 3 params
+                            $("#ind_" + indicatorNo + "_param_1_group").show();
+                            $("#ind_" + indicatorNo + "_param_2_group").show();
+                            $("#ind_" + indicatorNo + "_param_3_group").show();
+                            $("#ind_" + indicatorNo + "_param_4_group").show();
+                            $("#ind_" + indicatorNo + "_param_5_group").hide();
+                        }
+                        else if (ret.data.length == 5) {
+                            // Show 3 params
+                            $("#ind_" + indicatorNo + "_param_1_group").show();
+                            $("#ind_" + indicatorNo + "_param_2_group").show();
+                            $("#ind_" + indicatorNo + "_param_3_group").show();
+                            $("#ind_" + indicatorNo + "_param_4_group").show();
+                            $("#ind_" + indicatorNo + "_param_5_group").show();
                         }
 
                         // Change label and default values
@@ -120,6 +161,16 @@
             // Event data is the indicator number
             $("#id_indicator_1_code").change('1', onSelectIndicator);
             $("#id_indicator_2_code").change('2', onSelectIndicator);
+            // Trigger change event when form error to hide/show params
+            if ($("#id_strategy_code").val()) {
+                $("#id_strategy_code").trigger('change');
+            }
+            if ($("#id_indicator_1_code").val()) {
+                $("#id_indicator_1_code").trigger('change');
+            }
+            if ($("#id_indicator_2_code").val()) {
+                $("#id_indicator_2_code").trigger('change');
+            }
         });
     </script>
 {% endblock %}
@@ -168,9 +219,6 @@
                     <div class="col-sm-3">
                     {{ form.strategy_code | as_crispy_field }}
                     </div>
-                    <!-- <div class="col-sm-2">
-                    {{ form.stop_loss | as_crispy_field }}
-                    </div> -->
                 </div>
             </div>
 
@@ -192,6 +240,12 @@
                         <div id="ind_1_param_3_group" class="col-sm-1">
                         {{ form.ind_1_param_3 | as_crispy_field }}
                         </div>
+                        <div id="ind_1_param_4_group" class="col-sm-1">
+                        {{ form.ind_1_param_4 | as_crispy_field }}
+                        </div>
+                        <div id="ind_1_param_5_group" class="col-sm-1">
+                        {{ form.ind_1_param_5 | as_crispy_field }}
+                        </div>
                     </div>
                 </div>
                 <div id="ind_2_group">
@@ -209,6 +263,12 @@
                         </div>
                         <div id="ind_2_param_3_group" class="col-sm-1">
                         {{ form.ind_2_param_3 | as_crispy_field }}
+                        </div>
+                        <div id="ind_2_param_4_group" class="col-sm-1">
+                        {{ form.ind_2_param_4 | as_crispy_field }}
+                        </div>
+                        <div id="ind_2_param_5_group" class="col-sm-1">
+                        {{ form.ind_2_param_5 | as_crispy_field }}
                         </div>
                     </div>
                 </div>

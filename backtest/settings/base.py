@@ -143,6 +143,8 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 
 # Stock Price Data directory
 STOCK_DIR = BASE_DIR / 'stockdata'
+# Directory for result files from backtest runs
+RESULTS_DIR = BASE_DIR / 'results'
 
 # allauth settings
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = False

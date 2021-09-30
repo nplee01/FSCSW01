@@ -21,6 +21,10 @@ def get_indicator_params(request, indicator_code):
             data.append(model_to_dict(ic.param_2, fields=fld))
         if ic.param_3:
             data.append(model_to_dict(ic.param_3, fields=fld))
+        if ic.param_4:
+            data.append(model_to_dict(ic.param_4, fields=fld))
+        if ic.param_5:
+            data.append(model_to_dict(ic.param_5, fields=fld))
         ret.set_data(data)
     # No exceptions expected if fixtures has been loaded
     except ValueSet.DoesNotExist as err:

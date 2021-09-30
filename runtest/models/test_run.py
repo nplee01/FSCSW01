@@ -26,7 +26,7 @@ class TestRun(RecordOwner):
     """
 
     # User who ran this test, optional when user is a guest but we should never save w/o user
-    run_by = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name=_("User"))
+    run_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.PROTECT, verbose_name=_("User"))
     # Run status, QUE=Queued, EXE=Executing, COM=Completed
     run_status = models.CharField(verbose_name=_("Run Status"), default='QUE', max_length=3,
             help_text=_("Status of this test run"))
@@ -44,16 +44,16 @@ class TestRun(RecordOwner):
     # Initially allow 1 stock, later can be comma delimited each max=30. Empty choices is to
     # make it a ChoiceField in its form.
     stock_ticker = models.CharField(verbose_name=_("Stock Name"), max_length=200, 
-            choices=[], help_text=_("Stock to be selected for this backtest run"))
+            help_text=_("Stock to be selected for this backtest run"))
     # Start/End date range for backtest
     start_date = models.DateField(verbose_name=_("Start Date"), help_text=_("Backtest to start from this date"))
     end_date = models.DateField(verbose_name=_("End Date"), help_text=_("Backtest to end on this date"))
     # Portfolio starting amount
-    portfolio_start = models.IntegerField(verbose_name=_("Starting Capital"),
-            help_text=_("Backtest will start with this starting capital amount"), default=100000)
+    portfolio_start = models.IntegerField(verbose_name=_("Initial Capital"),
+            help_text=_("Backtest will start with this initial capital amount"), default=10000)
     # Strategy selected (from ValueSet(STRATEGIES))
     strategy_code = models.CharField(verbose_name=_("Strategy"), max_length=30,
-            choices=[], help_text=_("Strategy to use when triggering trades using Indicators"))
+            help_text=_("Strategy to use when triggering trades using Indicators"))
     stop_loss = models.FloatField(verbose_name=_("Stop Loss"), null=True,
             help_text=_("Triggers sell when % loss hit this level based on cost price"))
     # Not used for now
@@ -62,37 +62,54 @@ class TestRun(RecordOwner):
     # Up to 3 indicators used in this run. Selected from ValueSet(INDICATORS)
     # Each indicator may have up to 3 parameters of int value
     indicator_1_code = models.CharField(verbose_name=_("Indicator 1"), max_length=30, null=True, blank=True,
-        choices=[], help_text=_("Indicator 1 used for this backtest run"))
+        help_text=_("Indicator 1 used for this backtest run"))
     ind_1_param_1 = models.IntegerField(verbose_name=_("Param 1"), null=True, blank=True)
     ind_1_param_2 = models.IntegerField(verbose_name=_("Param 2"), null=True, blank=True)
     ind_1_param_3 = models.IntegerField(verbose_name=_("Param 3"), null=True, blank=True)
+    ind_1_param_4 = models.IntegerField(verbose_name=_("Param 4"), null=True, blank=True)
+    ind_1_param_5 = models.IntegerField(verbose_name=_("Param 5"), null=True, blank=True)
     indicator_2_code = models.CharField(verbose_name=_("Indicator 2"), max_length=30, null=True, blank=True,
-        choices=[], help_text=_("Indicator 2 used for this backtest run"))
+        help_text=_("Indicator 2 used for this backtest run"))
     ind_2_param_1 = models.IntegerField(verbose_name=_("Param 1"), null=True, blank=True)
     ind_2_param_2 = models.IntegerField(verbose_name=_("Param 2"), null=True, blank=True)
     ind_2_param_3 = models.IntegerField(verbose_name=_("Param 3"), null=True, blank=True)
+    ind_2_param_4 = models.IntegerField(verbose_name=_("Param 4"), null=True, blank=True)
+    ind_2_param_5 = models.IntegerField(verbose_name=_("Param 5"), null=True, blank=True)
+    # Not used
     indicator_3_code = models.CharField(verbose_name=_("Indicator 3"), max_length=30, null=True, blank=True,
-        choices=[], help_text=_("Indicator 3 used for this backtest run"))
+        help_text=_("Indicator 3 used for this backtest run"))
     ind_3_param_1 = models.IntegerField(verbose_name=_("Param 1"), null=True, blank=True)
     ind_3_param_2 = models.IntegerField(verbose_name=_("Param 2"), null=True, blank=True)
     ind_3_param_3 = models.IntegerField(verbose_name=_("Param 3"), null=True, blank=True)
+    ind_3_param_4 = models.IntegerField(verbose_name=_("Param 4"), null=True, blank=True)
+    ind_3_param_5 = models.IntegerField(verbose_name=_("Param 5"), null=True, blank=True)
     # Trade Sizing Method
     sizing_method = models.CharField(verbose_name=_("Sizing Method"), max_length=30, null=True, blank=True,
         help_text=_("Trade Sizing method decides how much to trade"))
-    trade_size = models.IntegerField(verbose_name=_(""), null=True, default=1000,
-        help_text=_(""))
+    trade_size = models.IntegerField(verbose_name=_("Trade Size"), null=True, default=1000,
+        help_text=_("Units per trade"))
     # End Input Parameters
     # Results Summary. To be updated after run
-    portfolio_end = models.IntegerField(verbose_name=_("Final Capital"), null=True,
+    portfolio_end = models.IntegerField(verbose_name=_("Final Equity"), null=True,
             help_text=_("Final Capital Amount when Backtest Ends"))
+    equity_performance = models.FloatField(verbose_name=_("Equity Performance"), null=True)
+    equity_roi = models.FloatField(verbose_name=_("Equity ROI"), null=True)
+    trades = models.PositiveIntegerField(verbose_name=_("Trades"), null=True,
+        help_text=_("Number of trades made"))
     win_trades = models.PositiveIntegerField(verbose_name=_("Winning Trades"), null=True,
         help_text=_("Number of winning trades made"))
     lose_trades = models.PositiveIntegerField(verbose_name=_("Losing Trades"), null=True,
         help_text=_("Number of losing trades made"))
+    win_rate = models.FloatField(verbose_name=_("Win Rate"), null=True)
+    # Not used
     avg_win_amount = models.IntegerField(verbose_name=_("Average Win"), null=True,
             help_text=_("Average winning amount per trade"))
     avg_loss_amount = models.IntegerField(verbose_name=_("Average Loss"),null=True,
             help_text=_("Average losing amount per trade"))
+    # Drawdown
+    max_drawdown = models.FloatField(verbose_name=_("Maximum Drawdown"), null=True)
+    drawdown_date = models.DateField(verbose_name=_("Drawdown Date"), null=True)
+    # Not used
     sharpe_ratio = models.FloatField(verbose_name=_("Sharpe Ratio"), null=True)
     sqn_no = models.FloatField(verbose_name=_("SQN No"), null=True)
     
@@ -111,6 +128,8 @@ class TestRun(RecordOwner):
 
 class TestRunResult(RecordOwner):
     """
+    Not needed anymore. Trade data saved in results directory.
+
     Child model of TestRun to store all trades triggered by the Indicators.
 
     This model should not be editable (ie updated in a form) but created based

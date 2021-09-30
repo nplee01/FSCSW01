@@ -20,7 +20,7 @@ class ValueSet(RecordOwner):
     Whenever you want to create a model that has just a Code and
     a Value, avoid doing so and just create a new ValueSet. Use
     your model name (in uppercase) as the Value Set Code. In
-    addition, we allow up to 3 params per Value, which your
+    addition, we allow up to 5 params per Value, which your
     own program can use in anyway it likes.
     """
     # Each Value Set has a Unique Code
@@ -43,7 +43,7 @@ class ValueSet(RecordOwner):
         if self.id:
             # For mandatory fields, should pass in is required True
             if not is_required:
-                choices = [(u'', _("No Selection"))]
+                choices = [('', _("No Selection"))]
             # Must prepend an empty selection for Fields that allows blank=True
             choices += [(row.value_code, row.value_description)
                 for row in self.valuesetmember_set.all().order_by('sort_order', 'value_code')]
@@ -65,13 +65,17 @@ class ValueSetMember(RecordOwner):
     sort_order = models.PositiveSmallIntegerField(verbose_name=_("Sort Order"), 
         blank=True, null=True,
         help_text=_("Optionally override sorting by Value Code"))
-    # up to 3 optional Parameters that accept integers
+    # up to 5 optional Parameters that accept integers
     param_1 = models.ForeignKey(Parameter, on_delete=models.PROTECT, verbose_name=_("Parameter 1"),
             null=True, related_name='param_1')
     param_2 = models.ForeignKey(Parameter, on_delete=models.PROTECT, verbose_name=_("Parameter 2"),
             null=True, related_name='param_2')
     param_3 = models.ForeignKey(Parameter, on_delete=models.PROTECT, verbose_name=_("Parameter 3"),
             null=True, related_name='param_3')
+    param_4 = models.ForeignKey(Parameter, on_delete=models.PROTECT, verbose_name=_("Parameter 4"),
+            null=True, related_name='param_4')
+    param_5 = models.ForeignKey(Parameter, on_delete=models.PROTECT, verbose_name=_("Parameter 5"),
+            null=True, related_name='param_5')
 
     class Meta:
         db_table = 'value_set_member'

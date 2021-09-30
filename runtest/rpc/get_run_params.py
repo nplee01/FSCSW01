@@ -16,7 +16,7 @@ def get_run_params(request):
         rr = ValueSetMember.objects.get(value_set=vs, value_code='RUN-RANGE')
         # We store date as ordinal in Parameter
         data['start_date'] = date.fromordinal(rr.param_1.default_value)
-        data['end_date'] = date.fromordinal(rr.param_2.default_value)
+        data['end_date'] = date.fromordinal(rr.param_2.default_value or 100000)
         # Get Portfolio Start amount
         pf = ValueSetMember.objects.get(value_set=vs, value_code='PORTFOLIO-START')
         data['portfolio_start'] = pf.param_1.default_value

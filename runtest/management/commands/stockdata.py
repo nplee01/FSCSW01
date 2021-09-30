@@ -3,7 +3,7 @@ import os, subprocess
 from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
 
-from btengine.stocks import download_all_stocks
+from runtest.stocks import download_all_stocks
 
 class Command(BaseCommand):
     help = 'Download latest stock prices'

@@ -8,6 +8,8 @@ from runtest.rpc.get_indicator_params import get_indicator_params
 from runtest.rpc.get_sizing_params import get_sizing_params
 from runtest.rpc.get_stock_prices import get_stock_prices
 # from runtest.rpc.get_test_history import get_test_history
+from runtest.rpc.get_results_data import get_results_data
+from runtest.rpc.get_results_summary import get_results_summary
 
 urlpatterns = [
         path('rpc/GetRunParams', get_run_params),
@@ -15,4 +17,6 @@ urlpatterns = [
         re_path('rpc/GetIndicatorParams/(?P<indicator_code>[A-Z0-9\-]+)', get_indicator_params),
         re_path('rpc/GetSizingParams/(?P<sizing_code>[A-Z0-9\-]+)', get_sizing_params),
         re_path('rpc/GetStockPrices/(?P<stock_name>[A-Z0-9\-\.]+)/(?P<start_date>\d{4}\-\d{2}\-\d{2})/(?P<end_date>\d{4}\-\d{2}\-\d{2})', get_stock_prices),
+        re_path('rpc/GetResultsData/(?P<run_id>\d+)', get_results_data),
+        re_path('rpc/GetResultsSummary/(?P<run_id>\d+)', get_results_summary),
 ]
