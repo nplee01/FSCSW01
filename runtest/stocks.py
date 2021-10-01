@@ -71,17 +71,19 @@ def download_stock(ticker, start_date, end_date, first_download):
     else:
         # New file
         prices.to_csv(csvf)
-    # Update download dates to stocks
-    # Note: Some stocks may not have prices up to end date,
-    # so last_date <= end_date
-    last_date = prices.index[-1] # Last Row
-    if first_download:
-        # Get earliest date from prices downloaded
-        first_date = prices.index[0] # First Row
-        stock.param_1.default_value = first_date.toordinal()
-        stock.param_1.save()
-    stock.param_2.default_value = last_date.toordinal()
-    stock.param_2.save()
+    # Update download dates to stocks, watch out if no rows downloaded
+    if len(prices) > 0:
+        # Note: Some stocks may not have prices up to end date,
+        # so last_date <= end_date
+        last_date = prices.index[-1] # Last Row
+        if first_download:
+            # Get earliest date from prices downloaded
+            first_date = prices.index[0] # First Row
+            stock.param_1.default_value = first_date.toordinal()
+            stock.param_1.save()
+        # Update end date
+        stock.param_2.default_value = last_date.toordinal()
+        stock.param_2.save()
     # Rows downloaded
     return len(prices)
 
