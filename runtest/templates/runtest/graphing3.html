@@ -40,33 +40,36 @@
         <div class="card"> 
           <div class="summary-row">
             <span class="summary-key">Initial Capital : </span>
-            <span class="summary-data">100000.00</span>
+            <span class="summary-data">
+                {{summary.InitCapital | stringformat:".2f" }}
+            </span>
           </div>
           <hr>
           <div class="summary-row">
             <span class="summary-key">Equity ROI : </span>
-            <span class="summary-data">50.98%</span>
+            <span class="summary-data">{{summary.EquityROI | stringformat:".2f"}}%</span>
           </div>
           <hr>
           <div class="summary-row">
             <span class="summary-key">Win Rate : </span>
-            <span class="summary-data">21.43%</span>
+            <span class="summary-data">{{summary.WinRate | stringformat:".2f" }}%</span>
           </div>
           <hr>
           <div class="summary-row"> 
             <span class="summary-key">Max Drawdown : </span>
-            <span class="summary-data">21.12%</span>
+            <span class="summary-data">{{summary.MaxDrawdownValue | stringformat:".2f"}}</span>
           </div>
           <hr>
           <div class="summary-row">
             <span class="summary-key">Final Equity Value : </span>
-            <span class="summary-data">8432.00</span>
+            <span class="summary-data">{{summary.FinalEquity | stringformat:".2f" }}</span>
           </div>
         </div>
       </div>
     </div>
   </div>
-    
+
+  <input type="hidden" id="myVar" name="variable" value="{{ run_id }}">
 
   <script src="static/js/graphing3.js"></script>
 

@@ -1,3 +1,4 @@
+from runtest.views.graphsummary import graphsummary
 from django.shortcuts import render
 from django.utils import timezone
 
@@ -5,6 +6,7 @@ from runtest.forms.test_run import TestRunForm
 from runtest.models import TestRun, ValueSet, ValueSetMember
 from runtest.stocks import get_stock
 from btengine.api import api_bt_run
+
 
 def get_strategy_desc(strategy, indicators):
     vs = ValueSet.objects.get(value_set_code='STRATEGIES')
@@ -16,7 +18,8 @@ def get_strategy_desc(strategy, indicators):
         desc += vsm.value_description
     return desc
 
-def backtest(request):        
+
+def backtest(request):
     """
     Allow user to select input parameters for a back test and
     subsequently run the back test when form is submitted
@@ -29,7 +32,7 @@ def backtest(request):
         else:
             usr = None
         obj = TestRun(run_by=usr, run_status='EXE', run_on=timezone.now(),
-                exec_start_on=timezone.now())
+                      exec_start_on=timezone.now())
         # Handle submitted form
         form = TestRunForm(instance=obj, data=request.POST)
         # Validate the form
@@ -44,21 +47,25 @@ def backtest(request):
                 if ind:
                     params = [ind]
                     for j in range(1, 6):
-                        param = form.cleaned_data.get('ind_' + str(i) + '_param_' + str(j))
+                        param = form.cleaned_data.get(
+                            'ind_' + str(i) + '_param_' + str(j))
                         if param:
                             params.append(param)
                     indicators.append(params)
             # Indicators looks like [['SMA', 10, 20], ['XMA', 100, 200, 300]]
-            desc = get_strategy_desc(form.cleaned_data['strategy_code'], indicators)
+            desc = get_strategy_desc(
+                form.cleaned_data['strategy_code'], indicators)
             # Call backtest
-            status = api_bt_run(form.instance.id, stock.value_description, form.cleaned_data['start_date'], 
-                    form.cleaned_data['end_date'], form.cleaned_data['portfolio_start'], 
-                    form.cleaned_data['trade_size'], desc, form.cleaned_data['strategy_code'], indicators)
+            status = api_bt_run(form.instance.id, stock.value_description, form.cleaned_data['start_date'],
+                                form.cleaned_data['end_date'], form.cleaned_data['portfolio_start'],
+                                form.cleaned_data['trade_size'], desc, form.cleaned_data['strategy_code'], indicators)
             # Update as completed
             form.instance.exec_end_on = timezone.now()
             form.instance.run_status = 'COM'
             form.instance.save()
             # TODO: Redirect to results page
+
+            return graphsummary(request, form.instance.id)
     else:
         # New form
         form = TestRunForm()

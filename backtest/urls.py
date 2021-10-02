@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, re_path
 
-from runtest.views import dispatcher, backtest, testhistory
+from runtest.views import dispatcher, backtest, testhistory, graphsummary
 
 urlpatterns = [
     # We are using 3rd party allauth app for authentication
@@ -31,6 +31,6 @@ urlpatterns = [
     path('about', dispatcher, {'template_name': 'runtest/about.html'}, name='about'),  
     path('graphing', dispatcher, {'template_name': 'runtest/graphing.html'}, name='graphing'),  
     path('graphing2', dispatcher, {'template_name': 'runtest/graphing2.html'}, name='graphing'),  
-    path('graphing3', dispatcher, {'template_name': 'runtest/graphing3.html'}, name='graphing'),  
+    path('graphing3', graphsummary, name='summary'),  
     path('runtest/', include('runtest.urls')),
 ]
