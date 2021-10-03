@@ -22,10 +22,13 @@ am4core.ready(function() {
   // chart.dataSource.parser.options.reverse = true;
 
   var run_id = document.getElementById("myVar").value;
-  $.getJSON('runtest/rpc/GetResultsData/' + run_id, res => {
-    if(res.status == 'OK'){
-      console.log(res.data);
+  $.getJSON("runtest/rpc/GetResultsData/" + run_id, res => {
+    if(res.status == "OK"){
+      // console.log(res.data[Object.keys(res.data)[0]].RSI);
+      // console.log(res.data);
       chart.data = res.data;
+    } else {
+      alert("Sorry, please try again later.");
     }
     // TODO: Else return a alert
   })
@@ -35,7 +38,7 @@ am4core.ready(function() {
   chart.leftAxesContainer.layout = "vertical";
   
   // uncomment this line if you want to change order of axes
-  //chart.bottomAxesContainer.reverseOrder = true;
+  // chart.bottomAxesContainer.reverseOrder = true;
   
   var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
   dateAxis.renderer.grid.template.location = 0;
@@ -79,31 +82,14 @@ am4core.ready(function() {
   series.dataFields.lowValueY = "Low";
   series.dataFields.highValueY = "High";
   series.clustered = false;
-  series.tooltipText = "open: {openValueY.value}\nlow: {lowValueY.value}\nhigh: {highValueY.value}\nclose: {valueY.value}";
+  series.tooltipText = "Open: {openValueY.value}\nlow: {lowValueY.value}\nhigh: {highValueY.value}\nclose: {valueY.value}";
   series.name = "MSFT";
   series.defaultState.transitionDuration = 0;
-  
-  var valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
-  valueAxis2.tooltip.disabled = true;
-  // height of axis
-  valueAxis2.height = am4core.percent(35);
-  valueAxis2.zIndex = 3
-  // this makes gap between panels
-  valueAxis2.marginTop = 30;
-  valueAxis2.renderer.baseGrid.disabled = true;
-  valueAxis2.renderer.inside = true;
-  valueAxis2.renderer.labels.template.verticalCenter = "bottom";
-  valueAxis2.renderer.labels.template.padding(2, 2, 2, 2);
-  //valueAxis.renderer.maxLabelPosition = 0.95;
-  valueAxis2.renderer.fontSize = "0.8em"
-  
-  valueAxis2.renderer.gridContainer.background.fill = am4core.color("#000000");
-  valueAxis2.renderer.gridContainer.background.fillOpacity = 0.05;
 
   var seriesL = chart.series.push(new am4charts.LineSeries());
   seriesL.dataFields.dateX = "Date";
   seriesL.dataFields.valueY = "Close";
-  seriesL.tooltipText = "close: {valueY.value}";
+  seriesL.tooltipText = "Close: {valueY.value}";
   seriesL.name = "MSFT: Value";
   seriesL.defaultState.transitionDuration = 0;
 
@@ -124,11 +110,19 @@ am4core.ready(function() {
   // valueAxisL.renderer.gridContainer.background.fill = am4core.color("#000000");
   // valueAxisL.renderer.gridContainer.background.fillOpacity = 0.05;
   
+  // Series for SMA
+  var seriesF = chart.series.push(new am4charts.LineSeries());
+  seriesF.dataFields.dateX = "Date";
+  seriesF.dataFields.valueY = "SMA";
+  seriesF.tooltipText = "Baseline SMA: {valueY.value}";
+  seriesF.name = "MSFT: Value";
+  seriesF.defaultState.transitionDuration = 0;
+
   // Series for SMA_S
   var seriesS = chart.series.push(new am4charts.LineSeries());
   seriesS.dataFields.dateX = "Date";
   seriesS.dataFields.valueY = "SMA_S";
-  seriesS.tooltipText = "sma slow: {valueY.value}";
+  seriesS.tooltipText = "SMA slow: {valueY.value}";
   seriesS.name = "MSFT: Value";
   seriesS.defaultState.transitionDuration = 0;
 
@@ -149,12 +143,11 @@ am4core.ready(function() {
   // valueAxisS.renderer.gridContainer.background.fill = am4core.color("#000000");
   // valueAxisS.renderer.gridContainer.background.fillOpacity = 0.05;
 
-  
   // Series for SMA_F
   var seriesF = chart.series.push(new am4charts.LineSeries());
   seriesF.dataFields.dateX = "Date";
   seriesF.dataFields.valueY = "SMA_F";
-  seriesF.tooltipText = "sma fast: {valueY.value}";
+  seriesF.tooltipText = "SMA fast: {valueY.value}";
   seriesF.name = "MSFT: Value";
   seriesF.defaultState.transitionDuration = 0;
 
@@ -175,17 +168,65 @@ am4core.ready(function() {
   // valueAxisF.renderer.gridContainer.background.fill = am4core.color("#000000");
   // valueAxisF.renderer.gridContainer.background.fillOpacity = 0.05;
 
-  // Second chart
-  var series2 = chart.series.push(new am4charts.ColumnSeries());
+  // Second chart: RSI
+  // TODO: Only generate if there is RSI in the data
+  // console.log(chart.data);
+  // if (res.data[Object.keys(res.data)[0]].RSI) {
+  var valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
+  valueAxis2.tooltip.disabled = true;
+  // height of axis
+  valueAxis2.height = am4core.percent(35);
+  valueAxis2.zIndex = 3
+  // this makes gap between panels
+  valueAxis2.marginTop = 30;
+  valueAxis2.renderer.baseGrid.disabled = true;
+  valueAxis2.renderer.inside = true;
+  valueAxis2.renderer.labels.template.verticalCenter = "bottom";
+  valueAxis2.renderer.labels.template.padding(2, 2, 2, 2);
+  //valueAxis.renderer.maxLabelPosition = 0.95;
+  valueAxis2.renderer.fontSize = "0.8em"
+  
+  valueAxis2.renderer.gridContainer.background.fill = am4core.color("#000000");
+  valueAxis2.renderer.gridContainer.background.fillOpacity = 0.05;
+
+  var series2 = chart.series.push(new am4charts.LineSeries());
   series2.dataFields.dateX = "Date";
   series2.clustered = false;
-  series2.dataFields.valueY = "Volume";
+  series2.dataFields.valueY = "RSI";
   series2.yAxis = valueAxis2;
-  series2.tooltipText = "{valueY.value}";
+  series2.tooltipText = "RSI: {valueY.value}";
   series2.name = "Series 2";
-  // volume should be summed
-  series2.groupFields.valueY = "sum";
   series2.defaultState.transitionDuration = 0;
+  // }
+
+  // Third chart: Volume
+  var valueAxis3 = chart.yAxes.push(new am4charts.ValueAxis());
+  valueAxis3.tooltip.disabled = true;
+  // height of axis
+  valueAxis3.height = am4core.percent(35);
+  valueAxis3.zIndex = 3
+  // this makes gap between panels
+  valueAxis3.marginTop = 30;
+  valueAxis3.renderer.baseGrid.disabled = true;
+  valueAxis3.renderer.inside = true;
+  valueAxis3.renderer.labels.template.verticalCenter = "bottom";
+  valueAxis3.renderer.labels.template.padding(2, 2, 2, 2);
+  //valueAxis.renderer.maxLabelPosition = 0.95;
+  valueAxis3.renderer.fontSize = "0.8em"
+  
+  valueAxis3.renderer.gridContainer.background.fill = am4core.color("#000000");
+  valueAxis3.renderer.gridContainer.background.fillOpacity = 0.05;
+
+  var series3 = chart.series.push(new am4charts.ColumnSeries());
+  series3.dataFields.dateX = "Date";
+  series3.clustered = false;
+  series3.dataFields.valueY = "Volume";
+  series3.yAxis = valueAxis3;
+  series3.tooltipText = "Volume: {valueY.value}";
+  series3.name = "Series 3";
+  // volume should be summed
+  series3.groupFields.valueY = "sum";
+  series3.defaultState.transitionDuration = 0;
 
   chart.cursor = new am4charts.XYCursor();
   
@@ -200,7 +241,7 @@ am4core.ready(function() {
   chart.scrollbarX = scrollbarX;
   scrollbarX.scrollbarChart.xAxes.getIndex(0).minHeight = undefined;
 
-  chart.svgContainer.htmlElement.style.height = "700px";
+  chart.svgContainer.htmlElement.style.height = "900px";
   
   // Date format to be used in input fields
   var inputFieldFormat = "yyyy-MM-dd";
