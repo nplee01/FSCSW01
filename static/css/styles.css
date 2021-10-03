@@ -126,10 +126,11 @@ footer {
   padding: 20px 20px;
   border: 1px solid #ccc;
   width: 600px;
-  min-width: 400px;
+  min-width: 400px; 
   height: 400px;
   margin: 0px 50px;
   display: none;
+  overflow-y: auto;
 }
 
 .tabcontent h3 {
