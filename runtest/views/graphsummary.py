@@ -11,6 +11,8 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 
+# TODO: Apply the login_required and csrf_protect
+
 
 def graphsummary(request, run_id):
 

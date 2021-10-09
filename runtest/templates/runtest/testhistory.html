@@ -29,10 +29,10 @@
         <td>{{ data.run_on }}</td>
         <td>{{ data.stock_ticker }}</td>
         <td>{{ data.portfolio_start }}</td>
-        <td>{{ data.equity_performance }}</td>
-        <td>{{ data.equity_roi }}</td>
-        <td>{{ data.win_rate }}</td>
-        <td>{{ data.max_drawdown }}</td>
+        <td>{{ data.equity_performance | stringformat:".2f" }}</td>
+        <td>{{ data.equity_roi | stringformat:".2f" }}</td>
+        <td>{{ data.win_rate | stringformat:".2f" }}</td>
+        <td>{{ data.max_drawdown | stringformat:".2f" }}</td>
         <td><button class="fas fa-search fa-md table-btn" onclick="gotoSummary(`{{data.id}}`)" ></button></td>
       </tr>
       {% endfor %}

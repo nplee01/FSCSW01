@@ -7,6 +7,11 @@ from runtest.models import TestRun, ValueSet, ValueSetMember
 from runtest.stocks import get_stock
 from btengine.api import api_bt_run
 
+import os
+import json
+from datetime import datetime
+from django.conf import settings
+
 
 def get_strategy_desc(strategy, indicators):
     vs = ValueSet.objects.get(value_set_code='STRATEGIES')
@@ -31,6 +36,7 @@ def backtest(request):
             usr = request.user
         else:
             usr = None
+
         obj = TestRun(run_by=usr, run_status='EXE', run_on=timezone.now(),
                       exec_start_on=timezone.now())
         # Handle submitted form
@@ -59,11 +65,43 @@ def backtest(request):
             status = api_bt_run(form.instance.id, stock.value_description, form.cleaned_data['start_date'],
                                 form.cleaned_data['end_date'], form.cleaned_data['portfolio_start'],
                                 form.cleaned_data['trade_size'], desc, form.cleaned_data['strategy_code'], indicators)
+
+            # Update the database using the excel
+            sm = json.load(
+                open(os.path.join(settings.RESULTS_DIR, str(form.instance.id) + 'P.json')))
+
+            # Add the data into the database
+            # TODO: Add in stock.value_description after addng a new column in the table
+            # form.instance.stock_fullname = sm['StockName']
+
+            form.instance.portfolio_end = sm['FinalEquity']
+            form.instance.equity_performance = sm['EquityPerfomance']
+            form.instance.equity_roi = sm['EquityROI']
+            form.instance.trades = sm['TradeCount']
+            form.instance.win_trades = sm['ProfitTradeCount']
+            form.instance.lose_trades = sm['LossingTradeCount']
+            form.instance.win_rate = sm.get('WinRate', '0')
+            form.instance.max_drawdown = sm.get('MaxDrawdownValue', '0')
+
+            # FIXME: 0 cannot be render on graphing.html
+
+            try:
+                max_drawdown_date = datetime.strptime(
+                    sm['MaxDrawdownDate'], '%d-%m-%Y')
+                form.instance.drawdown_date = f'{max_drawdown_date:%Y-%m-%d}'
+            except:
+                form.instance.drawdown_date = form.cleaned_data['end_date']
+
+            # TODO: !!! CHECKING NEEDED !!!
+            # form.instance.avg_win_amount = sm['WinRate'] / \
+            #     100 * sm['InitCapital']
+            # form.instance.avg_loss_amount = (
+            #     (100 - sm['WinRate'])/100) * sm['InitCapital']
+
             # Update as completed
             form.instance.exec_end_on = timezone.now()
             form.instance.run_status = 'COM'
             form.instance.save()
-            # TODO: Redirect to results page
 
             return graphsummary(request, form.instance.id)
     else:

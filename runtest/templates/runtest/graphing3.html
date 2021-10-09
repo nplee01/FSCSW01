@@ -23,12 +23,12 @@
           To: <input type="text" id="tofield" class="amcharts-input" />
         </div>
         <div style="float: right; margin-right: 15px;">
-          <button id="b1m" class="amcharts-input">1m</button>
-          <button id="b3m" class="amcharts-input">3m</button>
-          <button id="b6m" class="amcharts-input">6m</button>
-          <button id="b1y" class="amcharts-input">1y</button>
-          <button id="bytd" class="amcharts-input">YTD</button>
-          <button id="bmax" class="amcharts-input">MAX</button>
+          <button id="b1m" class="amcharts-input btn btn-dark" onclick="toggle(this.id)">1m</button>
+          <button id="b3m" class="amcharts-input btn btn-dark" onclick="toggle(this.id)">3m</button>
+          <button id="b6m" class="amcharts-input btn btn-dark" onclick="toggle(this.id)">6m</button>
+          <button id="b1y" class="amcharts-input btn btn-dark" onclick="toggle(this.id)">1y</button>
+          <button id="bytd" class="amcharts-input btn btn-dark" onclick="toggle(this.id)">YTD</button>
+          <button id="bmax" class="amcharts-input btn btn-warning" onclick="toggle(this.id)">MAX</button>
         </div>
       </div>
       <div id="chartdiv"></div>
@@ -96,6 +96,14 @@
   <script src="{% static 'js/graphing3.js' %}"></script>
   
   <script>
+    function toggle(id){
+      const btnList = ["b1m", "b3m", "b6m", "b1y", "bytd", "bmax"];
+      btnList.forEach(btn => document.getElementById(btn).classList.remove('btn-warning'))
+      btnList.forEach(btn => document.getElementById(btn).classList.add('btn-dark'))
+      document.getElementById(id).classList.remove('btn-dark');
+      document.getElementById(id).classList.add('btn-warning');
+    }
+
     // TODO: Remove WinRate and Max drawdown if the run is buy and hold
     // OR SUGGEST TO REMOVE BUY AND HOLD
 

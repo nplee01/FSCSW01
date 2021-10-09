@@ -81,14 +81,14 @@ am4core.ready(function() {
   series.dataFields.lowValueY = "Low";
   series.dataFields.highValueY = "High";
   series.clustered = false;
-  series.tooltipText = "Open: {openValueY.value}\nlow: {lowValueY.value}\nhigh: {highValueY.value}\nclose: {valueY.value}";
+  series.tooltipText = "Date: {dateX.formatDate('yyyy-MM-dd')}\nOpen: {openValueY.value}\nClose: {valueY.value}\nHigh: {highValueY.value}\nLow: {lowValueY.value}";
   series.name = "MSFT";
   series.defaultState.transitionDuration = 0;
 
   var seriesL = chart.series.push(new am4charts.LineSeries());
   seriesL.dataFields.dateX = "Date";
   seriesL.dataFields.valueY = "Close";
-  seriesL.tooltipText = "Close: {valueY.value}";
+  // seriesL.tooltipText = "Close: {valueY.value}";
   seriesL.name = "MSFT: Value";
   seriesL.defaultState.transitionDuration = 0;
 
