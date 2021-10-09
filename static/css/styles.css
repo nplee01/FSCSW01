@@ -310,6 +310,16 @@ footer {
 .border h3 {
   font-family: "Abril Fatface", cursive;
 }
+
+.errorlist {
+  font-family: "Raleway";
+  background-color: rgba(218, 218, 218, 0.7);
+  padding: 0.5rem;
+  color: red;
+  font-weight: bold;
+  text-align: center;
+}
+
 /* Do not show * for required fields */
 .asteriskField {
     display: none;

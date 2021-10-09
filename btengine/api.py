@@ -45,7 +45,7 @@ def api_bt_run(run_no, stock_name, from_date, to_date, init_capital, contract_si
     stock = read_stock(stock_name, from_date, to_date)
     signal = apply_strategy(stock,stg_cd,id_list)          
     order=generate_order(signal)
-    TL=broker_simulator(order,init_capital,verbose)
+    TL=broker_simulator(order, init_capital, contract_size, verbose)
     if len(TL) == 0:
         return False
     else:
