@@ -12,13 +12,13 @@
     <thead>
       <tr>
         <th>No.</th>
-        <th>Test Date / Time</th>
+        <th>Datetime</th>
         <th>Stock Name</th>
         <th>Initial Capital</th>
         <th>Final Equity</th>
-        <th>Equity ROI / %</th>
-        <th>Win Rate / %</th>
-        <th>Max Drawdown / %</th>
+        <th>Equity ROI (%)</th>
+        <th>Win Rate (%)</th>
+        <th>Max Drawdown</th>
         <th></th>
       </tr>
     </thead>
@@ -43,7 +43,17 @@
 <script>
   $(".testrecord").DataTable();
   function gotoSummary(id){
-    location.href = '/graphing3/' + id;
+
+    // Only direct to the graphing page if the id exists
+    $.getJSON("../../runtest/rpc/GetResultsData/" + id, res => {
+      if(res.status == "OK"){
+        location.href = '/graphing3/' + id;
+      } else {
+        alert("Sorry, please try again later.");
+        // TODO: Remove the data entry using AJAX
+      }
+    })
+
   }
 </script>
 

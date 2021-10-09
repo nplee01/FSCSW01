@@ -13,6 +13,8 @@ Add in the runtest/url.py, create a new rpc call
 	1. import the function
 	2. map the path to the function 
 '''
+import os
+from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
@@ -47,6 +49,16 @@ def testhistory(request, id=None):
         if id:
             row = TestRun.objects.get(pk=id)
             row.delete()
+
+            # Delete the files
+            orders_filepath = os.path.join(settings.RESULTS_DIR, str(id) + 'G.xlsx')
+            performance_filepath = os.path.join(settings.RESULTS_DIR, str(id) + 'P.json')
+            try:
+                os.remove(orders_filepath)
+                os.remove(performance_filepath)
+            except:
+                pass
+
     # Handle Get here or fallthru from handling Post and Delete to requery and redisplay data
     testhistorydata = TestRun.objects.filter(run_by = request.user)
     return render(request, template_name, context={'testhistorydata': testhistorydata})
@@ -55,35 +67,35 @@ def testhistory(request, id=None):
 # https://stackoverflow.com/questions/29212713/update-django-database-through-javascript
 # https://www.geeksforgeeks.org/update-view-function-based-views-django/
 # https://docs.djangoproject.com/en/3.2/topics/http/urls/
-@csrf_protect
-@login_required
-def update(request, id=None, remark=None):
+# @csrf_protect
+# @login_required
+# def update(request, id=None, remark=None):
     
-    if request.method == "POST":
-        if remark and id != None:
-            row = TestRun.objects.get(id = id)
-            row.user_remarks = remark
+#     if request.method == "POST":
+#         if remark and id != None:
+#             row = TestRun.objects.get(id = id)
+#             row.user_remarks = remark
         
-    template_name = 'runtest/home.html'
-    return render(request, template_name)
+#     template_name = 'runtest/home.html'
+#     return render(request, template_name)
 
 
-@login_required
-@csrf_protect
-def delete_entry(request):
+# @login_required
+# @csrf_protect
+# def delete_entry(request):
 
-    # Get the id and delete
-    if request.method == "DELETE":
-        if id in TestRun:
-            row = TestRun.objects.get(id = id)
-            print(row)
+#     # Get the id and delete
+#     if request.method == "DELETE":
+#         if id in TestRun:
+#             row = TestRun.objects.get(id = id)
+#             print(row)
             
-            # To check if the current id is runby the current user 
-            # before deleting
-            if request.user in row['run_by']:
-                print('deleted')
-                # TestRun.objects.filter(id = id).delete()
+#             # To check if the current id is runby the current user 
+#             # before deleting
+#             if request.user in row['run_by']:
+#                 print('deleted')
+#                 # TestRun.objects.filter(id = id).delete()
 
-    template_name= 'runtest/testhistory.html'
-    testhistorydata = TestRun.objects.filter(run_by = request.user)
-    return render(request, template_name, context={'testhistorydata': testhistorydata})
+#     template_name= 'runtest/testhistory.html'
+#     testhistorydata = TestRun.objects.filter(run_by = request.user)
+#     return render(request, template_name, context={'testhistorydata': testhistorydata})

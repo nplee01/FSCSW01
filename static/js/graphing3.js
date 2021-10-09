@@ -30,7 +30,6 @@ am4core.ready(function() {
     } else {
       alert("Sorry, please try again later.");
     }
-    // TODO: Else return a alert
   })
 
 

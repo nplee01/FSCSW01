@@ -68,27 +68,7 @@
       </div>
     </div>
     <hr>
-    <div class="test-result-remark">
-      <h1 class="test-result-text">Remarks</h1>
-      <div class="card-container">
-        <div class="card"> 
-          <div class="remark-row">
-            <div class="mb-3">
-              <label for="exampleFormControlTextarea1" class="form-label">Notes: </label>
-              <textarea class="form-control" id="remark" rows="3" 
-              placeholder="Add your remark here...">{{remark}}</textarea>
-            </div>
-            <button class="btn btn-success float-right" onclick="updateRemark(`{{run_id}}`)">Update Remark</button>
-            <!-- <span class="summary-key">Initial Capital : </span>
-            <span class="summary-data">
-                {{summary.InitCapital | stringformat:".2f" }}
-              </span> -->
-            </div>
-            <hr>
-            <button class="btn btn-danger" onclick="deleteEntry(`{{run_id}}`)">Delete this test run</button>
-          </div>
-      </div>
-    </div>
+    <button class="btn btn-success float-right" onclick="signInToSave(`{{run_id}}`)">Sign in to save</button>
   </div>
 
   <input type="hidden" id="myVar" name="variable" value="{{ run_id }}">
@@ -96,65 +76,38 @@
   <script src="{% static 'js/graphing3.js' %}"></script>
   
   <script>
-    // TODO: Remove WinRate and Max drawdown if the run is buy and hold
-    // OR SUGGEST TO REMOVE BUY AND HOLD
-
-    // Unfortunately jquery does not have a get cookie function.
+    // !!! HELP NEEDED !!!
+    // TODO: Not sure if cookie is needed
     function getCookie(name) {
       var match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
       if (match) return match[2];
     }
 
-    function updateRemark(id) {
-      var textarea = document.getElementById("remark");
-      var text = textarea.value;
-      $.ajax({
-        method: "POST",
-        url: "/testhistory/update",
-        // CSRF Token
-        headers: { "X-CSRFToken": getCookie("csrftoken") },
-        // Data to send
-        data: { id: id, remarks: text },
-        // Function to run on success
-        success: function (msg) {
-          console.log("Update ok msg: " + msg);
-          console.log("/testhistory/" + id);
-          alert('Your remark is updated!');
-        },
-        error: function (msg) {
-          console.log("Update failed: " + msg);
-        },
-      });
+    function signInToSave(id) {
+      // FIXME: Update the run in the database and display the test history
+      // Also take note of new user who want to sign up
+      location.href = '/accounts/login?next=/testhistory';
+
+      // $.ajax({
+      //   method: "POST",
+      //   url: "/testhistory/update",
+      //   // CSRF Token
+      //   headers: { "X-CSRFToken": getCookie("csrftoken") },
+      //   // Data to send
+      //   data: { id: id, remarks: text },
+      //   // Function to run on success
+      //   success: function (msg) {
+      //     console.log("Update ok msg: " + msg);
+      //     console.log("/testhistory/" + id);
+      //     alert('Your remark is updated!');
+      //   },
+      //   error: function (msg) {
+      //     console.log("Update failed: " + msg);
+      //   },
+      // });
       
     }
 
-    function deleteEntry(id) {
-      var x = confirm("Are you sure you want to delete?");
-      if (x) {
-        // $.delete("/testhistory/"+id+"/delete/");
-        console.log("sent " + id);
-
-        // Send the delete request
-        $.ajax({
-          method: "DELETE",
-          url: "/testhistory/" + id + "/delete",
-          // CSRF Token
-          headers: { "X-CSRFToken": getCookie("csrftoken") },
-          // Function to run on success
-          success: function (msg) {
-            console.log("Delete ok msg: " + msg);
-            console.log("/testhistory/" + id + "/delete");
-            location.href = '/testhistory';
-          },
-          error: function (msg) {
-            console.log("Delete failed: " + msg);
-          },
-        });
-      } else {
-        console.log(x);
-      }
-    }
-  
   </script>
 
 {% endblock %}
