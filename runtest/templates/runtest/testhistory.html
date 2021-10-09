@@ -12,88 +12,43 @@
     <thead>
       <tr>
         <th>No.</th>
-        <!-- <th>Timestamp</th> -->
         <th>Test Date / Time</th>
         <th>Stock Name</th>
         <th>Initial Capital</th>
         <th>Final Equity</th>
-        <th>Equity ROI/%</th>
-        <th>Win Rate/%</th>
-        <th>Max Drawdown/%</th>
-        <!-- <th>Remark</th>
-        <th>Peruse</th>
-        <th>Purge</th> -->
+        <th>Equity ROI / %</th>
+        <th>Win Rate / %</th>
+        <th>Max Drawdown / %</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
+      {% for data in testhistorydata %}
       <tr>
-        <td>1</td>
-        <td>01-01-1990 00:00</td>
-        <td>TENAGA</td>
-        <td>100000.00</td>
-        <td>8432.00</td>
-        <td>50.98%</td>
-        <td>21.43%</td>
-        <td>21.12%</td>
-      <!-- {% for data in testhistorydata %} -->
-        <!-- <td class="table-no"></td>
+        <td>{{ forloop.counter }}</td>
         <td>{{ data.run_on }}</td>
         <td>{{ data.stock_ticker }}</td>
-        <td>{{ data.strategy_code }}</td>
-        <td>{{ data.avg_win_amount | div:data.trade_size | mul:100 }}%</td>
-        <td>${{ data.avg_win_amount }}</td>
-        <td>
-          <button
-            class="far fa-edit fa-lg table-btn"
-            onclick="openRemark(`{{data.user_remarks}}`)"
-          ></button>
-          
-          <div id="myModal" class="modal">
-            <div class="modal-content">
-              <span class="close" onclick="closeRemark()">&times;</span>
-              <p id="para"></p>
-              <input
-                id="edit-text-area"
-                cols="30"
-                rows="10"
-                style="display: none"
-              />
-              <div class="update-buttons">
-                <button
-                  class="edit-btn"
-                  id="cancel-btn"
-                  onclick="cancelRemark()"
-                  style="display: none"
-                >
-                  Cancel
-                </button>
-                <button
-                  class="edit-btn"
-                  id="update-btn"
-                  onclick="updateRemark(`{{data.id}}`)"
-                  style="display: none"
-                >
-                  Update
-                </button>
-              </div>
-            </div>
-          </div>
-        </td>
-        <td><button class="fas fa-search fa-lg table-btn"></button></td>
-        <td>
-          <button
-            class="far fa-trash-alt fa-lg table-btn"
-            onclick="deleteEntry(`{{data.id}}`)"
-          ></button>
-        </td> -->
+        <td>{{ data.portfolio_start }}</td>
+        <td>{{ data.equity_performance }}</td>
+        <td>{{ data.equity_roi }}</td>
+        <td>{{ data.win_rate }}</td>
+        <td>{{ data.max_drawdown }}</td>
+        <td><button class="fas fa-search fa-md table-btn" onclick="gotoSummary(`{{data.id}}`)" ></button></td>
       </tr>
-      <!-- {% endfor %} -->
+      {% endfor %}
     </tbody>
   </table>
 </div>
 
 <script>
   $(".testrecord").DataTable();
+  function gotoSummary(id){
+    location.href = '/graphing3/' + id;
+  }
+</script>
+
+<!-- <script>
+
   // Get the modal
   var modal = document.getElementById("myModal");
 
@@ -262,6 +217,6 @@
       modal.style.display = "none";
     }
   };
-</script>
+</script> -->
 
 {% endblock %}

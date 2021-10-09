@@ -22,7 +22,7 @@ am4core.ready(function() {
   // chart.dataSource.parser.options.reverse = true;
 
   var run_id = document.getElementById("myVar").value;
-  $.getJSON("runtest/rpc/GetResultsData/" + run_id, res => {
+  $.getJSON("../../runtest/rpc/GetResultsData/" + run_id, res => {
     if(res.status == "OK"){
       // console.log(res.data[Object.keys(res.data)[0]].RSI);
       // console.log(res.data);
