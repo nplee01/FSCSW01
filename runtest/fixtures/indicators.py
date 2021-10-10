@@ -7,9 +7,9 @@ indicators = [
     ValueSetTuple(value_set_code='INDICATORS', value_set_description='Indicators for backtesting',
         set_member_list=(
             # Version 1.0 data
-            SetMemberTuple(value_code='BUYNHOLD', value_description='Buy and Hold', sort_order=1,
-                param_1_code=None, param_2_code=None, 
-                param_3_code=None, param_4_code=None, param_5_code=None),
+            # SetMemberTuple(value_code='BUYNHOLD', value_description='Buy and Hold', sort_order=1,
+            #     param_1_code=None, param_2_code=None, 
+            #     param_3_code=None, param_4_code=None, param_5_code=None),
             SetMemberTuple(value_code='SMA', value_description='SMA as Baseline', sort_order=2,
                 param_1_code='SMA-BASE-LINE', param_2_code=None, param_3_code=None,
                 param_4_code=None, param_5_code=None),

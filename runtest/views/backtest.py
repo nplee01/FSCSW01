@@ -71,12 +71,8 @@ def backtest(request):
                 open(os.path.join(settings.RESULTS_DIR, str(form.instance.id) + 'P.json')))
 
             # Add the data into the database
-            # TODO: Add in stock.value_description after addng a new column in the table
             form.instance.stock_ticker = stock.value_description
-
             form.instance.portfolio_end = sm['FinalEquity']
-
-            # FIXME
             form.instance.equity_performance = sm['FinalEquity']
             form.instance.equity_roi = sm['EquityROI']
             form.instance.trades = sm['TradeCount']
