@@ -75,7 +75,9 @@ def backtest(request):
             form.instance.stock_ticker = stock.value_description
 
             form.instance.portfolio_end = sm['FinalEquity']
-            form.instance.equity_performance = sm['EquityPerfomance']
+
+            # FIXME
+            form.instance.equity_performance = sm['FinalEquity']
             form.instance.equity_roi = sm['EquityROI']
             form.instance.trades = sm['TradeCount']
             form.instance.win_trades = sm['ProfitTradeCount']
