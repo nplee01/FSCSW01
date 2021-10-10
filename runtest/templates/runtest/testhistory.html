@@ -13,6 +13,8 @@
       <tr>
         <th>No.</th>
         <th>Datetime</th>
+        <th>Strategy</th>
+        <th>Indicators</th>
         <th>Stock Name</th>
         <th>Initial Capital</th>
         <th>Final Equity</th>
@@ -27,6 +29,8 @@
       <tr>
         <td>{{ forloop.counter }}</td>
         <td>{{ data.run_on }}</td>
+        <td>{{ data.strategy_code }}</td>
+        <td>{{ data.indicators }}</td>
         <td>{{ data.stock_ticker }}</td>
         <td>{{ data.portfolio_start }}</td>
         <td>{{ data.equity_performance | stringformat:".2f" }}</td>

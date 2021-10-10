@@ -61,6 +61,17 @@ def backtest(request):
             # Indicators looks like [['SMA', 10, 20], ['XMA', 100, 200, 300]]
             desc = get_strategy_desc(
                 form.cleaned_data['strategy_code'], indicators)
+
+            # Indicators used to be display on the test history page
+            indicators_str = ''
+            for ind in indicators:
+                indicators_str += f'{ind[0]} ' + str(tuple(i for i in ind[1:])) + ', '
+            # Remove the last ', '
+            indicators_str = indicators_str[:-2]
+            # Change the XMA to SMA Crossing (To be converted into a functions
+            # if there are many indicators)
+            indicators_str = indicators_str.replace('XMA', 'SMA Crossing')
+
             # Call backtest
             status = api_bt_run(form.instance.id, stock.value_description, form.cleaned_data['start_date'],
                                 form.cleaned_data['end_date'], form.cleaned_data['portfolio_start'],
@@ -80,6 +91,7 @@ def backtest(request):
             form.instance.lose_trades = sm['LossingTradeCount']
             form.instance.win_rate = sm.get('WinRate', '0')
             form.instance.max_drawdown = sm.get('MaxDrawdownValue', '0')
+            form.instance.indicators = indicators_str
 
             # FIXME: 0 cannot be render on graphing.html
 

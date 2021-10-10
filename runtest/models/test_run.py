@@ -83,6 +83,12 @@ class TestRun(RecordOwner):
     ind_3_param_3 = models.IntegerField(verbose_name=_("Param 3"), null=True, blank=True)
     ind_3_param_4 = models.IntegerField(verbose_name=_("Param 4"), null=True, blank=True)
     ind_3_param_5 = models.IntegerField(verbose_name=_("Param 5"), null=True, blank=True)
+
+    # List of indicator used and the respective values
+    # List: XMA --> SMA Crossing (20, 40), SMA (200), RSIOBOS (14, 80, 50, 20)
+    indicators = models.CharField(verbose_name=_("Indicatos"), max_length=200, 
+            help_text=_("Indicator(s) used for this backtest run"), null=True, blank=True)
+
     # Trade Sizing Method
     sizing_method = models.CharField(verbose_name=_("Sizing Method"), max_length=30, null=True, blank=True,
         help_text=_("Trade Sizing method decides how much to trade"))
