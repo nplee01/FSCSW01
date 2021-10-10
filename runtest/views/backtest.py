@@ -72,7 +72,7 @@ def backtest(request):
 
             # Add the data into the database
             # TODO: Add in stock.value_description after addng a new column in the table
-            # form.instance.stock_fullname = sm['StockName']
+            form.instance.stock_ticker = stock.value_description
 
             form.instance.portfolio_end = sm['FinalEquity']
             form.instance.equity_performance = sm['EquityPerfomance']
