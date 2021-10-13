@@ -21,14 +21,26 @@ am4core.ready(function() {
   // chart.dataSource.parser.options.useColumnNames = true;
   // chart.dataSource.parser.options.reverse = true;
 
+  // var rsiValue = undefined;
+
   var run_id = document.getElementById("myVar").value;
-  $.getJSON("../../runtest/rpc/GetResultsData/" + run_id, res => {
-    if(res.status == "OK"){
-      // console.log(res.data[Object.keys(res.data)[0]].RSI);
-      // console.log(res.data);
-      chart.data = res.data;
-    } else {
-      alert("Sorry, please try again later.");
+  $.getJSON("../../runtest/rpc/GetResultsData/" + run_id, res_data => {
+    if(res_data.status == "OK"){
+      $.getJSON("../../runtest/rpc/GetResultsSummary/" + run_id, res_summ => {
+        if(res_summ.status == "OK"){
+          // console.log(res.data[Object.keys(res.data)[0]].RSI);
+          // rsiValue = res.data[Object.keys(res.data)[0]].RSI;
+          // rsiGraph(res_data.data[Object.keys(res_data.data)[0]].RSI, res_summ.data[Object.keys("RSIOB")], res_summ.data[Object.keys("RSIOS")]);
+          rsiGraph(res_data.data, res_summ.data);
+          // console.log(res.data)
+          // console.log(res.data);
+          chart.data = res_data.data;
+        } else {
+          alert("Sorry, please try again later. Summary failed to be retrieved.");
+        }
+      })
+    }else{
+      alert("Sorry, please try again later. Data failed to be retrieved.");
     }
   })
 
@@ -170,33 +182,104 @@ am4core.ready(function() {
   // Second chart: RSI
   // TODO: Only generate if there is RSI in the data
   // console.log(chart.data);
-  // if (res.data[Object.keys(res.data)[0]].RSI) {
-  var valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
-  valueAxis2.tooltip.disabled = true;
-  // height of axis
-  valueAxis2.height = am4core.percent(35);
-  valueAxis2.zIndex = 3
-  // this makes gap between panels
-  valueAxis2.marginTop = 30;
-  valueAxis2.renderer.baseGrid.disabled = true;
-  valueAxis2.renderer.inside = true;
-  valueAxis2.renderer.labels.template.verticalCenter = "bottom";
-  valueAxis2.renderer.labels.template.padding(2, 2, 2, 2);
-  //valueAxis.renderer.maxLabelPosition = 0.95;
-  valueAxis2.renderer.fontSize = "0.8em"
+  // setTimeout(() => {
+  //   if (rsiValue !== undefined) {
+  //     var valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
+  //     valueAxis2.tooltip.disabled = true;
+  //     // height of axis
+  //     valueAxis2.height = am4core.percent(35);
+  //     valueAxis2.zIndex = 3
+  //     // this makes gap between panels
+  //     valueAxis2.marginTop = 30;
+  //     valueAxis2.renderer.baseGrid.disabled = true;
+  //     valueAxis2.renderer.inside = true;
+  //     valueAxis2.renderer.labels.template.verticalCenter = "bottom";
+  //     valueAxis2.renderer.labels.template.padding(2, 2, 2, 2);
+  //     //valueAxis.renderer.maxLabelPosition = 0.95;
+  //     valueAxis2.renderer.fontSize = "0.8em"
+      
+  //     valueAxis2.renderer.gridContainer.background.fill = am4core.color("#000000");
+  //     valueAxis2.renderer.gridContainer.background.fillOpacity = 0.05;
   
-  valueAxis2.renderer.gridContainer.background.fill = am4core.color("#000000");
-  valueAxis2.renderer.gridContainer.background.fillOpacity = 0.05;
+  //     var series2 = chart.series.push(new am4charts.LineSeries());
+  //     series2.dataFields.dateX = "Date";
+  //     series2.clustered = false;
+  //     series2.dataFields.valueY = "RSI";
+  //     series2.yAxis = valueAxis2;
+  //     series2.tooltipText = "RSI: {valueY.value}";
+  //     series2.name = "Series 2";
+  //     series2.defaultState.transitionDuration = 0;
+  //   }
+  // }, 10000);
 
-  var series2 = chart.series.push(new am4charts.LineSeries());
-  series2.dataFields.dateX = "Date";
-  series2.clustered = false;
-  series2.dataFields.valueY = "RSI";
-  series2.yAxis = valueAxis2;
-  series2.tooltipText = "RSI: {valueY.value}";
-  series2.name = "Series 2";
-  series2.defaultState.transitionDuration = 0;
-  // }
+  
+function rsiGraph(result, summ){
+
+  if (result[0].RSI !== undefined) {
+    // .at(-1)
+    firstDay = result[0].Date
+    lastDay = result[result.length-1].Date
+    // lastDay = result[Object.keys(result)[result.length-1]].Date
+    // RSIOB = summ[Object.keys("RSIOB")]
+    RSIOB = summ.RSIOB
+    RSIOS = summ.RSIOS
+
+    var valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
+    valueAxis2.tooltip.disabled = true;
+    // height of axis
+    valueAxis2.height = am4core.percent(35);
+    valueAxis2.zIndex = 3
+    // this makes gap between panels
+    valueAxis2.marginTop = 30;
+    valueAxis2.renderer.baseGrid.disabled = true;
+    valueAxis2.renderer.inside = true;
+    valueAxis2.renderer.labels.template.verticalCenter = "bottom";
+    valueAxis2.renderer.labels.template.padding(2, 2, 2, 2);
+    //valueAxis.renderer.maxLabelPosition = 0.95;
+    valueAxis2.renderer.fontSize = "0.8em"
+    
+    valueAxis2.renderer.gridContainer.background.fill = am4core.color("#000000");
+    valueAxis2.renderer.gridContainer.background.fillOpacity = 0.05;
+
+    var series2 = chart.series.push(new am4charts.LineSeries());
+    series2.dataFields.dateX = "Date";
+    series2.clustered = false;
+    series2.dataFields.valueY = "RSI";
+    series2.yAxis = valueAxis2;
+    series2.tooltipText = "RSI: {valueY.value}";
+    series2.name = "Series 2";
+    series2.defaultState.transitionDuration = 0;
+
+    // Overbought
+    var OBSeries = chart.series.push(new am4charts.LineSeries());
+    OBSeries.dataFields.dateX = "Date";
+    OBSeries.clustered = false;
+    OBSeries.dataFields.valueY = "RSIOB";
+    OBSeries.yAxis = valueAxis2;
+    OBSeries.tooltipText = "RSI OB: {valueY.value}";
+    OBSeries.name = "OBSeries";
+    OBSeries.defaultState.transitionDuration = 0;
+    OBSeries.strokeDasharray = 4;
+    OBSeries.strokeWidth = 2
+    OBSeries.stroke = am4core.color("red");
+    OBSeries.strokeOpacity = 0.7;
+    OBSeries.data = [{"Date": firstDay, "RSIOB": RSIOB },  {"Date": lastDay, "RSIOB": RSIOB }];
+    
+    // Oversold
+    var OSSeries = chart.series.push(new am4charts.LineSeries());
+    OSSeries.dataFields.dateX = "Date";
+    OSSeries.clustered = false;
+    OSSeries.dataFields.valueY = "RSIOS";
+    OSSeries.yAxis = valueAxis2;
+    OSSeries.tooltipText = "RSI OS: {valueY.value}";
+    OSSeries.name = "OSSeries";
+    OSSeries.defaultState.transitionDuration = 0;
+    OSSeries.strokeDasharray = 4;
+    OSSeries.strokeWidth = 2
+    OSSeries.stroke = am4core.color("green");
+    OSSeries.strokeOpacity = 0.7;
+    OSSeries.data = [{"Date": firstDay, "RSIOS": RSIOS },  {"Date": lastDay, "RSIOS": RSIOS }];
+  }
 
   // Third chart: Volume
   var valueAxis3 = chart.yAxes.push(new am4charts.ValueAxis());
@@ -226,6 +309,7 @@ am4core.ready(function() {
   // volume should be summed
   series3.groupFields.valueY = "sum";
   series3.defaultState.transitionDuration = 0;
+}
 
   chart.cursor = new am4charts.XYCursor();
   
