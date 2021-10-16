@@ -228,7 +228,7 @@ def daily_val(S0, TL0):
     return dv
 
 # 6.5 Gen and Print Back Testing Statistics
-def gen_bt_stat (BTStrategy, stock_name, initCapital, DV, PL_stat, stg_title, stg_cd, id_list, print_stat=True):
+def gen_bt_stat (BTStrategy, stock_name, initCapital, DV, PL_stat, stg_cd, id_list, print_stat=True):
     '''
     Generate back testing statistics from daily evaluation and P&L statistics dataframe
     input: BT strategy, stock name, init capital, daily valuation, P&L statistics, 
@@ -237,7 +237,7 @@ def gen_bt_stat (BTStrategy, stock_name, initCapital, DV, PL_stat, stg_title, st
     
     example:
      DV = daily_val(signal, TL1)
-     bt_stat=gen_stat (BT_strategy, stock_name, init_capital, DV, PL_stat, stg_title, stg_cd, id_list, print_stat=True)
+     bt_stat=gen_stat (BT_strategy, stock_name, init_capital, DV, PL_stat, stg_cd, id_list, print_stat=True)
      with open("123P.json", "w") as outfile:
           json.dump(bt_stat, outfile)
      DV.to_excel(str(run_no)+"G.xls")
@@ -272,7 +272,26 @@ def gen_bt_stat (BTStrategy, stock_name, initCapital, DV, PL_stat, stg_title, st
             print(f"Max drawdown {bt_pf['MaxDrawdownValue']:.2f} on {bt_pf['MaxDrawdownDate']}")
     
     # TODO: Add in the strategies and the indicators used along with their params
-    bt_pf['Strategy']=stg_title # Example: Confluence SMA Crossing and SMA Baseline
+    # Indicators used to be display on the test history page
+    # FIXME: TEMP FIX BEFORE FOUND HOW TO RESET THE DEFAULT VALUES
+    # FROM THE BACKTEST FORM
+    indicators_str = ''
+    for ind in id_list:
+        if ind[0] == 'SMA':
+            indicators_str += f'{ind[0]} ' + str([ind[1]]) + ', '
+        elif ind[0] == 'XMA':
+            indicators_str += f'{ind[0]} ' + str(list(i for i in ind[1:3])) + ', '
+        else:
+            indicators_str += f'{ind[0]} ' + str(list(i for i in ind[1:5])) + ', '
+
+    # Remove the last ', '
+    indicators_str = indicators_str[:-2]
+
+    # Replacing the [ ] to ( )
+    indicators_str = indicators_str.replace('[', '(').replace(']', ')')
+
+    # Insert the indicators used into the json
+    bt_pf['StrategyIndicators']=indicators_str # Example: Confluence SMA Crossing and SMA Baseline
     bt_pf['StrategyCode']=stg_cd # Either SINGLE or CONFLUENCE
 
     # Indicators list: custom output for different indicators used

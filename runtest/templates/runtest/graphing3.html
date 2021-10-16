@@ -39,6 +39,20 @@
       <div class="card-container">
         <div class="card"> 
           <div class="summary-row">
+            <span class="summary-key">Strategy used : </span>
+            <span class="summary-data">
+                {{summary.StrategyCode }}
+            </span>
+          </div>
+          <hr>
+          <div class="summary-row">
+            <span class="summary-key">Indicator(s) used : </span>
+            <span class="summary-data">
+                {{summary.StrategyIndicators }}
+            </span>
+          </div>
+          <hr>
+          <div class="summary-row">
             <span class="summary-key">Initial Capital : </span>
             <span class="summary-data">
                 {{summary.InitCapital | stringformat:".2f" }}

@@ -58,16 +58,29 @@ def backtest(request):
                         if param:
                             params.append(param)
                     indicators.append(params)
+
             # Indicators looks like [['SMA', 10, 20], ['XMA', 100, 200, 300]]
             desc = get_strategy_desc(
                 form.cleaned_data['strategy_code'], indicators)
 
             # Indicators used to be display on the test history page
+            # FIXME: TEMP FIX BEFORE FOUND HOW TO RESET THE DEFAULT VALUES
+            # FROM THE BACKTEST FORM
             indicators_str = ''
             for ind in indicators:
-                indicators_str += f'{ind[0]} ' + str(tuple(i for i in ind[1:])) + ', '
+                if ind[0] == 'SMA':
+                    indicators_str += f'{ind[0]} ' + str([ind[1]]) + ', '
+                elif ind[0] == 'XMA':
+                    indicators_str += f'{ind[0]} ' + str(list(i for i in ind[1:3])) + ', '
+                else:
+                    indicators_str += f'{ind[0]} ' + str(list(i for i in ind[1:5])) + ', '
+
             # Remove the last ', '
             indicators_str = indicators_str[:-2]
+
+            # Replacing the [ ] to ( )
+            indicators_str = indicators_str.replace('[', '(').replace(']', ')')
+
             # Change the XMA to SMA Crossing (To be converted into a functions
             # if there are many indicators)
             indicators_str = indicators_str.replace('XMA', 'SMA Crossing')

@@ -54,13 +54,19 @@ def api_bt_run(run_no, stock_name, from_date, to_date, init_capital, contract_si
         TL1 = gen_trade_no(TL1)
         PL_stat=gen_PL_stat(TL1,verbose=False)
         DV = daily_val(signal, TL1)
-        bt_stat = gen_bt_stat(BT_strategy, stock_name, init_capital, DV, PL_stat, stg_title, stg_cd, id_list, print_stat=verbose)
+        bt_stat = gen_bt_stat(BT_strategy, stock_name, init_capital, DV, PL_stat, stg_cd, id_list, print_stat=verbose)
         with open(os.path.join(results_dir, str(run_no)+"P.json"), "w") as outfile:
             json.dump(bt_stat, outfile)
 
         # Insert another columns named enterLong and exitLong
         DV.insert(loc=DV.columns.get_loc("buyOrder")+1, column='enterLong', value=None)
         DV.insert(loc=DV.columns.get_loc("enterLong")+1, column='exitLong', value=None)
+
+        # FIXME: Not sure why the df will automatically add another column when we used confluence
+        try:
+            DV = DV.drop(['Date_1'], axis=1)
+        except:
+            pass
 
         # Adding the trxPrice into enterLong or exitLong based on the buyOrder
         DV.loc[DV['buyOrder'] == 1, 'enterLong'] = DV['trxPrice']

@@ -40,6 +40,7 @@
   float: right;
   text-align: right;
   font-weight: bold;
+  font-family: monospace;
 }
 
 .card-container{
