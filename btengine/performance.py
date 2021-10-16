@@ -228,15 +228,16 @@ def daily_val(S0, TL0):
     return dv
 
 # 6.5 Gen and Print Back Testing Statistics
-def gen_bt_stat (BTStrategy, stock_name, initCapital, DV, PL_stat, print_stat=True):
+def gen_bt_stat (BTStrategy, stock_name, initCapital, DV, PL_stat, stg_title, stg_cd, id_list, print_stat=True):
     '''
     Generate back testing statistics from daily evaluation and P&L statistics dataframe
-    input: BT strategy, stock name, init capital, daily valuation and P&L statistics
+    input: BT strategy, stock name, init capital, daily valuation, P&L statistics, 
+    strategy name, strategy code, indicators list with their respective param
     output: backtesting performance results in dictionary format
     
     example:
      DV = daily_val(signal, TL1)
-     bt_stat=gen_stat (BT_strategy, stock_name, init_capital, DV,PL_stat,print_stat=True)
+     bt_stat=gen_stat (BT_strategy, stock_name, init_capital, DV, PL_stat, stg_title, stg_cd, id_list, print_stat=True)
      with open("123P.json", "w") as outfile:
           json.dump(bt_stat, outfile)
      DV.to_excel(str(run_no)+"G.xls")
@@ -269,5 +270,23 @@ def gen_bt_stat (BTStrategy, stock_name, initCapital, DV, PL_stat, print_stat=Tr
         if (print_stat):
             print(f"Win rate: {bt_pf['WinRate']:.2f}%")
             print(f"Max drawdown {bt_pf['MaxDrawdownValue']:.2f} on {bt_pf['MaxDrawdownDate']}")
-            
+    
+    # TODO: Add in the strategies and the indicators used along with their params
+    bt_pf['Strategy']=stg_title # Example: Confluence SMA Crossing and SMA Baseline
+    bt_pf['StrategyCode']=stg_cd # Either SINGLE or CONFLUENCE
+
+    # Indicators list: custom output for different indicators used
+    # NOTE: To be converted into a function that take from a indicators dict
+    for ind in id_list:
+        if ind[0] == 'SMA':
+            bt_pf['SMA'] = ind[1] # Eg: 200
+        elif ind[0] == 'XMA':
+            bt_pf['SMA_S'] = ind[1] # Eg: 50
+            bt_pf['SMA_F'] = ind[2] # Eg: 100
+        elif ind[0] == 'RSIOBOS':
+            bt_pf['RSIOBOS_PERIOD'] = ind[1]
+            bt_pf['RSIOB'] = ind[2]
+            bt_pf['RSI_BASE'] = ind[3]
+            bt_pf['RSIOS'] = ind[4]
+
     return bt_pf

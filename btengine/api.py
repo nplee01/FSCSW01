@@ -53,7 +53,7 @@ def api_bt_run(run_no, stock_name, from_date, to_date, init_capital, contract_si
         TL1 = gen_trade_no(TL1)
         PL_stat=gen_PL_stat(TL1,verbose=False)
         DV = daily_val(signal, TL1)
-        bt_stat=gen_bt_stat (BT_strategy, stock_name, init_capital, DV,PL_stat, verbose)
+        bt_stat = gen_bt_stat(BT_strategy, stock_name, init_capital, DV, PL_stat, stg_title, stg_cd, id_list, print_stat=verbose)
         with open(os.path.join(results_dir, str(run_no)+"P.json"), "w") as outfile:
             json.dump(bt_stat, outfile)
         DV.to_excel(os.path.join(results_dir, str(run_no)+"G.xlsx"))
