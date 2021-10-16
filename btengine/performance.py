@@ -281,8 +281,8 @@ def gen_bt_stat (BTStrategy, stock_name, initCapital, DV, PL_stat, stg_title, st
         if ind[0] == 'SMA':
             bt_pf['SMA'] = ind[1] # Eg: 200
         elif ind[0] == 'XMA':
-            bt_pf['SMA_S'] = ind[1] # Eg: 50
-            bt_pf['SMA_F'] = ind[2] # Eg: 100
+            bt_pf['SMA_F'] = ind[1] # Eg: 50
+            bt_pf['SMA_S'] = ind[2] # Eg: 100
         elif ind[0] == 'RSIOBOS':
             bt_pf['RSIOBOS_PERIOD'] = ind[1]
             bt_pf['RSIOB'] = ind[2]

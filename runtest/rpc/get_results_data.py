@@ -2,6 +2,7 @@ from datetime import date
 from time import strptime
 import sys
 import os.path
+import simplejson
 
 import pandas as pd
 
@@ -35,18 +36,11 @@ def get_results_data(request, run_id):
         # TODO: Change the date format
         df['Date'] = df['Date'].dt.strftime('%Y-%m-%d')
 
-        # Filling the empty cells to null for JSON parsing
-        df = df.fillna('null')
+        # Getting the list of dict for the json
+        df_vals = list(df.T.to_dict().values())
 
-        # Changing the df to dictionary
-        dic = df.to_dict('index')
-
-        # df_dict = df.reset_index().to_dict(orient='index')
-        df_vals = list(dic.values())
-
-        # Prepare the data to return as csv
-        # ret.set_data(df.to_csv())
-        ret.set_data(df_vals)
+        # Prepare the data to return as json obj
+        ret.set_data(simplejson.loads(simplejson.dumps(df_vals, ignore_nan=True)))
 
     # No exceptions expected if fixtures has been loaded
     except TestRun.DoesNotExist as err:

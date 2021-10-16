@@ -47,6 +47,7 @@ def api_bt_run(run_no, stock_name, from_date, to_date, init_capital, contract_si
     order=generate_order(signal)
     TL=broker_simulator(order, init_capital, contract_size, verbose)
     if len(TL) == 0:
+        # TODO: Fix no output file problem when there is no buy and sell signal.
         return False
     else:
         TL1 = eval_by_trade(TL)
@@ -56,6 +57,15 @@ def api_bt_run(run_no, stock_name, from_date, to_date, init_capital, contract_si
         bt_stat = gen_bt_stat(BT_strategy, stock_name, init_capital, DV, PL_stat, stg_title, stg_cd, id_list, print_stat=verbose)
         with open(os.path.join(results_dir, str(run_no)+"P.json"), "w") as outfile:
             json.dump(bt_stat, outfile)
+
+        # Insert another columns named enterLong and exitLong
+        DV.insert(loc=DV.columns.get_loc("buyOrder")+1, column='enterLong', value=None)
+        DV.insert(loc=DV.columns.get_loc("enterLong")+1, column='exitLong', value=None)
+
+        # Adding the trxPrice into enterLong or exitLong based on the buyOrder
+        DV.loc[DV['buyOrder'] == 1, 'enterLong'] = DV['trxPrice']
+        DV.loc[DV['buyOrder'] == -1, 'exitLong'] = DV['trxPrice']
+
         DV.to_excel(os.path.join(results_dir, str(run_no)+"G.xlsx"))
         return True
     

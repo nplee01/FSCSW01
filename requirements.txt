@@ -14,3 +14,5 @@ matplotlib == 3.2.2
 TA-lib == 0.4.19
 # Yahoo Finance for stock prices
 yfinance == 0.1.63
+# 3rd Party JSON to parse null value
+simplejson==3.17.5

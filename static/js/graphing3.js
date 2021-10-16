@@ -96,13 +96,66 @@ am4core.ready(function() {
   series.tooltipText = "Date: {dateX.formatDate('yyyy-MM-dd')}\nOpen: {openValueY.value}\nClose: {valueY.value}\nHigh: {highValueY.value}\nLow: {lowValueY.value}";
   series.name = "MSFT";
   series.defaultState.transitionDuration = 0;
+  
+  // series.fill = am4core.color("rgb(15, 148, 0)");
+  // series.stroke = am4core.color("rgb(15, 148, 0)");
+  // series.tooltip.getFillFromObject = false;
+  // series.tooltip.background.fill = am4core.color("rgb(15, 148, 0)");
 
-  var seriesL = chart.series.push(new am4charts.LineSeries());
-  seriesL.dataFields.dateX = "Date";
-  seriesL.dataFields.valueY = "Close";
+  // Close series
+  // var seriesL = chart.series.push(new am4charts.LineSeries());
+  // seriesL.dataFields.dateX = "Date";
+  // seriesL.dataFields.valueY = "Close";
+  // seriesL.stroke = am4core.color("black");
+  // seriesL.tooltip.getFillFromObject = false;
+  // seriesL.tooltip.background.fill = am4core.color("black");
   // seriesL.tooltipText = "Close: {valueY.value}";
-  seriesL.name = "MSFT: Value";
-  seriesL.defaultState.transitionDuration = 0;
+  // seriesL.name = "MSFT: Value";
+  // seriesL.defaultState.transitionDuration = 0;
+
+  // Buy and Sell TODO TODO TODO TODO
+  // Create series
+  var enterLongSeries = chart.series.push(new am4charts.LineSeries());
+  enterLongSeries.dataFields.dateX = "Date";
+  enterLongSeries.dataFields.valueY = "enterLong";
+  enterLongSeries.tooltipText = "Enter long: {valueY.value}";
+  enterLongSeries.clustered = false;
+  enterLongSeries.strokeOpacity = 0;
+  
+  var exitLongSeries = chart.series.push(new am4charts.LineSeries());
+  exitLongSeries.dataFields.dateX = "Date";
+  exitLongSeries.dataFields.valueY = "exitLong";
+  exitLongSeries.tooltipText = "Exit long: {valueY.value}";
+  enterLongSeries.clustered = false;
+  exitLongSeries.strokeOpacity = 0;
+  
+  // Add a bullet
+  var bullet = enterLongSeries.bullets.push(new am4charts.Bullet());
+
+  // Add a triangle to act as am arrow : ENTER LONG
+  var arrow = bullet.createChild(am4core.Triangle);
+  arrow.horizontalCenter = "middle";
+  arrow.verticalCenter = "middle";
+  arrow.strokeWidth = 0;
+  arrow.fill = am4core.color("green");
+  arrow.direction = "top";
+  arrow.width = 12;
+  arrow.height = 12;
+
+  // Add a bullet
+  var bullet2 = exitLongSeries.bullets.push(new am4charts.Bullet());
+
+  // Add a triangle to act as am arrow : EXIT LONG
+  var arrow2 = bullet2.createChild(am4core.Triangle);
+  arrow2.horizontalCenter = "middle";
+  arrow2.verticalCenter = "middle";
+  arrow2.rotation = 180;
+  arrow2.strokeWidth = 0;
+  arrow2.fill = am4core.color("red");
+  arrow2.direction = "top";
+  arrow2.width = 12;
+  arrow2.height = 12;
+
 
   // var valueAxisL = chart.yAxes.push(new am4charts.ValueAxis());
   // valueAxisL.tooltip.disabled = true;
@@ -122,12 +175,15 @@ am4core.ready(function() {
   // valueAxisL.renderer.gridContainer.background.fillOpacity = 0.05;
   
   // Series for SMA
-  var seriesF = chart.series.push(new am4charts.LineSeries());
-  seriesF.dataFields.dateX = "Date";
-  seriesF.dataFields.valueY = "SMA";
-  seriesF.tooltipText = "Baseline SMA: {valueY.value}";
-  seriesF.name = "MSFT: Value";
-  seriesF.defaultState.transitionDuration = 0;
+  var seriesBase = chart.series.push(new am4charts.LineSeries());
+  seriesBase.dataFields.dateX = "Date";
+  seriesBase.dataFields.valueY = "SMA";
+  seriesBase.tooltipText = "Baseline SMA: {valueY.value}";
+  seriesBase.name = "MSFT: Value";
+  seriesBase.defaultState.transitionDuration = 0;
+  seriesBase.stroke = am4core.color("rgb(65, 112, 216)");
+  seriesBase.tooltip.getFillFromObject = false;
+  seriesBase.tooltip.background.fill = am4core.color("rgb(65, 112, 216)");
 
   // Series for SMA_S
   var seriesS = chart.series.push(new am4charts.LineSeries());
@@ -136,6 +192,9 @@ am4core.ready(function() {
   seriesS.tooltipText = "SMA slow: {valueY.value}";
   seriesS.name = "MSFT: Value";
   seriesS.defaultState.transitionDuration = 0;
+  seriesS.stroke = am4core.color("red");
+  seriesS.tooltip.getFillFromObject = false;
+  seriesS.tooltip.background.fill = am4core.color("red");
 
   // var valueAxisS = chart.yAxes.push(new am4charts.ValueAxis());
   // valueAxisS.tooltip.disabled = true;
@@ -161,6 +220,9 @@ am4core.ready(function() {
   seriesF.tooltipText = "SMA fast: {valueY.value}";
   seriesF.name = "MSFT: Value";
   seriesF.defaultState.transitionDuration = 0;
+  seriesF.stroke = am4core.color("green");
+  seriesF.tooltip.getFillFromObject = false;  
+  seriesF.tooltip.background.fill = am4core.color("green");
 
   // var valueAxisF = chart.yAxes.push(new am4charts.ValueAxis());
   // valueAxisF.tooltip.disabled = true;
@@ -223,6 +285,7 @@ function rsiGraph(result, summ){
     // RSIOB = summ[Object.keys("RSIOB")]
     RSIOB = summ.RSIOB
     RSIOS = summ.RSIOS
+    RSI_BASE = summ.RSI_BASE
 
     var valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
     valueAxis2.tooltip.disabled = true;
@@ -248,6 +311,9 @@ function rsiGraph(result, summ){
     series2.yAxis = valueAxis2;
     series2.tooltipText = "RSI: {valueY.value}";
     series2.name = "Series 2";
+    series2.stroke = am4core.color("purple");
+    series2.tooltip.getFillFromObject = false;
+    series2.tooltip.background.fill = am4core.color("purple");
     series2.defaultState.transitionDuration = 0;
 
     // Overbought
@@ -262,9 +328,28 @@ function rsiGraph(result, summ){
     OBSeries.strokeDasharray = 4;
     OBSeries.strokeWidth = 2
     OBSeries.stroke = am4core.color("red");
+    OBSeries.tooltip.getFillFromObject = false;
+    OBSeries.tooltip.background.fill = am4core.color("red");
     OBSeries.strokeOpacity = 0.7;
     OBSeries.data = [{"Date": firstDay, "RSIOB": RSIOB },  {"Date": lastDay, "RSIOB": RSIOB }];
     
+    // Base
+    var RSIBASESeries = chart.series.push(new am4charts.LineSeries());
+    RSIBASESeries.dataFields.dateX = "Date";
+    RSIBASESeries.clustered = false;
+    RSIBASESeries.dataFields.valueY = "RSI_BASE";
+    RSIBASESeries.yAxis = valueAxis2;
+    RSIBASESeries.tooltipText = "RSI OS: {valueY.value}";
+    RSIBASESeries.name = "RSIBASESeries";
+    RSIBASESeries.defaultState.transitionDuration = 0;
+    RSIBASESeries.strokeDasharray = 4;
+    RSIBASESeries.strokeWidth = 2
+    RSIBASESeries.stroke = am4core.color("black");
+    RSIBASESeries.tooltip.getFillFromObject = false;
+    RSIBASESeries.tooltip.background.fill = am4core.color("black");
+    RSIBASESeries.strokeOpacity = 0.7;
+    RSIBASESeries.data = [{"Date": firstDay, "RSI_BASE": RSI_BASE },  {"Date": lastDay, "RSI_BASE": RSI_BASE }];
+
     // Oversold
     var OSSeries = chart.series.push(new am4charts.LineSeries());
     OSSeries.dataFields.dateX = "Date";
@@ -277,6 +362,8 @@ function rsiGraph(result, summ){
     OSSeries.strokeDasharray = 4;
     OSSeries.strokeWidth = 2
     OSSeries.stroke = am4core.color("green");
+    OSSeries.tooltip.getFillFromObject = false;
+    OSSeries.tooltip.background.fill = am4core.color("green");
     OSSeries.strokeOpacity = 0.7;
     OSSeries.data = [{"Date": firstDay, "RSIOS": RSIOS },  {"Date": lastDay, "RSIOS": RSIOS }];
   }
@@ -309,6 +396,11 @@ function rsiGraph(result, summ){
   // volume should be summed
   series3.groupFields.valueY = "sum";
   series3.defaultState.transitionDuration = 0;
+
+  series3.fill = am4core.color("rgb(65, 112, 216)");
+  series3.stroke = am4core.color("rgb(65, 112, 216)");
+  series3.tooltip.getFillFromObject = false;
+  series3.tooltip.background.fill = am4core.color("rgb(65, 112, 216)");
 }
 
   chart.cursor = new am4charts.XYCursor();
