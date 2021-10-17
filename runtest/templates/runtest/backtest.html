@@ -80,11 +80,11 @@
                 $.getJSON('runtest/rpc/GetIndicatorParams/' + indicator, function(ret) {
                     if (ret.status == 'OK') {
                         // Reset all param values
-                        $("#ind_" + indicatorNo + "_param_1").val(null);
-                        $("#ind_" + indicatorNo + "_param_2").val(null);
-                        $("#ind_" + indicatorNo + "_param_3").val(null);
-                        $("#ind_" + indicatorNo + "_param_4").val(null);
-                        $("#ind_" + indicatorNo + "_param_5").val(null);
+                        $("#id_ind_" + indicatorNo + "_param_1").val(null);
+                        $("#id_ind_" + indicatorNo + "_param_2").val(null);
+                        $("#id_ind_" + indicatorNo + "_param_3").val(null);
+                        $("#id_ind_" + indicatorNo + "_param_4").val(null);
+                        $("#id_ind_" + indicatorNo + "_param_5").val(null);
                         // We expect data to be an array
                         if (ret.data.length == 0) {
                             // Show 0 param
