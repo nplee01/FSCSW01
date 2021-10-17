@@ -36,6 +36,7 @@
         function resetPage() {
             initPage();
             $("#id_stock_ticker").val(null);
+            $("#id_strategy_code").val(null);
             $("#id_indicator_1_code").val(null);
             $("#id_ind_1_param_1").val(null);
             $("#id_ind_1_param_2").val(null);
@@ -48,6 +49,19 @@
             $("#id_ind_2_param_3").val(null);
             $("#id_ind_2_param_4").val(null);
             $("#id_ind_2_param_5").val(null);
+            // Hide 2nd indicator
+            $("#ind_2_group").hide();
+            // Hide all params
+            $("#ind_1_param_1_group").hide();
+            $("#ind_1_param_2_group").hide();
+            $("#ind_1_param_3_group").hide();
+            $("#ind_1_param_4_group").hide();
+            $("#ind_1_param_5_group").hide();
+            $("#ind_2_param_1_group").hide();
+            $("#ind_2_param_2_group").hide();
+            $("#ind_2_param_3_group").hide();
+            $("#ind_2_param_4_group").hide();
+            $("#ind_2_param_5_group").hide();
             // Set focus on first input
             $(':input:enabled:visible:first').focus();
         }
@@ -65,6 +79,20 @@
                         else if (ret.data.indicator_count == 2) {
                             $("#ind_2_group").show();
                         }
+                        // Reset indicator selection
+                        $("#id_indicator_1_code").val(null);
+                        $("#id_indicator_2_code").val(null);
+                        // Show params only when indicator selected
+                        $("#ind_1_param_1_group").hide();
+                        $("#ind_1_param_2_group").hide();
+                        $("#ind_1_param_3_group").hide();
+                        $("#ind_1_param_4_group").hide();
+                        $("#ind_1_param_5_group").hide();
+                        $("#ind_2_param_1_group").hide();
+                        $("#ind_2_param_2_group").hide();
+                        $("#ind_2_param_3_group").hide();
+                        $("#ind_2_param_4_group").hide();
+                        $("#ind_2_param_5_group").hide();
                     } else {
                         console.error(ret.error);
                     }
@@ -119,7 +147,7 @@
                             $("#ind_" + indicatorNo + "_param_5_group").hide();
                         }
                         else if (ret.data.length == 4) {
-                            // Show 3 params
+                            // Show 4 params
                             $("#ind_" + indicatorNo + "_param_1_group").show();
                             $("#ind_" + indicatorNo + "_param_2_group").show();
                             $("#ind_" + indicatorNo + "_param_3_group").show();
@@ -127,7 +155,7 @@
                             $("#ind_" + indicatorNo + "_param_5_group").hide();
                         }
                         else if (ret.data.length == 5) {
-                            // Show 3 params
+                            // Show 5 params
                             $("#ind_" + indicatorNo + "_param_1_group").show();
                             $("#ind_" + indicatorNo + "_param_2_group").show();
                             $("#ind_" + indicatorNo + "_param_3_group").show();
@@ -156,6 +184,7 @@
         // After document loaded...
         $(document).ready(function() {
             initPage();
+            resetPage();
             // Attach change functions to strategy and indicators
             $("#id_strategy_code").change(onSelectStrategy);
             // Event data is the indicator number
