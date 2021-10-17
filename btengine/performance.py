@@ -273,16 +273,9 @@ def gen_bt_stat (BTStrategy, stock_name, initCapital, DV, PL_stat, stg_cd, id_li
     
     # TODO: Add in the strategies and the indicators used along with their params
     # Indicators used to be display on the test history page
-    # FIXME: TEMP FIX BEFORE FOUND HOW TO RESET THE DEFAULT VALUES
-    # FROM THE BACKTEST FORM
     indicators_str = ''
     for ind in id_list:
-        if ind[0] == 'SMA':
-            indicators_str += f'{ind[0]} ' + str([ind[1]]) + ', '
-        elif ind[0] == 'XMA':
-            indicators_str += f'{ind[0]} ' + str(list(i for i in ind[1:3])) + ', '
-        else:
-            indicators_str += f'{ind[0]} ' + str(list(i for i in ind[1:5])) + ', '
+        indicators_str += f'{ind[0]} ' + str([i for i in ind[1:]]) + ', '
 
     # Remove the last ', '
     indicators_str = indicators_str[:-2]
@@ -291,8 +284,8 @@ def gen_bt_stat (BTStrategy, stock_name, initCapital, DV, PL_stat, stg_cd, id_li
     indicators_str = indicators_str.replace('[', '(').replace(']', ')')
 
     # Insert the indicators used into the json
-    bt_pf['StrategyIndicators']=indicators_str # Example: Confluence SMA Crossing and SMA Baseline
     bt_pf['StrategyCode']=stg_cd # Either SINGLE or CONFLUENCE
+    bt_pf['StrategyIndicators']=indicators_str # Example: SMA Baseline (200)
 
     # Indicators list: custom output for different indicators used
     # NOTE: To be converted into a function that take from a indicators dict

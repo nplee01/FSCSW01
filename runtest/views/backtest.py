@@ -68,12 +68,7 @@ def backtest(request):
             # FROM THE BACKTEST FORM
             indicators_str = ''
             for ind in indicators:
-                if ind[0] == 'SMA':
-                    indicators_str += f'{ind[0]} ' + str([ind[1]]) + ', '
-                elif ind[0] == 'XMA':
-                    indicators_str += f'{ind[0]} ' + str(list(i for i in ind[1:3])) + ', '
-                else:
-                    indicators_str += f'{ind[0]} ' + str(list(i for i in ind[1:5])) + ', '
+                indicators_str += f'{ind[0]} ' + str([i for i in ind[1:]]) + ', '
 
             # Remove the last ', '
             indicators_str = indicators_str[:-2]
