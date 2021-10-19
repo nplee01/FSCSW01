@@ -8,7 +8,15 @@ am4core.ready(function() {
   
   // Create chart
   var chart = am4core.create("chartdiv", am4charts.XYChart);
-  chart.padding(0, 15, 0, 15);
+  chart.padding(30, 15, 0, 15);
+
+  // chart.scrollbarX.disabled = true;
+  // chart.scrollbarX.opacity = 1;
+  // chart.scrollbarX.minHeight = 1;
+  // chart.scrollbarX.showSystemTooltip = false;
+  // chart.scrollbarX.thumb.showSystemTooltip = false;
+  // chart.scrollbarX.startGrip.showSystemTooltip = false;
+  // chart.scrollbarX.endGrip.showSystemTooltip = false;
   
   // Load data
 
@@ -35,6 +43,9 @@ am4core.ready(function() {
           // console.log(res.data)
           // console.log(res.data);
           chart.data = res_data.data;
+          // chart.zoom(new Date(2021, 5, 1), new Date(2021, 10, 1));
+          setTimeout(function(){ defaultZooming(6); }, 2500);
+
         } else {
           alert("Sorry, please try again later. Summary failed to be retrieved.");
         }
@@ -456,11 +467,14 @@ function rsiGraph(result, summ){
     zoomToDates(date);
   });
   
-  document.getElementById("bmax").addEventListener("click", function() {
-    var min = dateAxis.groupMin["day1"];
-    var date = new Date(min);
-    zoomToDates(date);
-  });
+  // document.getElementById("bmax").addEventListener("click", function() {
+  //   // var max = dateAxis.groupMax["day1"];
+  //   // var date = new Date(max);
+  //   // am4core.time.add(date, "month", 1);
+  //   var min = dateAxis.groupMin["day1"];
+  //   var date = new Date(min);
+  //   zoomToDates(date);
+  // });
   
   dateAxis.events.on("selectionextremeschanged", function() {
     updateFields();
@@ -506,5 +520,14 @@ function rsiGraph(result, summ){
   
     dateAxis.zoom({start:(date.getTime() - min)/(max - min), end:1});
   }
+
+  function defaultZooming(month) {
+    var max = dateAxis.groupMax["day1"];
+    var date = new Date(max);
+    am4core.time.add(date, "month", -month);
+    zoomToDates(date);
+  }
+
+  chart.scrollbarX.disabled = true;
 
 }); // end am4core.ready()

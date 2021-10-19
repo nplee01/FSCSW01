@@ -3,33 +3,33 @@ from runtest.fixtures.parameter import ParameterTuple, load_parameters
 from runtest.fixtures.set_audit_user import set_audit_user
 
 params = [
-        # Version 1.0 data
-        # SMA
-        ParameterTuple(param_code='SMA-BASE-LINE', param_label='Base Line', 
-            param_description='SMA Base Line', default_value=200,
-            min_value=0, max_value=None, step_by=None, mult_by=None),
-        # XMA
-        ParameterTuple(param_code='XMA-FAST-PERIOD', param_label='Fast Period', 
-            param_description='XMA Fast Period', default_value=50,
-            min_value=0, max_value=None, step_by=None, mult_by=None),
-        ParameterTuple(param_code='XMA-SLOW-PERIOD', param_label='Slow Period', 
-            param_description='XMA Slow Period', default_value=100,
-            min_value=0, max_value=None, step_by=None, mult_by=None),
-        # RSI OBOS
-        ParameterTuple(param_code='RSI-PERIOD', param_label='Period', 
-            param_description='RSI Period', default_value=14,
-            min_value=0, max_value=None, step_by=None, mult_by=None),
-        ParameterTuple(param_code='RSI-OVERBOT', param_label='Over Bought', 
-            param_description='RSI Overbought', default_value=80,
-            min_value=None, max_value=None, step_by=None, mult_by=None),
-        ParameterTuple(param_code='RSI-BASE-LINE', param_label='Base Line', 
-            param_description='RSI Base Line', default_value=50,
-            min_value=None, max_value=None, step_by=None, mult_by=None),
-        ParameterTuple(param_code='RSI-OVERSOLD', param_label='Over Sold', 
-            param_description='XMA Over Sold', default_value=20,
-            min_value=0, max_value=None, step_by=None, mult_by=None),
-    ]
-    
+    # Version 1.0 data
+    # SMA
+    ParameterTuple(param_code='SMA-BASE-LINE', param_label='Base Line',
+                   param_description='SMA Base Line', default_value=200,
+                   min_value=0, max_value=None, step_by=None, mult_by=None),
+    # XMA
+    ParameterTuple(param_code='XMA-FAST-PERIOD', param_label='Fast Period',
+                   param_description='XMA Fast Period', default_value=50,
+                   min_value=0, max_value=None, step_by=None, mult_by=None),
+    ParameterTuple(param_code='XMA-SLOW-PERIOD', param_label='Slow Period',
+                   param_description='XMA Slow Period', default_value=100,
+                   min_value=0, max_value=None, step_by=None, mult_by=None),
+    # RSI OBOS
+    ParameterTuple(param_code='RSI-PERIOD', param_label='Period',
+                   param_description='RSI Period', default_value=14,
+                   min_value=0, max_value=None, step_by=None, mult_by=None),
+    ParameterTuple(param_code='RSI-OVERBOT', param_label='O/Bought',
+                   param_description='RSI Overbought', default_value=80,
+                   min_value=None, max_value=None, step_by=None, mult_by=None),
+    ParameterTuple(param_code='RSI-BASE-LINE', param_label='Base Line',
+                   param_description='RSI Base Line', default_value=50,
+                   min_value=None, max_value=None, step_by=None, mult_by=None),
+    ParameterTuple(param_code='RSI-OVERSOLD', param_label='O/Sold',
+                   param_description='XMA Over Sold', default_value=20,
+                   min_value=0, max_value=None, step_by=None, mult_by=None),
+]
+
 
 if __name__ == '__main__':
     set_audit_user()
@@ -195,4 +195,3 @@ if __name__ == '__main__':
             param_description='RSI Upper Band', default_value=70,
             min_value=None, max_value=None, step_by=None, mult_by=None),
     """
-
