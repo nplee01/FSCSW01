@@ -30,10 +30,10 @@ def get_results_data(request, run_id):
         df = pd.read_excel(os.path.join(
             settings.RESULTS_DIR, str(run_id) + 'G.xlsx'))
 
-        # TODO: Drop the first unnamed column
+        # Drop the first unnamed column
         df = df.iloc[:, 1:]
 
-        # TODO: Change the date format
+        # Change the date format
         df['Date'] = df['Date'].dt.strftime('%Y-%m-%d')
 
         # Getting the list of dict for the json

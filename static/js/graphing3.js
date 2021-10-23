@@ -124,7 +124,7 @@ am4core.ready(function() {
   // seriesL.name = "MSFT: Value";
   // seriesL.defaultState.transitionDuration = 0;
 
-  // Buy and Sell TODO TODO TODO TODO
+  // Buy and Sell
   // Create series
   var enterLongSeries = chart.series.push(new am4charts.LineSeries());
   enterLongSeries.dataFields.dateX = "Date";
@@ -166,7 +166,6 @@ am4core.ready(function() {
   arrow2.direction = "top";
   arrow2.width = 12;
   arrow2.height = 12;
-
 
   // var valueAxisL = chart.yAxes.push(new am4charts.ValueAxis());
   // valueAxisL.tooltip.disabled = true;
@@ -235,184 +234,134 @@ am4core.ready(function() {
   seriesF.tooltip.getFillFromObject = false;  
   seriesF.tooltip.background.fill = am4core.color("green");
 
-  // var valueAxisF = chart.yAxes.push(new am4charts.ValueAxis());
-  // valueAxisF.tooltip.disabled = true;
-  // // height of axis
-  // valueAxisF.height = am4core.percent(65);
-  // valueAxisF.zIndex = 3
-  // // this makes gap between panels
-  // valueAxisF.marginTop = 30;
-  // valueAxisF.renderer.baseGrid.disabled = true;
-  // valueAxisF.renderer.inside = true;
-  // valueAxisF.renderer.labels.template.verticalCenter = "bottom";
-  // valueAxisF.renderer.labels.template.padding(2, 2, 2, 2);
-  // //valueAxis.renderer.maxLabelPosition = 0.95;
-  // valueAxisF.renderer.fontSize = "0.8em"
+  // Function to draw the RSI Graph
+  function rsiGraph(result, summ){
 
-  // valueAxisF.renderer.gridContainer.background.fill = am4core.color("#000000");
-  // valueAxisF.renderer.gridContainer.background.fillOpacity = 0.05;
+    if (result[0].RSI !== undefined) {
+      // .at(-1)
+      firstDay = result[0].Date
+      lastDay = result[result.length-1].Date
+      // lastDay = result[Object.keys(result)[result.length-1]].Date
+      // RSIOB = summ[Object.keys("RSIOB")]
+      RSIOB = summ.RSIOB
+      RSIOS = summ.RSIOS
+      RSI_BASE = summ.RSI_BASE
 
-  // Second chart: RSI
-  // TODO: Only generate if there is RSI in the data
-  // console.log(chart.data);
-  // setTimeout(() => {
-  //   if (rsiValue !== undefined) {
-  //     var valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
-  //     valueAxis2.tooltip.disabled = true;
-  //     // height of axis
-  //     valueAxis2.height = am4core.percent(35);
-  //     valueAxis2.zIndex = 3
-  //     // this makes gap between panels
-  //     valueAxis2.marginTop = 30;
-  //     valueAxis2.renderer.baseGrid.disabled = true;
-  //     valueAxis2.renderer.inside = true;
-  //     valueAxis2.renderer.labels.template.verticalCenter = "bottom";
-  //     valueAxis2.renderer.labels.template.padding(2, 2, 2, 2);
-  //     //valueAxis.renderer.maxLabelPosition = 0.95;
-  //     valueAxis2.renderer.fontSize = "0.8em"
+      var valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
+      valueAxis2.tooltip.disabled = true;
+      // height of axis
+      valueAxis2.height = am4core.percent(35);
+      valueAxis2.zIndex = 3
+      // this makes gap between panels
+      valueAxis2.marginTop = 30;
+      valueAxis2.renderer.baseGrid.disabled = true;
+      valueAxis2.renderer.inside = true;
+      valueAxis2.renderer.labels.template.verticalCenter = "bottom";
+      valueAxis2.renderer.labels.template.padding(2, 2, 2, 2);
+      //valueAxis.renderer.maxLabelPosition = 0.95;
+      valueAxis2.renderer.fontSize = "0.8em"
       
-  //     valueAxis2.renderer.gridContainer.background.fill = am4core.color("#000000");
-  //     valueAxis2.renderer.gridContainer.background.fillOpacity = 0.05;
-  
-  //     var series2 = chart.series.push(new am4charts.LineSeries());
-  //     series2.dataFields.dateX = "Date";
-  //     series2.clustered = false;
-  //     series2.dataFields.valueY = "RSI";
-  //     series2.yAxis = valueAxis2;
-  //     series2.tooltipText = "RSI: {valueY.value}";
-  //     series2.name = "Series 2";
-  //     series2.defaultState.transitionDuration = 0;
-  //   }
-  // }, 10000);
+      valueAxis2.renderer.gridContainer.background.fill = am4core.color("#000000");
+      valueAxis2.renderer.gridContainer.background.fillOpacity = 0.05;
 
-  
-function rsiGraph(result, summ){
+      var series2 = chart.series.push(new am4charts.LineSeries());
+      series2.dataFields.dateX = "Date";
+      series2.clustered = false;
+      series2.dataFields.valueY = "RSI";
+      series2.yAxis = valueAxis2;
+      series2.tooltipText = "RSI: {valueY.value}";
+      series2.name = "Series 2";
+      series2.stroke = am4core.color("purple");
+      series2.tooltip.getFillFromObject = false;
+      series2.tooltip.background.fill = am4core.color("purple");
+      series2.defaultState.transitionDuration = 0;
 
-  if (result[0].RSI !== undefined) {
-    // .at(-1)
-    firstDay = result[0].Date
-    lastDay = result[result.length-1].Date
-    // lastDay = result[Object.keys(result)[result.length-1]].Date
-    // RSIOB = summ[Object.keys("RSIOB")]
-    RSIOB = summ.RSIOB
-    RSIOS = summ.RSIOS
-    RSI_BASE = summ.RSI_BASE
+      // Overbought
+      var OBSeries = chart.series.push(new am4charts.LineSeries());
+      OBSeries.dataFields.dateX = "Date";
+      OBSeries.clustered = false;
+      OBSeries.dataFields.valueY = "RSIOB";
+      OBSeries.yAxis = valueAxis2;
+      OBSeries.tooltipText = "RSI OB: {valueY.value}";
+      OBSeries.name = "OBSeries";
+      OBSeries.defaultState.transitionDuration = 0;
+      OBSeries.strokeDasharray = 4;
+      OBSeries.strokeWidth = 2
+      OBSeries.stroke = am4core.color("red");
+      OBSeries.tooltip.getFillFromObject = false;
+      OBSeries.tooltip.background.fill = am4core.color("red");
+      OBSeries.strokeOpacity = 0.7;
+      OBSeries.data = [{"Date": firstDay, "RSIOB": RSIOB },  {"Date": lastDay, "RSIOB": RSIOB }];
+      
+      // Base
+      var RSIBASESeries = chart.series.push(new am4charts.LineSeries());
+      RSIBASESeries.dataFields.dateX = "Date";
+      RSIBASESeries.clustered = false;
+      RSIBASESeries.dataFields.valueY = "RSI_BASE";
+      RSIBASESeries.yAxis = valueAxis2;
+      RSIBASESeries.tooltipText = "RSI OS: {valueY.value}";
+      RSIBASESeries.name = "RSIBASESeries";
+      RSIBASESeries.defaultState.transitionDuration = 0;
+      RSIBASESeries.strokeDasharray = 4;
+      RSIBASESeries.strokeWidth = 2
+      RSIBASESeries.stroke = am4core.color("black");
+      RSIBASESeries.tooltip.getFillFromObject = false;
+      RSIBASESeries.tooltip.background.fill = am4core.color("black");
+      RSIBASESeries.strokeOpacity = 0.7;
+      RSIBASESeries.data = [{"Date": firstDay, "RSI_BASE": RSI_BASE },  {"Date": lastDay, "RSI_BASE": RSI_BASE }];
 
-    var valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
-    valueAxis2.tooltip.disabled = true;
+      // Oversold
+      var OSSeries = chart.series.push(new am4charts.LineSeries());
+      OSSeries.dataFields.dateX = "Date";
+      OSSeries.clustered = false;
+      OSSeries.dataFields.valueY = "RSIOS";
+      OSSeries.yAxis = valueAxis2;
+      OSSeries.tooltipText = "RSI OS: {valueY.value}";
+      OSSeries.name = "OSSeries";
+      OSSeries.defaultState.transitionDuration = 0;
+      OSSeries.strokeDasharray = 4;
+      OSSeries.strokeWidth = 2
+      OSSeries.stroke = am4core.color("green");
+      OSSeries.tooltip.getFillFromObject = false;
+      OSSeries.tooltip.background.fill = am4core.color("green");
+      OSSeries.strokeOpacity = 0.7;
+      OSSeries.data = [{"Date": firstDay, "RSIOS": RSIOS },  {"Date": lastDay, "RSIOS": RSIOS }];
+    }
+
+    // Third chart: Volume
+    var valueAxis3 = chart.yAxes.push(new am4charts.ValueAxis());
+    valueAxis3.tooltip.disabled = true;
     // height of axis
-    valueAxis2.height = am4core.percent(35);
-    valueAxis2.zIndex = 3
+    valueAxis3.height = am4core.percent(35);
+    valueAxis3.zIndex = 3
     // this makes gap between panels
-    valueAxis2.marginTop = 30;
-    valueAxis2.renderer.baseGrid.disabled = true;
-    valueAxis2.renderer.inside = true;
-    valueAxis2.renderer.labels.template.verticalCenter = "bottom";
-    valueAxis2.renderer.labels.template.padding(2, 2, 2, 2);
+    valueAxis3.marginTop = 30;
+    valueAxis3.renderer.baseGrid.disabled = true;
+    valueAxis3.renderer.inside = true;
+    valueAxis3.renderer.labels.template.verticalCenter = "bottom";
+    valueAxis3.renderer.labels.template.padding(2, 2, 2, 2);
     //valueAxis.renderer.maxLabelPosition = 0.95;
-    valueAxis2.renderer.fontSize = "0.8em"
+    valueAxis3.renderer.fontSize = "0.8em"
     
-    valueAxis2.renderer.gridContainer.background.fill = am4core.color("#000000");
-    valueAxis2.renderer.gridContainer.background.fillOpacity = 0.05;
+    valueAxis3.renderer.gridContainer.background.fill = am4core.color("#000000");
+    valueAxis3.renderer.gridContainer.background.fillOpacity = 0.05;
 
-    var series2 = chart.series.push(new am4charts.LineSeries());
-    series2.dataFields.dateX = "Date";
-    series2.clustered = false;
-    series2.dataFields.valueY = "RSI";
-    series2.yAxis = valueAxis2;
-    series2.tooltipText = "RSI: {valueY.value}";
-    series2.name = "Series 2";
-    series2.stroke = am4core.color("purple");
-    series2.tooltip.getFillFromObject = false;
-    series2.tooltip.background.fill = am4core.color("purple");
-    series2.defaultState.transitionDuration = 0;
+    var series3 = chart.series.push(new am4charts.ColumnSeries());
+    series3.dataFields.dateX = "Date";
+    series3.clustered = false;
+    series3.dataFields.valueY = "Volume";
+    series3.yAxis = valueAxis3;
+    series3.tooltipText = "Volume: {valueY.value}";
+    series3.name = "Series 3";
+    // volume should be summed
+    series3.groupFields.valueY = "sum";
+    series3.defaultState.transitionDuration = 0;
 
-    // Overbought
-    var OBSeries = chart.series.push(new am4charts.LineSeries());
-    OBSeries.dataFields.dateX = "Date";
-    OBSeries.clustered = false;
-    OBSeries.dataFields.valueY = "RSIOB";
-    OBSeries.yAxis = valueAxis2;
-    OBSeries.tooltipText = "RSI OB: {valueY.value}";
-    OBSeries.name = "OBSeries";
-    OBSeries.defaultState.transitionDuration = 0;
-    OBSeries.strokeDasharray = 4;
-    OBSeries.strokeWidth = 2
-    OBSeries.stroke = am4core.color("red");
-    OBSeries.tooltip.getFillFromObject = false;
-    OBSeries.tooltip.background.fill = am4core.color("red");
-    OBSeries.strokeOpacity = 0.7;
-    OBSeries.data = [{"Date": firstDay, "RSIOB": RSIOB },  {"Date": lastDay, "RSIOB": RSIOB }];
-    
-    // Base
-    var RSIBASESeries = chart.series.push(new am4charts.LineSeries());
-    RSIBASESeries.dataFields.dateX = "Date";
-    RSIBASESeries.clustered = false;
-    RSIBASESeries.dataFields.valueY = "RSI_BASE";
-    RSIBASESeries.yAxis = valueAxis2;
-    RSIBASESeries.tooltipText = "RSI OS: {valueY.value}";
-    RSIBASESeries.name = "RSIBASESeries";
-    RSIBASESeries.defaultState.transitionDuration = 0;
-    RSIBASESeries.strokeDasharray = 4;
-    RSIBASESeries.strokeWidth = 2
-    RSIBASESeries.stroke = am4core.color("black");
-    RSIBASESeries.tooltip.getFillFromObject = false;
-    RSIBASESeries.tooltip.background.fill = am4core.color("black");
-    RSIBASESeries.strokeOpacity = 0.7;
-    RSIBASESeries.data = [{"Date": firstDay, "RSI_BASE": RSI_BASE },  {"Date": lastDay, "RSI_BASE": RSI_BASE }];
-
-    // Oversold
-    var OSSeries = chart.series.push(new am4charts.LineSeries());
-    OSSeries.dataFields.dateX = "Date";
-    OSSeries.clustered = false;
-    OSSeries.dataFields.valueY = "RSIOS";
-    OSSeries.yAxis = valueAxis2;
-    OSSeries.tooltipText = "RSI OS: {valueY.value}";
-    OSSeries.name = "OSSeries";
-    OSSeries.defaultState.transitionDuration = 0;
-    OSSeries.strokeDasharray = 4;
-    OSSeries.strokeWidth = 2
-    OSSeries.stroke = am4core.color("green");
-    OSSeries.tooltip.getFillFromObject = false;
-    OSSeries.tooltip.background.fill = am4core.color("green");
-    OSSeries.strokeOpacity = 0.7;
-    OSSeries.data = [{"Date": firstDay, "RSIOS": RSIOS },  {"Date": lastDay, "RSIOS": RSIOS }];
+    series3.fill = am4core.color("rgb(65, 112, 216)");
+    series3.stroke = am4core.color("rgb(65, 112, 216)");
+    series3.tooltip.getFillFromObject = false;
+    series3.tooltip.background.fill = am4core.color("rgb(65, 112, 216)");
   }
-
-  // Third chart: Volume
-  var valueAxis3 = chart.yAxes.push(new am4charts.ValueAxis());
-  valueAxis3.tooltip.disabled = true;
-  // height of axis
-  valueAxis3.height = am4core.percent(35);
-  valueAxis3.zIndex = 3
-  // this makes gap between panels
-  valueAxis3.marginTop = 30;
-  valueAxis3.renderer.baseGrid.disabled = true;
-  valueAxis3.renderer.inside = true;
-  valueAxis3.renderer.labels.template.verticalCenter = "bottom";
-  valueAxis3.renderer.labels.template.padding(2, 2, 2, 2);
-  //valueAxis.renderer.maxLabelPosition = 0.95;
-  valueAxis3.renderer.fontSize = "0.8em"
-  
-  valueAxis3.renderer.gridContainer.background.fill = am4core.color("#000000");
-  valueAxis3.renderer.gridContainer.background.fillOpacity = 0.05;
-
-  var series3 = chart.series.push(new am4charts.ColumnSeries());
-  series3.dataFields.dateX = "Date";
-  series3.clustered = false;
-  series3.dataFields.valueY = "Volume";
-  series3.yAxis = valueAxis3;
-  series3.tooltipText = "Volume: {valueY.value}";
-  series3.name = "Series 3";
-  // volume should be summed
-  series3.groupFields.valueY = "sum";
-  series3.defaultState.transitionDuration = 0;
-
-  series3.fill = am4core.color("rgb(65, 112, 216)");
-  series3.stroke = am4core.color("rgb(65, 112, 216)");
-  series3.tooltip.getFillFromObject = false;
-  series3.tooltip.background.fill = am4core.color("rgb(65, 112, 216)");
-}
 
   chart.cursor = new am4charts.XYCursor();
   

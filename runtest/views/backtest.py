@@ -1,4 +1,5 @@
 from runtest.views.graphsummary import graphsummary
+from runtest.views.dispatcher import dispatcher
 from django.shortcuts import render
 from django.utils import timezone
 
@@ -64,8 +65,6 @@ def backtest(request):
                 form.cleaned_data['strategy_code'], indicators)
 
             # Indicators used to be display on the test history page
-            # FIXME: TEMP FIX BEFORE FOUND HOW TO RESET THE DEFAULT VALUES
-            # FROM THE BACKTEST FORM
             indicators_str = ''
             for ind in indicators:
                 indicators_str += f'{ind[0]} ' + str([i for i in ind[1:]]) + ', '
@@ -85,6 +84,14 @@ def backtest(request):
                                 form.cleaned_data['end_date'], form.cleaned_data['portfolio_start'],
                                 form.cleaned_data['trade_size'], desc, form.cleaned_data['strategy_code'], indicators)
 
+            # Return a strategies return no output page is status is False
+            if status == False:
+                # FIXME: delete the run
+                row = TestRun.objects.get(pk=form.instance.id)
+                row.delete()
+
+                return dispatcher(request, "runtest/noresult.html")
+            
             # Update the database using the excel
             sm = json.load(
                 open(os.path.join(settings.RESULTS_DIR, str(form.instance.id) + 'P.json')))
@@ -100,8 +107,6 @@ def backtest(request):
             form.instance.win_rate = sm.get('WinRate', '0')
             form.instance.max_drawdown = sm.get('MaxDrawdownValue', '0')
             form.instance.indicators = indicators_str
-
-            # FIXME: 0 cannot be render on graphing.html
 
             try:
                 max_drawdown_date = datetime.strptime(

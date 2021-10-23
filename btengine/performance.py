@@ -271,7 +271,7 @@ def gen_bt_stat (BTStrategy, stock_name, initCapital, DV, PL_stat, stg_cd, id_li
             print(f"Win rate: {bt_pf['WinRate']:.2f}%")
             print(f"Max drawdown {bt_pf['MaxDrawdownValue']:.2f} on {bt_pf['MaxDrawdownDate']}")
     
-    # TODO: Add in the strategies and the indicators used along with their params
+    # Add in the strategies and the indicators used along with their params
     # Indicators used to be display on the test history page
     indicators_str = ''
     for ind in id_list:

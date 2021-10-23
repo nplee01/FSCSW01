@@ -248,6 +248,10 @@ footer {
   min-width: 850px;
 }
 
+.ab-card-body h2 {
+  font-family: "Abril Fatface", cursive;
+}
+
 .quote {
   font-family: "IM Fell French Canon SC", serif;
   background-color: rgba(218, 218, 218, 0.7);
@@ -623,4 +627,34 @@ div table tbody {
   margin: 10px 10px 10px 10px;
   background-color: none;
   border-radius: 0.5em;
+}
+
+/* No output page */
+.warren-card-body {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin: 50px;
+  min-width: 850px;
+}
+
+#warren-img {
+  width: 300px;
+  height: 100%;
+}
+
+.warren-text {
+  min-width: 600px;
+  padding-left: 50px;
+}
+
+.warren-text h2 {
+  font-family: "Abril Fatface", cursive;
+}
+
+.warren-text p {
+  margin-top: 20px;
+  font-family: "Quicksand";
+  font-size: 20px;
+  text-align: justify;
 }

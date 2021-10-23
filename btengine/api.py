@@ -47,7 +47,6 @@ def api_bt_run(run_no, stock_name, from_date, to_date, init_capital, contract_si
     order=generate_order(signal)
     TL=broker_simulator(order, init_capital, contract_size, verbose)
     if len(TL) == 0:
-        # TODO: Fix no output file problem when there is no buy and sell signal.
         return False
     else:
         TL1 = eval_by_trade(TL)
