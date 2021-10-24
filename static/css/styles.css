@@ -29,12 +29,14 @@ nav > ul > li > a {
   font-weight: 600;
   text-shadow: 1px 1px #252525a6;
   color: white;
+  transition: 0.3s;
 }
 
 nav > ul > li > .on {
   color: rgb(233, 201, 58);
   border-bottom: solid 3px rgb(233, 201, 58);
   margin-top: 22px;
+  transition: 0.3s;
 }
 
 nav ul:hover li a {
@@ -469,6 +471,7 @@ form p input {
   border-color: white;
   filter: drop-shadow(0 0 0.5em black);
   font-family: "Abril Fatface", cursive;
+  transition: 0.3s;
 }
 
 .primaryAction:hover,
@@ -657,4 +660,24 @@ div table tbody {
   font-family: "Quicksand";
   font-size: 20px;
   text-align: justify;
+}
+
+button.try-again-btn {
+  padding: 10px;
+  margin: 2% 35%;
+  font-size: 20px;
+  border-width: 1em;
+  border-radius: 0.5em;
+  border-color: white;
+  filter: drop-shadow(0 0 0.5em black);
+  font-family: "Abril Fatface", cursive;
+  transition: 0.3s;
+}
+
+button.try-again-btn:hover {
+  background-color: rgb(233, 201, 58);
+  border-color: gold;
+  transition: 0.3s;
+  filter: drop-shadow(0 0 5em gold);
+  font-family: "Abril Fatface", cursive;
 }
