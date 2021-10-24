@@ -21,12 +21,12 @@
         <th>Equity ROI (%)</th>
         <th>Win Rate (%)</th>
         <th>Max Drawdown</th>
-        <th></th>
+        <!-- <th></th> -->
       </tr>
     </thead>
     <tbody>
       {% for data in testhistorydata %}
-      <tr>
+      <tr class="table-row" onclick="gotoSummary(`{{data.id}}`)">
         <td>{{ forloop.counter }}</td>
         <td>{{ data.run_on }}</td>
         <td>{{ data.strategy_code }}</td>
@@ -37,7 +37,7 @@
         <td>{{ data.equity_roi | stringformat:".2f" }}</td>
         <td>{{ data.win_rate | stringformat:".2f" }}</td>
         <td>{{ data.max_drawdown | stringformat:".2f" }}</td>
-        <td><button class="fas fa-search fa-md table-btn" onclick="gotoSummary(`{{data.id}}`)" ></button></td>
+        <!-- <td><button class="fas fa-search fa-md table-btn" onclick="gotoSummary(`{{data.id}}`)" ></button></td> -->
       </tr>
       {% endfor %}
     </tbody>

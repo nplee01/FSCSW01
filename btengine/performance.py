@@ -275,7 +275,7 @@ def gen_bt_stat (BTStrategy, stock_name, initCapital, DV, PL_stat, stg_cd, id_li
     # Indicators used to be display on the test history page
     indicators_str = ''
     for ind in id_list:
-        indicators_str += f'{ind[0]} ' + str([i for i in ind[1:]]) + ', '
+        indicators_str += f'{indicator_dict.get(ind[0])} ' + str([i for i in ind[1:]]) + ', '
 
     # Remove the last ', '
     indicators_str = indicators_str[:-2]
@@ -285,6 +285,8 @@ def gen_bt_stat (BTStrategy, stock_name, initCapital, DV, PL_stat, stg_cd, id_li
 
     # Insert the indicators used into the json
     bt_pf['StrategyCode']=stg_cd # Either SINGLE or CONFLUENCE
+
+    # Replacing the XMA and RSIOBOS 
     bt_pf['StrategyIndicators']=indicators_str # Example: SMA Baseline (200)
 
     # Indicators list: custom output for different indicators used
@@ -302,3 +304,9 @@ def gen_bt_stat (BTStrategy, stock_name, initCapital, DV, PL_stat, stg_cd, id_li
             bt_pf['RSIOS'] = ind[4]
 
     return bt_pf
+
+indicator_dict = {
+    'SMA': "SMA Baseline",
+    'XMA': "SMA Crossing",
+    'RSIOBOS': "RSI OB/OS",
+}

@@ -614,6 +614,16 @@ div table tbody {
   background: none;
 }
 
+tr.table-row {
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+tr.table-row:hover {
+  transition: 0.3s;
+  box-shadow: 0 3px 10px grey;
+}
+
 .remark-btn {
   margin: auto;
   background-color: none;
