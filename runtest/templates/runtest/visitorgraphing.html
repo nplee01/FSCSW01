@@ -2,7 +2,7 @@
 
 {% block graphhead %}
   {% load static %}
-  <link rel="stylesheet" href="{% static 'css/graphstyle3.css' %}" /> 
+  <link rel="stylesheet" href="{% static 'css/graphstyles.css' %}" /> 
 {% endblock %}
 
 {% block content %}
@@ -86,7 +86,7 @@
 
   <input type="hidden" id="myVar" name="variable" value="{{ run_id }}">
   {% load static %}
-  <script src="{% static 'js/graphing3.js' %}"></script>
+  <script src="{% static 'js/graphing.js' %}"></script>
   
   <script>
     function toggle(id){
@@ -96,8 +96,7 @@
       document.getElementById(id).classList.remove('btn-dark');
       document.getElementById(id).classList.add('btn-warning');
     }
-    // !!! HELP NEEDED !!!
-    // TODO: Not sure if cookie is needed
+
     function getCookie(name) {
       var match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
       if (match) return match[2];
@@ -125,10 +124,6 @@
       //     console.log("Update failed: " + msg);
       //   },
       // });
-      
     }
-
   </script>
-
 {% endblock %}
-

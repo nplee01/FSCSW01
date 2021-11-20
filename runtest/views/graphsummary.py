@@ -33,7 +33,7 @@ def graphsummary(request, run_id):
     # To avoid "None" in the summary page text area
     remark = "" if tmpRemark == None else tmpRemark
 
-    return render(request, 'runtest/graphing3.html', {'summary': summary_json['data'], 'run_id': run_id, 'remark': remark})
+    return render(request, 'runtest/graphing.html', {'summary': summary_json['data'], 'run_id': run_id, 'remark': remark})
 
 # {'StockName': 'TENAGA', 'InitCapital': 10000, 'FinalEquity': 18229.999542236335,
 # 'CurrentShareMarketValue': 0.0, 'CurrentCashBalance': 18229.999542236335,

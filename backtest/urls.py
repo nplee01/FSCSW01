@@ -29,8 +29,6 @@ urlpatterns = [
     path('testhistory/update', testhistory, name='testhistoryupdate'),
     path('testhistory/<int:id>/delete/', testhistory, name='testhistorydelete'),
     path('about', dispatcher, {'template_name': 'runtest/about.html'}, name='about'),  
-    path('graphing', dispatcher, {'template_name': 'runtest/graphing.html'}, name='graphing'),  
-    path('graphing2', dispatcher, {'template_name': 'runtest/graphing2.html'}, name='graphing'),  
-    path('graphing3/<int:run_id>/', graphsummary, name='summary'),  
+    path('graphing/<int:run_id>/', graphsummary, name='summary'),  
     path('runtest/', include('runtest.urls')),
 ]
