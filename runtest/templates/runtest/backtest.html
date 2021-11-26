@@ -43,25 +43,12 @@
             $("#id_ind_1_param_3").val(null);
             $("#id_ind_1_param_4").val(null);
             $("#id_ind_1_param_5").val(null);
-            $("#id_indicator_2_code").val(null);
-            $("#id_ind_2_param_1").val(null);
-            $("#id_ind_2_param_2").val(null);
-            $("#id_ind_2_param_3").val(null);
-            $("#id_ind_2_param_4").val(null);
-            $("#id_ind_2_param_5").val(null);
-            // Hide 2nd indicator
-            $("#ind_2_group").hide();
             // Hide all params
             $("#ind_1_param_1_group").hide();
             $("#ind_1_param_2_group").hide();
             $("#ind_1_param_3_group").hide();
             $("#ind_1_param_4_group").hide();
             $("#ind_1_param_5_group").hide();
-            $("#ind_2_param_1_group").hide();
-            $("#ind_2_param_2_group").hide();
-            $("#ind_2_param_3_group").hide();
-            $("#ind_2_param_4_group").hide();
-            $("#ind_2_param_5_group").hide();
             // Set focus on first input
             $(':input:enabled:visible:first').focus();
         }
@@ -72,27 +59,14 @@
             if (strategyCode) {
                 $.getJSON('runtest/rpc/GetStrategyParams/' + strategyCode, function(ret) {
                     if (ret.status == 'OK') {
-                        // Hide or Display Indicators
-                        if (ret.data.indicator_count == 1) {
-                            $("#ind_2_group").hide();
-                        }
-                        else if (ret.data.indicator_count == 2) {
-                            $("#ind_2_group").show();
-                        }
                         // Reset indicator selection
                         $("#id_indicator_1_code").val(null);
-                        $("#id_indicator_2_code").val(null);
                         // Show params only when indicator selected
                         $("#ind_1_param_1_group").hide();
                         $("#ind_1_param_2_group").hide();
                         $("#ind_1_param_3_group").hide();
                         $("#ind_1_param_4_group").hide();
                         $("#ind_1_param_5_group").hide();
-                        $("#ind_2_param_1_group").hide();
-                        $("#ind_2_param_2_group").hide();
-                        $("#ind_2_param_3_group").hide();
-                        $("#ind_2_param_4_group").hide();
-                        $("#ind_2_param_5_group").hide();
                     } else {
                         console.error(ret.error);
                     }
@@ -189,16 +163,12 @@
             $("#id_strategy_code").change(onSelectStrategy);
             // Event data is the indicator number
             $("#id_indicator_1_code").change('1', onSelectIndicator);
-            $("#id_indicator_2_code").change('2', onSelectIndicator);
             // Trigger change event when form error to hide/show params
             if ($("#id_strategy_code").val()) {
                 $("#id_strategy_code").trigger('change');
             }
             if ($("#id_indicator_1_code").val()) {
                 $("#id_indicator_1_code").trigger('change');
-            }
-            if ($("#id_indicator_2_code").val()) {
-                $("#id_indicator_2_code").trigger('change');
             }
         });
     </script>
@@ -272,30 +242,6 @@
                         </div>
                         <div id="ind_1_param_5_group" class="col-sm-1">
                         {{ form.ind_1_param_5 | as_crispy_field }}
-                        </div>
-                    </div>
-                </div>
-                <div id="ind_2_group">
-                    <div class="form-row">
-                        <div class="col-sm-3">
-                        {{ form.indicator_2_code | as_crispy_field }}
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div id="ind_2_param_1_group" class="col-sm-1">
-                        {{ form.ind_2_param_1 | as_crispy_field }}
-                        </div>
-                        <div id="ind_2_param_2_group" class="col-sm-1">
-                        {{ form.ind_2_param_2 | as_crispy_field }}
-                        </div>
-                        <div id="ind_2_param_3_group" class="col-sm-1">
-                        {{ form.ind_2_param_3 | as_crispy_field }}
-                        </div>
-                        <div id="ind_2_param_4_group" class="col-sm-1">
-                        {{ form.ind_2_param_4 | as_crispy_field }}
-                        </div>
-                        <div id="ind_2_param_5_group" class="col-sm-1">
-                        {{ form.ind_2_param_5 | as_crispy_field }}
                         </div>
                     </div>
                 </div>

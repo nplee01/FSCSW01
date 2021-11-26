@@ -16,11 +16,9 @@ class TestRunForm(VersionModelForm):
             help_text=_("Stock to be selected for this backtest run"))
     strategy_code = ChoiceField(label=_("Strategy"), required=True,
             help_text=_("Strategy to use when triggering trades using Indicators"))
-    indicator_1_code = ChoiceField(label=_("Indicator 1"), required=True, 
-            help_text=_("Indicator 1 used for this backtest run"))
-    indicator_2_code = ChoiceField(label=_("Indicator 2"), required=False,
-            help_text=_("Indicator 2 used for this backtest run"))
-    # Indicator 3 Not used
+    indicator_1_code = ChoiceField(label=_("Indicator"), required=True, 
+            help_text=_("Indicator used for this backtest run"))
+    
     # Disabled fields
     portfolio_start = IntegerField(label=_("Initial Capital"), disabled=True, 
             help_text=_("Backtest will start with this initial capital amount"))
@@ -31,9 +29,7 @@ class TestRunForm(VersionModelForm):
         # All other fields are updated by program, last_version is needed for optimistic locking
         fields = ['stock_ticker', 'start_date', 'end_date', 'portfolio_start', 'strategy_code', 
                 'indicator_1_code', 'ind_1_param_1', 'ind_1_param_2', 'ind_1_param_3', 
-                'ind_1_param_4', 'ind_1_param_5',
-                'indicator_2_code', 'ind_2_param_1', 'ind_2_param_2', 'ind_2_param_3', 
-                'ind_2_param_4', 'ind_2_param_5', 'trade_size', 'last_version' ]
+                'ind_1_param_4', 'ind_1_param_5', 'trade_size', 'last_version' ]
 
     def __init__(self, *args, **kwargs):
         # Call parent's init method
@@ -62,7 +58,6 @@ class TestRunForm(VersionModelForm):
             choices = []
         # Attach choices to widget
         self.fields["indicator_1_code"].choices = choices
-        self.fields["indicator_2_code"].choices = choices
 
     def clean(self):
         # Form validation

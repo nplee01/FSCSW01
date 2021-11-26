@@ -61,28 +61,13 @@ class TestRun(RecordOwner):
             help_text=_("Triggers sell when losses hit this level based on current value"))
     # Up to 3 indicators used in this run. Selected from ValueSet(INDICATORS)
     # Each indicator may have up to 3 parameters of int value
-    indicator_1_code = models.CharField(verbose_name=_("Indicator 1"), max_length=30, null=True, blank=True,
-        help_text=_("Indicator 1 used for this backtest run"))
+    indicator_1_code = models.CharField(verbose_name=_("Indicator"), max_length=30, null=True, blank=True,
+        help_text=_("Indicator used for this backtest run"))
     ind_1_param_1 = models.IntegerField(verbose_name=_("Param 1"), null=True, blank=True)
     ind_1_param_2 = models.IntegerField(verbose_name=_("Param 2"), null=True, blank=True)
     ind_1_param_3 = models.IntegerField(verbose_name=_("Param 3"), null=True, blank=True)
     ind_1_param_4 = models.IntegerField(verbose_name=_("Param 4"), null=True, blank=True)
     ind_1_param_5 = models.IntegerField(verbose_name=_("Param 5"), null=True, blank=True)
-    indicator_2_code = models.CharField(verbose_name=_("Indicator 2"), max_length=30, null=True, blank=True,
-        help_text=_("Indicator 2 used for this backtest run"))
-    ind_2_param_1 = models.IntegerField(verbose_name=_("Param 1"), null=True, blank=True)
-    ind_2_param_2 = models.IntegerField(verbose_name=_("Param 2"), null=True, blank=True)
-    ind_2_param_3 = models.IntegerField(verbose_name=_("Param 3"), null=True, blank=True)
-    ind_2_param_4 = models.IntegerField(verbose_name=_("Param 4"), null=True, blank=True)
-    ind_2_param_5 = models.IntegerField(verbose_name=_("Param 5"), null=True, blank=True)
-    # Not used
-    indicator_3_code = models.CharField(verbose_name=_("Indicator 3"), max_length=30, null=True, blank=True,
-        help_text=_("Indicator 3 used for this backtest run"))
-    ind_3_param_1 = models.IntegerField(verbose_name=_("Param 1"), null=True, blank=True)
-    ind_3_param_2 = models.IntegerField(verbose_name=_("Param 2"), null=True, blank=True)
-    ind_3_param_3 = models.IntegerField(verbose_name=_("Param 3"), null=True, blank=True)
-    ind_3_param_4 = models.IntegerField(verbose_name=_("Param 4"), null=True, blank=True)
-    ind_3_param_5 = models.IntegerField(verbose_name=_("Param 5"), null=True, blank=True)
 
     # List of indicator used and the respective values
     # List: XMA --> SMA Crossing (20, 40), SMA (200), RSIOBOS (14, 80, 50, 20)
