@@ -11,9 +11,6 @@ strategies = [
             SetMemberTuple(value_code='SINGLE', value_description='Single Indicator', sort_order=1,
                 param_1_code='1-IND', param_2_code=None, param_3_code=None,
                 param_4_code=None, param_5_code=None),
-            SetMemberTuple(value_code='CONFLUENCE', value_description='Confluence', sort_order=2,
-                param_1_code='2-IND', param_2_code=None, param_3_code=None,
-                param_4_code=None, param_5_code=None),
             )
         )
     ]
